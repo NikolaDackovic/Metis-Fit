@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.turbo/
+coverage/
+.expo/
+*.log
+.env
+.env.*
+!.env.example
+.tmp/
+.DS_Store
+dist-preview
+.astro/

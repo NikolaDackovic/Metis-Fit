@@ -1,0 +1,16 @@
+**/node_modules
+**/dist
+**/dist-preview
+**/.turbo
+**/.expo
+**/coverage
+.tmp
+.git
+.github
+docs
+apps/admin
+apps/mobile
+**/.env
+**/.env.*
+!**/.env.example
+**/*.log

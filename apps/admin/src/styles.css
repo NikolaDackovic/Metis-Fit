@@ -1,0 +1,87 @@
+@import 'tailwindcss';
+@import '@grit/design-tokens/theme.css';
+@import '@fontsource-variable/montserrat';
+@import '@fontsource/syncopate/700.css';
+@import '@fontsource/ibm-plex-sans-arabic/400.css';
+@import '@fontsource/ibm-plex-sans-arabic/600.css';
+@import '@fontsource/ibm-plex-sans-arabic/700.css';
+
+@theme {
+  --font-sans: 'Montserrat Variable', 'Montserrat', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-display: 'Syncopate', 'Montserrat Variable', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    /* Long words (Russian, URLs, emails) wrap instead of breaking out of cards and cells. */
+    overflow-wrap: break-word;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent-400);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--color-accent-tint);
+  }
+  /* Grid items may shrink below their content (truncated / long text, Russian words), so a card
+     never pushes the page wider than the screen. */
+  .grid > * {
+    min-width: 0;
+  }
+  dialog::backdrop {
+    background: rgb(0 0 0 / 0.7);
+  }
+}
+
+/* Arabic (right to left): Arabic font first, no letter spacing (it breaks joined letters),
+   display headings without Syncopate (no Arabic glyphs), direction icons mirrored. */
+:root[dir='rtl'] {
+  --font-sans: 'IBM Plex Sans Arabic', 'Montserrat Variable', system-ui, sans-serif;
+  --font-display: 'IBM Plex Sans Arabic', 'Montserrat Variable', system-ui, sans-serif;
+}
+:root[dir='rtl'] * {
+  letter-spacing: 0 !important;
+}
+:root[dir='rtl']
+  :is(
+    .lucide-chevron-right,
+    .lucide-chevron-left,
+    .lucide-arrow-left,
+    .lucide-arrow-right,
+    .lucide-log-out
+  ) {
+  transform: scaleX(-1);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Signature diagonal accent cut (docs/DESIGN_SYSTEM.md §0) - used sparingly. */
+.grit-cut {
+  position: relative;
+}
+.grit-cut::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--color-accent-500);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 12px));
+}
+
+/* Horizontal chip rows on phones: swipeable, no visible scrollbar. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

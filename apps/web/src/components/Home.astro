@@ -1,0 +1,342 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import { APP_URL, API_URL, clubAtBuild, str } from '../lib/api';
+import { dict, LOCALES, localePath, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = dict[locale];
+const club = await clubAtBuild(locale);
+const name = str(club?.info.name) ?? 'GRIT';
+const tagline = str(club?.info.tagline);
+const joinUrl = `${APP_URL}/register`;
+const nav = [
+  ['why', t.nav.why],
+  ['space', t.nav.space],
+  ['plans', t.nav.plans],
+  ['schedule', t.nav.schedule],
+  ['trainers', t.nav.trainers],
+  ['faq', t.nav.faq],
+  ['contact', t.nav.contact],
+] as const;
+// Strings the browser script needs, in the page language.
+const clientText = {
+  locale,
+  status: t.status,
+  days: t.days,
+  daysShort: t.daysShort,
+  closed: t.contact.closed,
+  plans: { unlimited: t.plans.unlimited, choose: t.plans.choose, empty: t.plans.empty },
+  schedule: { spots: t.schedule.spots, full: t.schedule.full, empty: t.schedule.empty },
+  trainersPt: t.trainers.pt,
+  joinUrl,
+};
+---
+
+<Base locale={locale} club={club}>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:px-3 focus:py-2 focus:text-black">
+    Skip
+  </a>
+
+  <!-- Header: transparent over the hero, solid after scrolling -->
+  <header
+    id="top"
+    data-header
+    class="fixed inset-x-0 top-0 z-40 border-b border-transparent transition-colors duration-200 data-[solid=true]:border-border-subtle data-[solid=true]:bg-bg-base/90 data-[solid=true]:backdrop-blur"
+  >
+    <div class="container-x flex h-16 items-center gap-6">
+      <a href={localePath(locale)} class="shrink-0" aria-label={name}>
+        <img data-live="logo" src="/img/logo.png" alt={name} class="h-6 w-auto" width="120" height="24" />
+      </a>
+      <nav class="hidden flex-1 items-center justify-center gap-6 text-sm font-semibold text-white/80 lg:flex" aria-label="Main">
+        {nav.map(([id, label]) => <a href={`#${id}`} class="hover:text-white">{label}</a>)}
+      </nav>
+      <div class="ms-auto flex items-center gap-3 lg:ms-0">
+        <div class="flex items-center gap-1 text-xs font-bold" aria-label={t.lang}>
+          {
+            LOCALES.map((l) => (
+              <a
+                href={localePath(l)}
+                hreflang={l}
+                aria-current={l === locale ? 'true' : undefined}
+                class={`rounded-xs px-1.5 py-1 uppercase ${l === locale ? 'text-white' : 'text-white/50 hover:text-white'}`}
+              >
+                {l}
+              </a>
+            ))
+          }
+        </div>
+        <a href={joinUrl} class="btn btn-primary hidden min-h-10 px-4 text-sm sm:inline-flex">{t.cta.join}</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="relative isolate flex min-h-[92svh] items-end overflow-hidden pt-24 pb-12 sm:pb-16">
+      <img
+        data-live="hero"
+        src="/img/hero.jpg"
+        alt=""
+        class="absolute inset-0 -z-20 size-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="absolute inset-0 -z-10 bg-gradient-to-r from-black via-black/75 to-black/10"></div>
+      <div class="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-bg-base to-transparent"></div>
+      <div class="container-x">
+        <div class="max-w-3xl">
+          <p class="kicker"><span data-live="name">{name}</span></p>
+          <h1 class="display mt-6 text-[clamp(2.4rem,6.6vw,5.4rem)] leading-[1.04]">
+            <span class="block">{t.hero.title[0]}</span>
+            <span class="block">{t.hero.title[1]}</span>
+            <span class="block text-accent-500">{t.hero.title[2]}</span>
+          </h1>
+          <p class="mt-6 max-w-xl text-base text-white/80 sm:text-lg">
+            {tagline && <span data-live="tagline" class="block font-semibold text-white">{tagline}</span>}
+            {t.hero.text}
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href={joinUrl} class="btn btn-primary">
+              {t.cta.join}
+              <Icon name="arrow" class="size-4" />
+            </a>
+            <a href="#plans" class="btn btn-ghost">{t.cta.plans}</a>
+          </div>
+          <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/80">
+            <span data-live="status" class="inline-flex items-center gap-2 font-semibold">
+              <span class="size-2 rounded-full bg-white/30"></span>{t.loading}
+            </span>
+            <span class="inline-flex items-center gap-2" data-live-wrap="address">
+              <Icon name="pin" class="size-4 text-accent-400" />
+              <span data-live="address">{str(club?.info.address) ?? ''}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section id="why" class="section">
+      <div class="container-x grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div class="lg:sticky lg:top-28 lg:self-start">
+          <p class="kicker">01 · {t.nav.why}</p>
+          <h2 class="display mt-5 text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.why.title}</h2>
+          <p class="mt-5 max-w-md text-white/70">{t.why.lead}</p>
+        </div>
+        <ol class="grid gap-px overflow-hidden rounded-md border border-border-subtle bg-border-subtle sm:grid-cols-2">
+          {
+            t.why.items.map((it, i) => (
+              <li class="bg-bg-base p-7 sm:p-8">
+                <span class="display text-3xl text-accent-500">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="mt-5 text-lg font-bold">{it.t}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-white/65">{it.d}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- SPACE (photos from the admin) -->
+    <section id="space" class="section border-t border-border-subtle bg-bg-surface">
+      <div class="container-x">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="kicker">02 · {t.nav.space}</p>
+            <h2 class="display mt-5 text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.space.title}</h2>
+          </div>
+          <p class="max-w-sm text-white/70">{t.space.lead}</p>
+        </div>
+        <div data-live="photos" class="mt-10 grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[220px] lg:grid-cols-4">
+          <div class="skeleton col-span-2 row-span-2"></div>
+          <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANS -->
+    <section id="plans" class="section">
+      <div class="container-x">
+        <p class="kicker">03 · {t.nav.plans}</p>
+        <div class="mt-5 flex flex-wrap items-end justify-between gap-4">
+          <h2 class="display text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.plans.title}</h2>
+          <p class="max-w-md text-white/70">{t.plans.lead}</p>
+        </div>
+        <div data-live="plans" class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="skeleton h-56"></div><div class="skeleton h-56"></div><div class="skeleton h-56"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule" class="section border-t border-border-subtle bg-bg-surface">
+      <div class="container-x">
+        <p class="kicker">04 · {t.nav.schedule}</p>
+        <div class="mt-5 flex flex-wrap items-end justify-between gap-4">
+          <h2 class="display text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.schedule.title}</h2>
+          <p class="max-w-md text-white/70">{t.schedule.lead}</p>
+        </div>
+        <div data-live="schedule" class="no-scrollbar mt-10 -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+          <div class="skeleton h-64 w-60 shrink-0"></div><div class="skeleton h-64 w-60 shrink-0"></div><div class="skeleton h-64 w-60 shrink-0"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAINERS -->
+    <section id="trainers" class="section">
+      <div class="container-x">
+        <p class="kicker">05 · {t.nav.trainers}</p>
+        <div class="mt-5 flex flex-wrap items-end justify-between gap-4">
+          <h2 class="display text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.trainers.title}</h2>
+          <p class="max-w-md text-white/70">{t.trainers.lead}</p>
+        </div>
+        <div data-live="trainers" class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="skeleton h-96"></div><div class="skeleton h-96"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP -->
+    <section class="section border-y border-border-subtle bg-bg-surface">
+      <div class="container-x grid items-center gap-14 lg:grid-cols-2">
+        <div>
+          <p class="kicker">06 · App</p>
+          <h2 class="display mt-5 text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.app.title}</h2>
+          <p class="mt-5 max-w-md text-white/70">{t.app.lead}</p>
+          <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+            {
+              t.app.items.map((i) => (
+                <li class="flex items-center gap-3 text-sm font-semibold">
+                  <span class="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent-400">
+                    <Icon name="check" class="size-3.5" />
+                  </span>
+                  {i}
+                </li>
+              ))
+            }
+          </ul>
+          <a href={joinUrl} class="btn btn-primary mt-10">{t.cta.app}<Icon name="arrow" class="size-4" /></a>
+        </div>
+        <!-- Phone with the membership card, drawn in HTML (no fake screenshot) -->
+        <div class="flex justify-center lg:justify-end" aria-hidden="true">
+          <div class="relative w-[270px] rounded-[2.6rem] border border-border-strong bg-black p-3 shadow-[0_40px_120px_-40px_rgba(229,78,38,0.45)]">
+            <div class="mx-auto mb-3 h-5 w-24 rounded-full bg-bg-surface2"></div>
+            <div class="rounded-[2rem] bg-bg-base px-5 pt-6 pb-8">
+              <img src="/img/logo.png" alt="" class="h-4 w-auto" />
+              <div class="mt-6 rounded-lg border border-border-subtle bg-bg-surface p-4">
+                <div class="flex items-center justify-between">
+                  <span class="h-2 w-20 rounded-full bg-white/20"></span>
+                  <span class="size-2 rounded-full bg-status-success shadow-[0_0_0_4px_rgba(43,213,118,0.2)]"></span>
+                </div>
+                <div class="mx-auto mt-4 grid size-36 place-items-center rounded-md bg-white p-3 text-black">
+                  <Icon name="qr" class="size-full" />
+                </div>
+                <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-bg-surface2">
+                  <div class="h-full w-2/3 bg-accent-500"></div>
+                </div>
+              </div>
+              <div class="mt-4 grid grid-cols-3 gap-2">
+                <div class="h-12 rounded-md bg-bg-surface"></div><div class="h-12 rounded-md bg-bg-surface"></div><div class="h-12 rounded-md bg-bg-surface"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <div class="container-x grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div>
+          <p class="kicker">07 · {t.nav.faq}</p>
+          <h2 class="display mt-5 text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.faq.title}</h2>
+        </div>
+        <div class="divide-y divide-border-subtle border-y border-border-subtle">
+          {
+            t.faq.items.map((f) => (
+              <details class="group">
+                <summary class="flex cursor-pointer items-center justify-between gap-6 py-5 text-base font-bold sm:text-lg">
+                  {f.q}
+                  <span class="faq-icon shrink-0 text-accent-400 transition-transform">
+                    <Icon name="plus" class="size-5" />
+                  </span>
+                </summary>
+                <p class="pb-6 text-white/70">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section border-t border-border-subtle bg-bg-surface">
+      <div class="container-x grid gap-12 lg:grid-cols-2">
+        <div>
+          <p class="kicker">08 · {t.nav.contact}</p>
+          <h2 class="display mt-5 text-[clamp(1.9rem,4.2vw,3.2rem)]">{t.contact.title}</h2>
+          <dl class="mt-10 grid gap-6 sm:grid-cols-2">
+            <div data-live-wrap="address">
+              <dt class="text-xs font-bold tracking-widest text-white/50 uppercase">{t.contact.address}</dt>
+              <dd class="mt-2 font-semibold"><span data-live="address">{str(club?.info.address) ?? ''}</span></dd>
+              <dd class="mt-2"><a data-live="maps" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-semibold text-accent-400 hover:underline"><Icon name="pin" class="size-4" />{t.cta.directions}</a></dd>
+            </div>
+            <div data-live-wrap="phone">
+              <dt class="text-xs font-bold tracking-widest text-white/50 uppercase">{t.contact.phone}</dt>
+              <dd class="mt-2"><a data-live="phone" href="#" class="font-semibold hover:text-accent-400">{str(club?.info.phone) ?? ''}</a></dd>
+            </div>
+            <div data-live-wrap="email">
+              <dt class="text-xs font-bold tracking-widest text-white/50 uppercase">{t.contact.email}</dt>
+              <dd class="mt-2"><a data-live="email" href="#" class="font-semibold break-all hover:text-accent-400">{str(club?.info.email) ?? ''}</a></dd>
+            </div>
+            <div data-live-wrap="social">
+              <dt class="text-xs font-bold tracking-widest text-white/50 uppercase">{t.contact.follow}</dt>
+              <dd class="mt-2 flex gap-2">
+                <a data-live="instagram" href="#" target="_blank" rel="noopener" aria-label="Instagram" class="inline-flex size-10 items-center justify-center rounded-sm border border-border-strong hover:border-accent-400 hover:text-accent-400"><Icon name="instagram" class="size-5" /></a>
+                <a data-live="facebook" href="#" target="_blank" rel="noopener" aria-label="Facebook" class="inline-flex size-10 items-center justify-center rounded-sm border border-border-strong hover:border-accent-400 hover:text-accent-400"><Icon name="facebook" class="size-5" /></a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div class="rounded-md border border-border-subtle bg-bg-base p-6 sm:p-8">
+          <h3 class="flex items-center gap-2 text-sm font-bold tracking-widest text-white/60 uppercase">
+            <Icon name="clock" class="size-4 text-accent-400" />{t.contact.hours}
+          </h3>
+          <table class="mt-6 w-full text-sm" data-live="hours">
+            <tbody><tr><td class="skeleton block h-48"></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="bg-accent-500 text-on-accent">
+      <div class="container-x flex flex-wrap items-center justify-between gap-8 py-16 sm:py-20">
+        <div class="max-w-2xl">
+          <h2 class="display text-[clamp(1.8rem,4.5vw,3.4rem)]">{t.final.title}</h2>
+          <p class="mt-4 text-lg font-semibold opacity-80">{t.final.text}</p>
+        </div>
+        <a href={joinUrl} class="btn min-h-14 bg-black px-8 text-white hover:bg-bg-elevated">{t.cta.join}<Icon name="arrow" class="size-4" /></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border-subtle">
+    <div class="container-x flex flex-wrap items-center justify-between gap-4 py-8 text-sm text-white/50">
+      <span>© {new Date().getFullYear()} <span data-live="name">{name}</span>. {t.footer.rights}</span>
+      <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer">
+        {nav.slice(2).map(([id, label]) => <a href={`#${id}`} class="hover:text-white">{label}</a>)}
+      </nav>
+    </div>
+  </footer>
+
+  <script is:inline id="grit-config" type="application/json" set:html={JSON.stringify({ api: API_URL, text: clientText }).replace(/</g, '\\u003c')} />
+  <script>
+    import { start } from '../scripts/live';
+    start();
+  </script>
+</Base>

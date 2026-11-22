@@ -1,0 +1,61 @@
+---
+import '../styles.css';
+import { str, type ClubData } from '../lib/api';
+import { dict, LOCALES, localePath, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  club: ClubData | null;
+}
+const { locale, club } = Astro.props;
+const t = dict[locale];
+const name = str(club?.info.name) ?? 'GRIT';
+const title = `${name} | ${t.meta.title}`;
+const description = str(club?.info.tagline) ? `${str(club?.info.tagline)} ${t.meta.description}` : t.meta.description;
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonical = `${site}${localePath(locale)}`;
+const image = club?.loginImageUrl ?? `${site}/img/hero.jpg`;
+const dayCodes = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+// Search engines read this as the business card of the club (address, phone, hours).
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HealthClub',
+  name,
+  url: str(club?.info.website) ?? canonical,
+  image,
+  ...(str(club?.info.phone) && { telephone: str(club?.info.phone) }),
+  ...(str(club?.info.email) && { email: str(club?.info.email) }),
+  ...(str(club?.info.address) && { address: str(club?.info.address) }),
+  sameAs: [str(club?.info.instagram), str(club?.info.facebook)].filter(Boolean),
+  openingHours: (club?.openingHours ?? [])
+    .filter((h) => !h.isClosed && h.opensAt && h.closesAt)
+    .map((h) => `${dayCodes[h.weekday]} ${h.opensAt}-${h.closesAt}`),
+};
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080808" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {LOCALES.map((l) => <link rel="alternate" hreflang={l} href={`${site}${localePath(l)}`} />)}
+    <link rel="alternate" hreflang="x-default" href={`${site}/`} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" as="image" href="/img/hero.jpg" fetchpriority="high" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
+  </head>
+  <body class="min-h-dvh antialiased">
+    <slot />
+  </body>
+</html>
