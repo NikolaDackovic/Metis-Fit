@@ -12,7 +12,7 @@ export function BackHeader({ title, right }: { title: string; right?: ReactNode 
   return (
     <View style={styles.row}>
       <Pressable
-        onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+        onPress={goBack}
         accessibilityRole="button"
         accessibilityLabel={t('app.common.back')}
         hitSlop={10}
@@ -27,7 +27,29 @@ export function BackHeader({ title, right }: { title: string; right?: ReactNode 
   );
 }
 
+BackHeader.stickyTop = true;
+
+const goBack = () => (router.canGoBack() ? router.back() : router.replace('/'));
+
+/** Just the back arrow; Screen keeps it fixed at the top while the content scrolls. */
+export function BackButton({ onPress }: { onPress?: () => void }) {
+  const { t } = useTranslation();
+  return (
+    <Pressable
+      onPress={onPress ?? goBack}
+      style={styles.back}
+      accessibilityRole="button"
+      accessibilityLabel={t('app.common.back')}
+      hitSlop={8}
+    >
+      <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
+    </Pressable>
+  );
+}
+BackButton.stickyTop = true;
+
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 12 },
+  back: { width: 44, height: 44, justifyContent: 'center' },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 8 },
   title: { flex: 1, fontSize: 24, lineHeight: 30 },
 });

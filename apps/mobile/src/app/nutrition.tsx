@@ -8,24 +8,16 @@ type FoodMeal = FoodDayDto['entries'][number]['meal'];
 import { ACTIVITY_LEVELS, DIET_RESTRICTIONS, NUTRITION_GOALS } from '@grit/validation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import {
-  ArrowLeft,
-  CircleCheck,
-  Dumbbell,
-  Flame,
-  Scale,
-  Sparkles,
-  TrendingDown,
-} from 'lucide-react-native';
+import { CircleCheck, Dumbbell, Flame, Scale, Sparkles, TrendingDown } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, Easing, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, ErrorNote, Field, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { clubToday } from '@/lib/format';
 import { parseDecimal } from '@/lib/training';
 import { uuid } from '@/lib/workout-store';
-import { dirIcon } from '@/lib/rtl';
 import { color, displayFont, fonts, radius, type } from '@/theme';
 
 type Draft = {
@@ -127,15 +119,9 @@ export default function NutritionScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
+      <BackButton
         onPress={() => (mode === 'wizard' && step > 0 ? setStep(step - 1) : router.back())}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      />
       <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
         {t('app.nutrition.title')}
       </Text>

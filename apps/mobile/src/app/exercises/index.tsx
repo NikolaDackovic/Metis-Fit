@@ -1,10 +1,11 @@
 import type { MuscleGroupDto } from '@grit/validation';
 import { useQuery } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, Check, ChevronRight, CloudOff, Plus, Search } from 'lucide-react-native';
+import { Check, ChevronRight, CloudOff, Plus, Search } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { BackButton } from '@/components/BackHeader';
 import { Card, Screen, Skeleton } from '@/components/ui';
 import { api } from '@/lib/api';
 import { useLibrary } from '@/lib/training';
@@ -40,15 +41,7 @@ export default function ExercisesScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
         {picking ? t('app.exercises.pick_title') : t('app.exercises.title')}
       </Text>

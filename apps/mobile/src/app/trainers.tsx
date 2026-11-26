@@ -1,12 +1,12 @@
 import type { TrainerDto } from '@grit/validation';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { ArrowLeft, AtSign, UserRound, Star } from 'lucide-react-native';
+import { AtSign, UserRound, Star } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, EmptyState, ErrorNote, Screen, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
-import { dirIcon } from '@/lib/rtl';
 import { color, displayFont, fonts, type } from '@/theme';
 
 /** Trainers who agreed to a public profile. */
@@ -19,15 +19,7 @@ export default function TrainersScreen() {
   });
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
         {t('app.trainers.title')}
       </Text>

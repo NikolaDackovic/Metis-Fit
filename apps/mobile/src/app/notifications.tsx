@@ -2,7 +2,6 @@ import type { NotificationListDto } from '@grit/validation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import {
-  ArrowLeft,
   Bell,
   CalendarDays,
   CheckCheck,
@@ -15,11 +14,11 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { NotificationPrefs } from '@/components/NotificationPrefs';
+import { BackButton } from '@/components/BackHeader';
 import { Card, EmptyState, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api } from '@/lib/api';
 import { useFormat } from '@/lib/format';
 import { useNotifications, useNotificationText } from '@/lib/notifications';
-import { dirIcon } from '@/lib/rtl';
 import { color, displayFont, fonts, radius, type } from '@/theme';
 
 const ICON: Record<string, LucideIcon> = {
@@ -53,15 +52,7 @@ export default function NotificationsScreen() {
 
   return (
     <Screen edges={['top', 'bottom']} refreshing={q.isFetching} onRefresh={() => void q.refetch()}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       <View style={styles.titleRow}>
         <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
           {t('app.notifications.title')}

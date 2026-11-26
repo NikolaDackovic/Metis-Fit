@@ -1,16 +1,16 @@
 import type { WorkoutDetailDto } from '@grit/validation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, Trash2 } from 'lucide-react-native';
+import { Trash2 } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, ErrorNote, Screen, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { useFormat } from '@/lib/format';
 import { formatDuration, useLibrary, usesReps, usesTime, usesWeight } from '@/lib/training';
 import { useWorkout } from '@/lib/workout-store';
-import { dirIcon } from '@/lib/rtl';
 import { color, fonts, type } from '@/theme';
 
 /** A finished workout: all sets grouped by exercise. */
@@ -29,15 +29,7 @@ export default function WorkoutDetailScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       {q.isPending ? (
         <Skeleton height={300} />
       ) : q.isError || !w ? (

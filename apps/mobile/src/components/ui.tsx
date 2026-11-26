@@ -8,7 +8,7 @@ import {
   XCircle,
   type LucideIcon,
 } from 'lucide-react-native';
-import type { ReactNode } from 'react';
+import { Children, isValidElement, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
@@ -24,6 +24,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SubNav } from '@/components/SubNav';
 import { spacing } from '@/lib/rtl';
 import { color, fonts, MAX_CONTENT_WIDTH, radius, type } from '@/theme';
 
@@ -43,12 +44,19 @@ export function Screen({
   edges?: Array<'top' | 'bottom'>;
   transparent?: boolean;
 }) {
-  const inner = <View style={styles.content}>{children}</View>;
+  // A back arrow/header as the first child stays fixed at the top (with the bottom bar below):
+  // it is a screen opened from a tab, so moving around must stay one tap away while scrolling.
+  const items = Children.toArray(children);
+  const first = items[0];
+  const sticky =
+    isValidElement(first) && Boolean((first.type as { stickyTop?: boolean }).stickyTop);
+  const inner = <View style={styles.content}>{sticky ? items.slice(1) : children}</View>;
   return (
     <SafeAreaView
       style={[styles.screen, transparent && { backgroundColor: 'transparent' }]}
-      edges={edges}
+      edges={sticky ? edges.filter((e) => e !== 'bottom') : edges}
     >
+      {sticky && <View style={styles.top}>{first}</View>}
       {scroll ? (
         <ScrollView
           contentContainerStyle={styles.scroll}
@@ -68,6 +76,7 @@ export function Screen({
       ) : (
         inner
       )}
+      {sticky && <SubNav />}
     </SafeAreaView>
   );
 }
@@ -214,6 +223,14 @@ export function ErrorNote({ message }: { message: string }) {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: color.bg.base },
   scroll: { flexGrow: 1, paddingBottom: 32 },
+  top: {
+    width: '100%',
+    maxWidth: MAX_CONTENT_WIDTH,
+    alignSelf: 'center',
+    paddingHorizontal: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: color.border.subtle,
+  },
   content: {
     width: '100%',
     maxWidth: MAX_CONTENT_WIDTH,

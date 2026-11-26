@@ -1,15 +1,15 @@
 import type { PtRequestDto, TrainerDto } from '@grit/validation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, CheckCircle2, Link2 } from 'lucide-react-native';
+import { CheckCircle2, Link2 } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, ErrorNote, Field, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { useFormat } from '@/lib/format';
 import { useMe } from '@/lib/queries';
-import { dirIcon } from '@/lib/rtl';
 import { color, displayFont, fonts, radius, type } from '@/theme';
 
 const OPEN = new Set(['new', 'contacted']);
@@ -48,15 +48,7 @@ export default function PtRequestScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
         {t('app.pt.title')}
       </Text>

@@ -1,14 +1,13 @@
 import type { CafeMenuDto, CafeOrderDto, PlacedOrderDto } from '@grit/validation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native';
+import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { CafeMenu, OrderStatus } from '@/components/cafe/CafeMenu';
+import { BackButton } from '@/components/BackHeader';
 import { Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
-import { dirIcon } from '@/lib/rtl';
-import { color, displayFont, type } from '@/theme';
+import { displayFont, type } from '@/theme';
 
 /** Café for members: order to pick up at the bar (or to a table, when opened from its QR). */
 export default function CafeScreen() {
@@ -40,15 +39,7 @@ export default function CafeScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
         {t('app.cafe.title')}
       </Text>

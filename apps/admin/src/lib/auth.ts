@@ -108,6 +108,11 @@ export async function mfaEnrollIfNeeded(): Promise<{
   const { data } = await sb().auth.mfa.listFactors();
   const verified = data?.totp.find((f) => f.status === 'verified');
   if (verified) return null;
+  // A QR code shown earlier but never confirmed blocks a new one with the same name: drop it.
+  for (const f of data?.all ?? []) {
+    if (f.factor_type === 'totp' && f.status === 'unverified')
+      await sb().auth.mfa.unenroll({ factorId: f.id });
+  }
   const { data: enrolled, error } = await sb().auth.mfa.enroll({
     factorType: 'totp',
     friendlyName: 'Metis Fit Admin',

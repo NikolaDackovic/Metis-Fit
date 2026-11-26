@@ -1,14 +1,14 @@
 import type { EquipmentDto } from '@grit/validation';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { router, useLocalSearchParams } from 'expo-router';
-import { AlertTriangle, ArrowLeft, CheckCircle2, MapPin, PlayCircle } from 'lucide-react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { AlertTriangle, CheckCircle2, MapPin, PlayCircle } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Linking, StyleSheet, Text, TextInput, View } from 'react-native';
 import { EquipmentStatusBadge } from '@/components/EquipmentStatusBadge';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, ErrorNote, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
-import { dirIcon } from '@/lib/rtl';
 import { color, fonts, radius, type } from '@/theme';
 
 /** Machine profile: how to use it, safety, where it stands, and "report a problem". */
@@ -33,15 +33,7 @@ export default function EquipmentScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
 
       {q.isPending ? (
         <Skeleton height={300} />

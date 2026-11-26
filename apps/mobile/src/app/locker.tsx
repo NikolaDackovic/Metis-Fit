@@ -1,14 +1,14 @@
 import type { LockerMapDto, MyVisitNowDto } from '@grit/validation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { ArrowLeft, DoorClosed } from 'lucide-react-native';
+import { DoorClosed } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useMyVisit } from '@/components/VisitCard';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, EmptyState, ErrorNote, Screen, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
-import { dirIcon } from '@/lib/rtl';
 import { color, displayFont, fonts, radius, type } from '@/theme';
 
 /** The guest picks a free locker in the changing room of their choice. */
@@ -45,15 +45,7 @@ export default function LockerScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
         {t('app.visit.title')}
       </Text>

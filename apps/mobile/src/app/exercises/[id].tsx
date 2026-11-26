@@ -1,17 +1,17 @@
 import type { ExerciseDetailDto, ExerciseHistoryDto } from '@grit/validation';
 import { useQuery } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ArrowLeft, MapPin, PlayCircle, Plus } from 'lucide-react-native';
+import { MapPin, PlayCircle, Plus } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { BarChart } from '@/components/training/BarChart';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, ErrorNote, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { useFormat } from '@/lib/format';
 import { useMe } from '@/lib/queries';
 import { formatDuration, useLibrary } from '@/lib/training';
 import { useWorkout } from '@/lib/workout-store';
-import { dirIcon } from '@/lib/rtl';
 import { color, fonts, type } from '@/theme';
 
 /** How to do the exercise, where in the club, and my own history on it. */
@@ -41,15 +41,7 @@ export default function ExerciseScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       {q.isPending && !e ? (
         <Skeleton height={300} />
       ) : !e ? (

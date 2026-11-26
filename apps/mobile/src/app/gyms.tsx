@@ -1,14 +1,14 @@
 import type { MyClubDto, PublicClubDto } from '@grit/validation';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { ArrowLeft, Building2, Check, MapPin, Search } from 'lucide-react-native';
+import { Building2, Check, MapPin, Search } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { BackButton } from '@/components/BackHeader';
 import { Card, EmptyState, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api } from '@/lib/api';
 import { selectClub, selectedClub } from '@/lib/club-select';
-import { dirIcon } from '@/lib/rtl';
 import { color, displayFont, fonts, radius, type } from '@/theme';
 
 /**
@@ -38,15 +38,8 @@ export default function GymsScreen() {
 
   return (
     <Screen>
+      <BackButton />
       <View style={styles.header}>
-        <Pressable
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel={t('common.close')}
-          hitSlop={10}
-        >
-          <ArrowLeft style={dirIcon} size={24} color={color.text.primary} />
-        </Pressable>
         <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
           {t('app.gyms.title')}
         </Text>

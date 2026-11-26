@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { ArrowLeft, Check, Trash2, X } from 'lucide-react-native';
+import { Check, Trash2, X } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { BackButton } from '@/components/BackHeader';
 import { Button, Card, ErrorNote, Field, Screen } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { signOut } from '@/lib/auth';
-import { dirIcon } from '@/lib/rtl';
 import { color, fonts, type } from '@/theme';
 
 /**
@@ -35,15 +35,7 @@ export default function DeleteAccountScreen() {
 
   return (
     <Screen edges={['top', 'bottom']}>
-      <Pressable
-        onPress={() => router.back()}
-        style={styles.back}
-        accessibilityRole="button"
-        accessibilityLabel={t('app.common.back')}
-        hitSlop={8}
-      >
-        <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
-      </Pressable>
+      <BackButton />
       <Text style={type.h1}>{t('app.account.delete_title')}</Text>
       <Text style={type.bodySm}>{t('app.account.delete_text')}</Text>
 
