@@ -137,7 +137,10 @@ export function createSupabaseMediaStore(opts: {
         },
         body: new Uint8Array(data),
       });
-      if (!res.ok) throw new Error(`storage upload failed: ${res.status}`);
+      if (!res.ok)
+        throw new Error(
+          `storage upload failed: ${res.status} ${(await res.text().catch(() => '')).slice(0, 300)}`,
+        );
     },
     async remove(key) {
       const res = await f(`${base}/storage/v1/object/${check(key)}`, { method: 'DELETE', headers });
