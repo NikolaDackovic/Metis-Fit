@@ -49,17 +49,14 @@ describe('calorie counter (F15-2)', () => {
     const e = r.body.data.entries[0];
     expect(e).toMatchObject({ kcal: 157, proteinG: 13.9, grams: 110, foodId: egg.id });
     // Without grams: one serving (55 g).
-    const one = await h.http
-      .post('/v1/me/food-log')
-      .set(ana.auth)
-      .send({
-        id: randomUUID(),
-        eatenOn: day,
-        meal: 'snack',
-        name: 'Jaje',
-        kcal: 0,
-        foodId: egg.id,
-      });
+    const one = await h.http.post('/v1/me/food-log').set(ana.auth).send({
+      id: randomUUID(),
+      eatenOn: day,
+      meal: 'snack',
+      name: 'Jaje',
+      kcal: 0,
+      foodId: egg.id,
+    });
     expect(one.body.data.entries[1].kcal).toBe(79);
     // Recently used foods come back for the empty search.
     const lists = await h.http.get('/v1/me/foods').set(ana.auth);
@@ -78,7 +75,10 @@ describe('calorie counter (F15-2)', () => {
       barcode: '1234567890123',
     });
     expect(mine.status).toBe(201);
-    expect((await search(ana, 'zdravkov'))[0]).toMatchObject({ name: 'Zdravkova kaša', mine: true });
+    expect((await search(ana, 'zdravkov'))[0]).toMatchObject({
+      name: 'Zdravkova kaša',
+      mine: true,
+    });
     expect(await search(bob, 'zdravkov')).toEqual([]);
     expect((await h.http.get(`/v1/me/foods/${mine.body.data.id}`).set(bob.auth)).status).toBe(404);
     // My own barcode is found without asking anyone outside.

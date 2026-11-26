@@ -192,17 +192,14 @@ describe('trainer schedule', () => {
       .then((r) => r.rows[0]!.d);
     const startsAt = `${day}T10:00:00+01:00`;
     const appt = (trainer: string, start = startsAt) =>
-      h.http
-        .post('/v1/admin/appointments')
-        .set(coachUser.auth)
-        .send({
-          trainerId: trainer,
-          memberId: m.memberId,
-          kind: 'pt',
-          startsAt: start,
-          durationMin: 60,
-          location: 'Sala 1',
-        });
+      h.http.post('/v1/admin/appointments').set(coachUser.auth).send({
+        trainerId: trainer,
+        memberId: m.memberId,
+        kind: 'pt',
+        startsAt: start,
+        durationMin: 60,
+        location: 'Sala 1',
+      });
 
     expect((await appt(trainerId)).status).toBe(201);
     expect((await appt(other.body.data.id)).status).toBe(403);

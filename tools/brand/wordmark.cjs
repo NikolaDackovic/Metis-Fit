@@ -34,18 +34,32 @@ function build({ big = 200, small = 132, lower = true, kettlebell = false, gap =
   const capH = base - capTop;
   // Barbell plates (outermost small collar, then medium, then large next to the letters).
   const plate = (cx, w, h) => ({ x: cx - w / 2, y: base - capH / 2 - h / 2, w, h });
-  const left = [plate(-118, 16, capH * 0.34), plate(-84, 30, capH * 0.78), plate(-40, 36, capH * 1.08)];
-  const right = [plate(textRight + 46, 36, capH * 1.08), plate(textRight + 90, 30, capH * 0.78), plate(textRight + 124, 16, capH * 0.34)];
+  const left = [
+    plate(-118, 16, capH * 0.34),
+    plate(-84, 30, capH * 0.78),
+    plate(-40, 36, capH * 1.08),
+  ];
+  const right = [
+    plate(textRight + 46, 36, capH * 1.08),
+    plate(textRight + 90, 30, capH * 0.78),
+    plate(textRight + 124, 16, capH * 0.34),
+  ];
   const cy = base - capH / 2;
   const sk = (v) => `transform="translate(0 ${cy}) skewX(${SKEW}) translate(0 ${-cy})"`;
   const plates = [...left, ...right]
-    .map((p) => `<rect x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" width="${p.w}" height="${p.h.toFixed(1)}" rx="${Math.min(10, p.w / 3)}"/>`)
+    .map(
+      (p) =>
+        `<rect x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}" width="${p.w}" height="${p.h.toFixed(1)}" rx="${Math.min(10, p.w / 3)}"/>`,
+    )
     .join('');
   // Motion cuts through the big M and F (curved, rising to the right).
   const cut = (bb) => {
-    const x1 = bb.x1 - 10, y1 = bb.y2 - (bb.y2 - bb.y1) * 0.18;
-    const x2 = bb.x2 - 2, y2 = bb.y1 + (bb.y2 - bb.y1) * 0.36;
-    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + 22;
+    const x1 = bb.x1 - 10,
+      y1 = bb.y2 - (bb.y2 - bb.y1) * 0.18;
+    const x2 = bb.x2 - 2,
+      y2 = bb.y1 + (bb.y2 - bb.y1) * 0.36;
+    const mx = (x1 + x2) / 2,
+      my = (y1 + y2) / 2 + 22;
     return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
   };
   const cuts = [cut(M), cut(F)];
@@ -56,8 +70,10 @@ function build({ big = 200, small = 132, lower = true, kettlebell = false, gap =
     const bodyCy = iBox.y1 - 30;
     bell = `<path d="M${cx - 14} ${bodyCy - 6} Q${cx - 17} ${bodyCy - 33} ${cx} ${bodyCy - 33} Q${cx + 17} ${bodyCy - 33} ${cx + 14} ${bodyCy - 6}" fill="none" stroke="${O}" stroke-width="7" stroke-linecap="round"/><path d="M${cx - 19} ${bodyCy + 2} a19 18 0 1 1 38 0 q0 10 -6 14 h-26 q-6 -4 -6 -14 z"/>`;
   }
-  const minX = -140, maxX = textRight + 150;
-  const minY = capTop - 70, maxY = base + 40;
+  const minX = -140,
+    maxX = textRight + 150;
+  const minY = capTop - 70,
+    maxY = base + 40;
   return {
     viewBox: `${minX} ${minY.toFixed(0)} ${(maxX - minX).toFixed(0)} ${(maxY - minY).toFixed(0)}`,
     w: maxX - minX,

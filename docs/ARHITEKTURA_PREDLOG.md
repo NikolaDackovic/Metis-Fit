@@ -4,20 +4,20 @@ Procena dokumenta "Metis Fit – predlog kompletne arhitekture" u odnosu na ono 
 
 ## Već imamo (poklapa se sa predlogom)
 
-| Predlog                                         | Kod nas                                                                                                    |
-| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Jedna aplikacija za sve uloge                   | Metis Fit: član, trener (kartica "Posao"), isti nalog u više teretana                                       |
-| Modularni monolit, React + TS, Node, Postgres   | Express API po modulima, Expo aplikacija, React + Vite admin, zajednički paketi (validacija, tipovi, prevodi) |
-| REST + OpenAPI                                  | Svaka ruta ima šemu; OpenAPI se generiše                                                                     |
-| Multi-tenant                                    | `club_id` na svim tabelama, izolacija u bazi (RLS), `X-Club`, više teretana po nalogu, platforma odobrava teretane |
-| Dozvole po ulogama, trener nije admin           | Uloge i dozvole (vlasnik, menadžer, recepcija, trener), trener vidi samo svoje klijente                    |
-| Lični podaci pripadaju korisniku                | Trening, ishrana, navike, merenja su na nalogu; trener vidi napredak samo uz dozvolu člana                 |
-| Recepcija                                       | Ulaz (QR skener, kamera), kiosk na vratima, uplate, garderobe, zahtevi                                     |
-| Offline QR                                      | Potpisani vremenski ograničeni kodovi, rezervni kod bez interneta                                          |
-| Bezbednost                                      | MFA za vlasnika i menadžera, audit trag, rate limit, tajne samo na serveru, zaštita od ponovnog QR-a       |
-| Brojač kalorija, bar-kod, voda, ciljevi         | F15-2                                                                                                      |
-| Treneri, termini, poruke, rasporedi             | F14                                                                                                        |
-| Kafić, loyalty                                  | Meni, porudžbine sa stola, bodovi (do Servio integracije)                                                  |
+| Predlog                                       | Kod nas                                                                                                            |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Jedna aplikacija za sve uloge                 | Metis Fit: član, trener (kartica "Posao"), isti nalog u više teretana                                              |
+| Modularni monolit, React + TS, Node, Postgres | Express API po modulima, Expo aplikacija, React + Vite admin, zajednički paketi (validacija, tipovi, prevodi)      |
+| REST + OpenAPI                                | Svaka ruta ima šemu; OpenAPI se generiše                                                                           |
+| Multi-tenant                                  | `club_id` na svim tabelama, izolacija u bazi (RLS), `X-Club`, više teretana po nalogu, platforma odobrava teretane |
+| Dozvole po ulogama, trener nije admin         | Uloge i dozvole (vlasnik, menadžer, recepcija, trener), trener vidi samo svoje klijente                            |
+| Lični podaci pripadaju korisniku              | Trening, ishrana, navike, merenja su na nalogu; trener vidi napredak samo uz dozvolu člana                         |
+| Recepcija                                     | Ulaz (QR skener, kamera), kiosk na vratima, uplate, garderobe, zahtevi                                             |
+| Offline QR                                    | Potpisani vremenski ograničeni kodovi, rezervni kod bez interneta                                                  |
+| Bezbednost                                    | MFA za vlasnika i menadžera, audit trag, rate limit, tajne samo na serveru, zaštita od ponovnog QR-a               |
+| Brojač kalorija, bar-kod, voda, ciljevi       | F15-2                                                                                                              |
+| Treneri, termini, poruke, rasporedi           | F14                                                                                                                |
+| Kafić, loyalty                                | Meni, porudžbine sa stola, bodovi (do Servio integracije)                                                          |
 
 ## Vredi dodati (redosled koji predlažem)
 
