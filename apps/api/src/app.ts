@@ -208,7 +208,10 @@ export function createApp(deps: AppDeps, routes: RouteDef[] = allRoutes): expres
     sql`select 1`
       .execute(deps.db)
       .then(() => res.json({ status: 'ready' }))
-      .catch(() => res.status(503).json({ status: 'db_unavailable' }));
+      .catch((err: unknown) => {
+        deps.logger.error({ err }, 'readiness: database unreachable');
+        res.status(503).json({ status: 'db_unavailable' });
+      });
   });
 
   const router = express.Router();
