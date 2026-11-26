@@ -59,7 +59,10 @@ export default function TabsLayout() {
         },
         tabBarActiveTintColor: color.text.primary,
         tabBarInactiveTintColor: color.text.secondary,
-        tabBarLabelStyle: { fontFamily: fonts.semibold, fontSize: 11 },
+        // Seven places on a 375 px phone: labels always under the icons, never cut off.
+        tabBarLabelPosition: 'below-icon',
+        tabBarLabelStyle: { fontFamily: fonts.semibold, fontSize: 10 },
+        tabBarItemStyle: { paddingHorizontal: 0 },
       }}
     >
       <Tabs.Screen

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingTop: 6,
   },
   item: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: 2 },
-  label: { fontFamily: fonts.semibold, fontSize: 11, color: color.text.secondary },
+  label: { fontFamily: fonts.semibold, fontSize: 10, color: color.text.secondary },
   qrSlot: { flex: 1, alignItems: 'center' },
   qr: {
     width: 52,
