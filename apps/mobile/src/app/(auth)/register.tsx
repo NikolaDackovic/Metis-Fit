@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Button, ErrorNote, Field, Screen } from '@/components/ui';
 import { ApiError } from '@/lib/api';
-import { signUp } from '@/lib/auth';
+import { GoogleButton } from '@/components/auth/GoogleButton';
+import { passwordOk, signUp } from '@/lib/auth';
 import { dirIcon } from '@/lib/rtl';
 import { color, fonts, type } from '@/theme';
 
@@ -26,7 +27,7 @@ export default function RegisterScreen() {
     setError(null);
     if (!form.firstName.trim() || !form.lastName.trim()) return setError('validation.required');
     if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) return setError('validation.invalid_email');
-    if (form.password.length < 10) return setError('app.auth.password_rules');
+    if (!passwordOk(form.password)) return setError('app.auth.password_rules');
     setLoading(true);
     try {
       const result = await signUp({
@@ -108,6 +109,8 @@ export default function RegisterScreen() {
           </View>
           {error && <ErrorNote message={error} />}
           <Button label={t('app.auth.register')} onPress={() => void submit()} loading={loading} />
+          <Text style={[styles.hint, { textAlign: 'center' }]}>{t('app.auth.or')}</Text>
+          <GoogleButton onError={setError} />
           <Text style={styles.hint}>{t('app.auth.terms_note')}</Text>
         </View>
       )}

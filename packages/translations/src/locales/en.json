@@ -2308,7 +2308,7 @@
       "register": "Sign up",
       "register_title": "New account",
       "register_hint": "Create your account. New to the club? You become a member right away; already registered at the desk? Link your account with the code.",
-      "password_rules": "The password must have at least 10 characters.",
+      "password_rules": "At least 8 characters: one uppercase letter, one number and one symbol (e.g. ! or ?).",
       "terms_note": "By signing up you accept {{club}}'s terms of use and privacy policy.",
       "check_email_title": "Check your email",
       "check_email": "We sent a confirmation link to {{email}}. Confirm your address, then sign in.",
@@ -2318,7 +2318,19 @@
       "has_code_hint": "Turn on if you are already registered at the club, then link with the code.",
       "phone_optional": "Phone (optional)",
       "dob_optional": "Date of birth (optional)",
-      "account_only": "You are creating your Metis Fit account. Training, food and progress work right away; you add a gym later, at the desk or in the app (More → Gyms)."
+      "account_only": "You are creating your Metis Fit account. Training, food and progress work right away; you add a gym later, at the desk or in the app (More → Gyms).",
+      "password_hint": "Choose a new password for your account.",
+      "email_rate": "Too many email requests. Try again in a few minutes.",
+      "reset_failed": "The email could not be sent. Try again.",
+      "password_update_failed": "The password was not saved. Open the link from the email again.",
+      "google": "Continue with Google",
+      "google_soon": "Sign-in with Google is coming soon.",
+      "or": "or",
+      "new_password_title": "New password",
+      "new_password": "New password",
+      "repeat_password": "Repeat password",
+      "save_password": "Save password",
+      "password_mismatch": "The passwords do not match."
     },
     "home": {
       "greeting": {

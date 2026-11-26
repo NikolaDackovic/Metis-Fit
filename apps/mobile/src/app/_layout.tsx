@@ -18,6 +18,7 @@ import { AppState, Platform } from 'react-native';
 import { I18nextProvider } from 'react-i18next';
 import { ApiError } from '@/lib/api';
 import { initAuth, useAuth } from '@/lib/auth';
+import { NewPasswordScreen } from '@/components/auth/NewPasswordScreen';
 import { rememberBrandColors } from '@/lib/brand-boot';
 import { setupI18n } from '@/lib/i18n';
 import { clubShortName, useClub } from '@/lib/queries';
@@ -73,6 +74,7 @@ export default function RootLayout() {
   });
   const [i18n, setI18n] = useState<I18n | null>(null);
   const status = useAuth((s) => s.status);
+  const recovery = useAuth((s) => s.recovery);
   const [clubLoaded, setClubLoaded] = useState(false);
 
   useEffect(() => {
@@ -106,6 +108,14 @@ export default function RootLayout() {
   }, [status]);
 
   if (!ready || !i18n) return null;
+  // Opened from a "reset password" email: the new password comes before anything else.
+  if (recovery && status === 'signedIn')
+    return (
+      <I18nextProvider i18n={i18n}>
+        <StatusBar style={scheme === 'light' ? 'dark' : 'light'} />
+        <NewPasswordScreen />
+      </I18nextProvider>
+    );
 
   return (
     <I18nextProvider i18n={i18n}>

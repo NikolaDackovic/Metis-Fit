@@ -7,7 +7,7 @@ import { LanguageSelect } from '@/components/LanguageSelect';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Field, Input, Select } from '@/components/ui/Field';
-import { BrandMark } from '@/layouts/BrandMark';
+import { PlatformWordmark } from '@/layouts/PlatformWordmark';
 import hall from '../../../../../assets/club/main-hall.jpg';
 import { ApiError } from '@/lib/api';
 import { AUTH_MODE, devSignIn, signInWithPassword } from '@/lib/auth';
@@ -40,7 +40,7 @@ export function LoginPage() {
       </div>
       <div className="relative z-10 w-full max-w-sm">
         <div className="mb-10 flex flex-col items-center gap-4">
-          <BrandMark className="h-12" />
+          <PlatformWordmark className="h-auto w-72 max-w-full" />
           <p className="text-xs font-semibold tracking-[0.3em] text-text-secondary uppercase">
             {t('admin.login.subtitle')}
           </p>

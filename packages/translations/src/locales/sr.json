@@ -2332,7 +2332,7 @@
       "register": "Registruj se",
       "register_title": "Novi nalog",
       "register_hint": "Napravi nalog. Ako si nov/a u klubu, odmah postaješ član; ako si već upisan/a na recepciji, poveži nalog kodom.",
-      "password_rules": "Lozinka mora imati najmanje 10 karaktera.",
+      "password_rules": "Najmanje 8 karaktera: jedno veliko slovo, jedan broj i jedan znak (npr. ! ili ?).",
       "terms_note": "Registracijom prihvataš uslove korišćenja i politiku privatnosti {{club}}-a.",
       "check_email_title": "Proveri email",
       "check_email": "Poslali smo link za potvrdu na {{email}}. Potvrdi adresu, pa se prijavi.",
@@ -2342,7 +2342,19 @@
       "has_code_hint": "Uključi ako si već upisan/a u klubu, pa poveži nalog kodom.",
       "phone_optional": "Telefon (opciono)",
       "dob_optional": "Datum rođenja (opciono)",
-      "account_only": "Praviš svoj Metis Fit nalog. Trening, ishranu i napredak koristiš odmah; teretanu dodaješ posle, na recepciji ili u aplikaciji (Više → Teretane)."
+      "account_only": "Praviš svoj Metis Fit nalog. Trening, ishranu i napredak koristiš odmah; teretanu dodaješ posle, na recepciji ili u aplikaciji (Više → Teretane).",
+      "password_hint": "Izaberi novu lozinku za svoj nalog.",
+      "email_rate": "Previše zahteva za email. Pokušaj ponovo za nekoliko minuta.",
+      "reset_failed": "Slanje emaila nije uspelo. Pokušaj ponovo.",
+      "password_update_failed": "Lozinka nije sačuvana. Otvori link iz emaila ponovo.",
+      "google": "Nastavi sa Google nalogom",
+      "google_soon": "Prijava preko Google naloga stiže uskoro.",
+      "or": "ili",
+      "new_password_title": "Nova lozinka",
+      "new_password": "Nova lozinka",
+      "repeat_password": "Ponovi lozinku",
+      "save_password": "Sačuvaj lozinku",
+      "password_mismatch": "Lozinke se ne poklapaju."
     },
     "home": {
       "greeting": {

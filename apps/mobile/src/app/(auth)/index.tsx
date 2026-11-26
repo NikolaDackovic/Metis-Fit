@@ -5,6 +5,7 @@ import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } fro
 import { AuthBackdrop } from '@/components/AuthBackdrop';
 import { LanguagePicker } from '@/components/LanguagePicker';
 import { PlatformWordmark } from '@/components/PlatformWordmark';
+import { GoogleButton } from '@/components/auth/GoogleButton';
 import { Button, ErrorNote, Field, Screen } from '@/components/ui';
 import { ApiError } from '@/lib/api';
 import { AUTH_MODE, requestPasswordReset, signIn } from '@/lib/auth';
@@ -106,6 +107,12 @@ export default function SignInScreen() {
               <Pressable onPress={() => void forgot()} accessibilityRole="button" hitSlop={8}>
                 <Text style={styles.link}>{t('app.auth.forgot')}</Text>
               </Pressable>
+            )}
+            {AUTH_MODE !== 'dev' && (
+              <>
+                <Text style={[type.bodySm, { textAlign: 'center' }]}>{t('app.auth.or')}</Text>
+                <GoogleButton onError={setError} />
+              </>
             )}
           </View>
 

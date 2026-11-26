@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { Platform } from 'react-native';
 import { create } from 'zustand';
 import { API_URL, ApiError, configureApi } from './api';
 import { secureStorage } from './storage';
@@ -35,10 +36,43 @@ function sb(): SupabaseClient {
 }
 
 type Status = 'loading' | 'signedOut' | 'signedIn';
-export const useAuth = create<{ status: Status; set: (s: Status) => void }>((set) => ({
-  status: 'loading',
-  set: (status) => set({ status }),
-}));
+/** recovery: opened from a "reset password" email; the app asks for a new password first. */
+export const useAuth = create<{ status: Status; recovery: boolean; set: (s: Status) => void }>(
+  (set) => ({
+    status: 'loading',
+    recovery: false,
+    set: (status) => set({ status }),
+  }),
+);
+
+/** At least 8 characters with an uppercase letter, a digit and a special character. */
+export function passwordOk(p: string): boolean {
+  return p.length >= 8 && /[A-Z]/.test(p) && /[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p);
+}
+
+/** Where links in emails (confirm, reset) and Google sign-in come back to: the web app itself. */
+function webOrigin(): string | undefined {
+  return Platform.OS === 'web' && typeof window !== 'undefined'
+    ? window.location.origin
+    : undefined;
+}
+
+/**
+ * Web: links from Supabase emails and Google sign-in return with the session in the URL hash
+ * (#access_token=...&refresh_token=...&type=signup|recovery). Store it and clean the address bar.
+ */
+async function consumeAuthRedirect() {
+  if (!webOrigin()) return;
+  const hash = window.location.hash.replace(/^#/, '');
+  if (!hash.includes('access_token') && !hash.includes('error')) return;
+  const p = new URLSearchParams(hash);
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  const access_token = p.get('access_token');
+  const refresh_token = p.get('refresh_token');
+  if (!access_token || !refresh_token) return;
+  const { error } = await sb().auth.setSession({ access_token, refresh_token });
+  if (!error && p.get('type') === 'recovery') useAuth.setState({ recovery: true });
+}
 
 export async function getAccessToken(): Promise<string | null> {
   if (AUTH_MODE === 'dev') return secureStorage.getItem(DEV_TOKEN);
@@ -48,6 +82,7 @@ export async function getAccessToken(): Promise<string | null> {
 
 export async function initAuth() {
   configureApi({ getToken: getAccessToken, onUnauthenticated: () => void signOut() });
+  if (AUTH_MODE === 'supabase') await consumeAuthRedirect().catch(() => undefined);
   const token = await getAccessToken();
   useAuth.getState().set(token ? 'signedIn' : 'signedOut');
   if (AUTH_MODE === 'supabase') {
@@ -121,6 +156,7 @@ export async function signUp(input: {
     email: input.email,
     password: input.password,
     options: {
+      emailRedirectTo: webOrigin(),
       data: { first_name: input.firstName, last_name: input.lastName, locale: input.locale },
     },
   });
@@ -131,7 +167,37 @@ export async function signUp(input: {
 export async function requestPasswordReset(email: string) {
   if (AUTH_MODE === 'dev')
     throw new ApiError(400, 'BUSINESS_RULE', 'app.auth.signup_unavailable_dev');
-  await sb().auth.resetPasswordForEmail(email);
+  const { error } = await sb().auth.resetPasswordForEmail(email, { redirectTo: webOrigin() });
+  if (error)
+    throw new ApiError(
+      400,
+      'BUSINESS_RULE',
+      error.status === 429 ? 'app.auth.email_rate' : 'app.auth.reset_failed',
+    );
+}
+
+/** After a reset link: the new password for the account that is now signed in. */
+export async function setNewPassword(password: string) {
+  const { error } = await sb().auth.updateUser({ password });
+  if (error) throw new ApiError(400, 'BUSINESS_RULE', 'app.auth.password_update_failed');
+  useAuth.setState({ recovery: false });
+}
+
+/** Google sign-in (web). Until Google is switched on in Supabase it explains that it is coming. */
+export async function signInWithGoogle() {
+  const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
+  const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+  if (AUTH_MODE === 'dev' || !webOrigin() || !url || !key)
+    throw new ApiError(400, 'BUSINESS_RULE', 'app.auth.google_soon');
+  const settings = (await fetch(`${url}/auth/v1/settings`, { headers: { apikey: key } })
+    .then((r) => r.json())
+    .catch(() => null)) as { external?: { google?: boolean } } | null;
+  if (!settings?.external?.google) throw new ApiError(400, 'BUSINESS_RULE', 'app.auth.google_soon');
+  const { error } = await sb().auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: webOrigin() },
+  });
+  if (error) throw new ApiError(400, 'BUSINESS_RULE', 'app.auth.google_soon');
 }
 
 export async function signOut() {
