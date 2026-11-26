@@ -3,7 +3,7 @@ import {
   BriefcaseBusiness,
   Building2,
   Dumbbell,
-  Ellipsis,
+  LayoutGrid,
   HeartPulse,
   House,
   QrCode,
@@ -33,7 +33,7 @@ export function SubNav() {
       ? { key: 'coach', label: t('app.tabs.coach'), icon: BriefcaseBusiness, href: '/(tabs)/coach' }
       : { key: 'club', label: t('app.tabs.club'), icon: Building2, href: '/(tabs)/club' },
     { key: 'profile', label: t('app.tabs.profile'), icon: UserRound, href: '/profile' },
-    { key: 'more', label: t('app.tabs.more'), icon: Ellipsis, href: '/(tabs)/more' },
+    { key: 'more', label: t('app.tabs.more'), icon: LayoutGrid, href: '/(tabs)/more' },
   ];
   return (
     <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 6) }]}>

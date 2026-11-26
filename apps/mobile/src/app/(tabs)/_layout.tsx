@@ -3,7 +3,7 @@ import {
   BriefcaseBusiness,
   Building2,
   Dumbbell,
-  Ellipsis,
+  LayoutGrid,
   HeartPulse,
   House,
   QrCode,
@@ -155,7 +155,7 @@ export default function TabsLayout() {
         options={{
           title: t('app.tabs.more'),
           tabBarIcon: ({ focused, size }) => (
-            <Ellipsis size={size} color={focused ? color.accent[400] : color.text.secondary} />
+            <LayoutGrid size={size} color={focused ? color.accent[400] : color.text.secondary} />
           ),
         }}
       />
