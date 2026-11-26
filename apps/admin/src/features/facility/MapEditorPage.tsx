@@ -166,7 +166,8 @@ export function MapEditorPage() {
     onSuccess: (map) => {
       load(map);
       void qc.invalidateQueries({ queryKey: ['equipment'] });
-      toast.success(t('admin.map.saved'));
+      if (can('map.publish')) publish.mutate();
+      else toast.success(t('admin.map.saved'));
     },
   });
   const publish = useMutation({
@@ -277,23 +278,19 @@ export function MapEditorPage() {
               </Button>
             )}
             <Button
-              variant="secondary"
-              icon={<Save className="size-4" />}
-              loading={save.isPending}
-              disabled={!dirty}
+              icon={can('map.publish') ? <Send className="size-4" /> : <Save className="size-4" />}
+              loading={save.isPending || publish.isPending}
+              disabled={!dirty || floors.length === 0}
               onClick={() => save.mutate()}
             >
-              {t(dirty ? 'admin.map.save' : 'admin.map.saved_state')}
+              {t(
+                !dirty
+                  ? 'admin.map.saved_state'
+                  : can('map.publish')
+                    ? 'admin.map.save_publish'
+                    : 'admin.map.save',
+              )}
             </Button>
-            {can('map.publish') && (
-              <Button
-                icon={<Send className="size-4" />}
-                disabled={dirty || floors.length === 0}
-                onClick={() => setConfirmPublish(true)}
-              >
-                {t('admin.map.publish')}
-              </Button>
-            )}
           </>
         }
       />
@@ -309,14 +306,14 @@ export function MapEditorPage() {
             <Button
               size="sm"
               variant="secondary"
-              loading={save.isPending}
+              loading={save.isPending || publish.isPending}
               onClick={() => save.mutate()}
             >
-              {t('admin.map.save')}
+              {t(can('map.publish') ? 'admin.map.save_publish' : 'admin.map.save')}
             </Button>
           ) : (
             can('map.publish') && (
-              <Button size="sm" onClick={() => setConfirmPublish(true)}>
+              <Button size="sm" loading={publish.isPending} onClick={() => publish.mutate()}>
                 {t('admin.map.publish_now')}
               </Button>
             )

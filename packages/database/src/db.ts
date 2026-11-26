@@ -1260,6 +1260,16 @@ export interface TrainerClients {
   trainer_id: string;
 }
 
+export interface AlertDismissals {
+  club_id: Generated<string>;
+  created_at: Generated<Timestamp>;
+  created_by: string | null;
+  id: Generated<string>;
+  kind: string;
+  member_id: string;
+  until: string;
+}
+
 export interface CalendarFeeds {
   club_id: Generated<string>;
   created_at: Generated<Timestamp>;
@@ -1522,6 +1532,7 @@ export interface DB {
   trainer_translations: TrainerTranslations;
   trainer_availability: TrainerAvailability;
   calendar_feeds: CalendarFeeds;
+  alert_dismissals: AlertDismissals;
   foods: Foods;
   trainers: Trainers;
   user_roles: UserRoles;

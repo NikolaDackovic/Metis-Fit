@@ -2,6 +2,7 @@ import type { Request } from 'express';
 import { sql, type Kysely } from 'kysely';
 import type { DB } from '@grit/database';
 import type {
+  AlertDismissBody,
   AlertsDto,
   AnnouncementDto,
   CreateAnnouncementBody,
@@ -252,6 +253,8 @@ export function createNotificationService(db: Kysely<DB>) {
           from public.membership_overview o
           join public.members m on m.id = o.member_id and m.deactivated_at is null
           where o.state = 'active' and o.days_left between 0 and ${s.expiring}
+            and not exists (select 1 from public.alert_dismissals ad where ad.kind = 'expiring'
+                            and ad.member_id = m.id and ad.until >= public.club_today())
             and not exists (select 1 from public.memberships n
                             where n.member_id = o.member_id and n.state <> 'cancelled' and n.id <> o.id
                               and n.start_date > o.start_date)
@@ -266,6 +269,8 @@ export function createNotificationService(db: Kysely<DB>) {
               from public.membership_overview o
               join public.members m on m.id = o.member_id and m.deactivated_at is null
               where o.state not in ('cancelled', 'pending') and o.price_amount > o.paid_amount
+            and not exists (select 1 from public.alert_dismissals ad where ad.kind = 'debts'
+                            and ad.member_id = m.id and ad.until >= public.club_today())
               order by amount desc limit 100`
               .execute(tx)
               .then((r) => r.rows)
@@ -280,6 +285,8 @@ export function createNotificationService(db: Kysely<DB>) {
                              where v.member_id = m.id) lv on true
           where cs.status in ('active', 'expiring_soon')
             and coalesce(lv.last_visit, m.created_at) < now() - make_interval(days => ${s.inactive})
+            and not exists (select 1 from public.alert_dismissals ad where ad.kind = 'inactive'
+                            and ad.member_id = m.id and ad.until >= public.club_today())
           order by lv.last_visit nulls first limit 100`
           .execute(tx)
           .then((r) => r.rows);
@@ -298,6 +305,8 @@ export function createNotificationService(db: Kysely<DB>) {
           ) b
           where m.date_of_birth is not null and m.deactivated_at is null
             and b.next between public.club_today() and public.club_today() + 7
+            and not exists (select 1 from public.alert_dismissals ad where ad.kind = 'birthdays'
+                            and ad.member_id = m.id and ad.until >= public.club_today())
           order by in_days, name limit 100`
           .execute(tx)
           .then((r) => r.rows);
@@ -308,6 +317,8 @@ export function createNotificationService(db: Kysely<DB>) {
                    as has_membership
           from public.members m
           where m.deactivated_at is null and m.created_at > now() - interval '7 days'
+            and not exists (select 1 from public.alert_dismissals ad where ad.kind = 'signups'
+                            and ad.member_id = m.id and ad.until >= public.club_today())
           order by m.created_at desc limit 100`
           .execute(tx)
           .then((r) => r.rows);
@@ -396,6 +407,28 @@ export function createNotificationService(db: Kysely<DB>) {
             hasMembership: r.has_membership,
           })),
         };
+      }),
+
+    /** Hide an alert row until a date (e.g. a debt after calling the member). */
+    dismissAlert: (actor: Actor, req: Request, b: AlertDismissBody) =>
+      withStaffTx(db, async (tx) => {
+        const until = sql<string>`public.club_today() + ${b.days}::int`;
+        await tx
+          .insertInto('alert_dismissals')
+          .values({ kind: b.kind, member_id: b.memberId, until, created_by: actor.userId })
+          .onConflict((oc) =>
+            oc
+              .columns(['club_id', 'kind', 'member_id'])
+              .doUpdateSet({ until, created_by: actor.userId }),
+          )
+          .execute();
+        await writeAudit(tx, actor, req, {
+          action: 'alert.dismiss',
+          entityType: 'member',
+          entityId: b.memberId,
+          diff: { after: { kind: b.kind, days: b.days } },
+        });
+        return { ok: true };
       }),
   };
 }

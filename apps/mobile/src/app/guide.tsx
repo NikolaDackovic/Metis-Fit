@@ -6,6 +6,7 @@ import {
   Droplets,
   Dumbbell,
   Flame,
+  Languages,
   Moon,
   QrCode as QrIcon,
   ScanBarcode,
@@ -16,6 +17,7 @@ import { useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LanguagePicker } from '@/components/LanguagePicker';
 import { PlatformWordmark } from '@/components/PlatformWordmark';
 import { QrCode } from '@/components/QrCode';
 import { Button } from '@/components/ui';
@@ -23,7 +25,7 @@ import { markGuideSeen } from '@/lib/guide';
 import { clubShortName, useClub, useMe } from '@/lib/queries';
 import { color, fonts, MAX_CONTENT_WIDTH, radius, type } from '@/theme';
 
-const STEPS = ['welcome', 'entry', 'training', 'health', 'ready'] as const;
+const STEPS = ['language', 'welcome', 'entry', 'training', 'health', 'ready'] as const;
 
 function Line({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
   return (
@@ -54,6 +56,14 @@ export default function GuideScreen() {
   };
 
   const art: Record<(typeof STEPS)[number], ReactNode> = {
+    language: (
+      <View style={{ alignSelf: 'stretch', gap: 16 }}>
+        <View style={{ alignItems: 'center' }}>
+          <Languages size={40} color={color.accent[400]} />
+        </View>
+        <LanguagePicker />
+      </View>
+    ),
     welcome: (
       <View style={{ alignItems: 'center', gap: 22 }}>
         <PlatformWordmark width={240} />

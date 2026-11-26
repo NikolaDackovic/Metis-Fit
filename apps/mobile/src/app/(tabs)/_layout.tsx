@@ -3,16 +3,17 @@ import {
   BriefcaseBusiness,
   Building2,
   Dumbbell,
+  Ellipsis,
   HeartPulse,
   House,
   QrCode,
 } from 'lucide-react-native';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { api } from '@/lib/api';
 import { guideSeen } from '@/lib/guide';
+import { useIsTrainer } from '@/lib/trainer';
 import { processPendingJoin } from '@/lib/join';
 import { useMe } from '@/lib/queries';
 import { registerForPush, usePushNavigation } from '@/lib/push';
@@ -43,16 +44,8 @@ export default function TabsLayout() {
       if (!seen) router.push('/guide');
     });
   }, [userId]);
-  // F14-1: trainers get a "Work" tab (their schedule and clients); everyone else does not see it.
-  const canSchedule = Boolean(useMe().data?.permissions.includes('schedule.own'));
-  // Only an account linked to a trainer profile (owners have every permission but may not train).
-  const trainer = useQuery({
-    queryKey: ['me', 'trainer'],
-    queryFn: () => api.get<{ trainerId: string | null }>('/admin/me/trainer'),
-    enabled: canSchedule,
-    staleTime: 10 * 60_000,
-  });
-  const isTrainer = canSchedule && Boolean(trainer.data?.trainerId);
+  // F14-1: trainers get a "Work" tab instead of "Club" (Club moves to More).
+  const isTrainer = useIsTrainer();
   return (
     <Tabs
       screenOptions={{
@@ -132,9 +125,19 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="club"
         options={{
+          href: isTrainer ? null : undefined,
           title: t('app.tabs.club'),
           tabBarIcon: ({ focused, size }) => (
             <Building2 size={size} color={focused ? color.accent[400] : color.text.secondary} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="more"
+        options={{
+          title: t('app.tabs.more'),
+          tabBarIcon: ({ focused, size }) => (
+            <Ellipsis size={size} color={focused ? color.accent[400] : color.text.secondary} />
           ),
         }}
       />

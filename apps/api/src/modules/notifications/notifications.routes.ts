@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import {
   alertsDto,
+  alertDismissBody,
   announcementDto,
   createAnnouncementBody,
   markReadBody,
@@ -93,6 +94,18 @@ export const notificationsRoutes = [
   }),
 
   // ── Staff ───────────────────────────────────────────────────────────────────
+  defineRoute({
+    method: 'post',
+    path: '/admin/alerts/dismiss',
+    access: access.can('alerts.read'),
+    summary: 'Hide an alert row for some days (it comes back if the reason is still there)',
+    tags: TAG,
+    body: alertDismissBody,
+    response: z.object({ ok: z.boolean() }),
+    handler: async ({ actor, req, body, deps }) => ({
+      data: await createNotificationService(deps.db).dismissAlert(actor!, req, body),
+    }),
+  }),
   defineRoute({
     method: 'get',
     path: '/admin/alerts',

@@ -1,3 +1,4 @@
+import { scheme } from '@/lib/brand-boot';
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
@@ -110,7 +111,7 @@ export default function RootLayout() {
     <I18nextProvider i18n={i18n}>
       <QueryClientProvider client={queryClient}>
         <ClubName />
-        <StatusBar style="light" />
+        <StatusBar style={scheme === 'light' ? 'dark' : 'light'} />
         <Stack
           screenOptions={{ headerShown: false, contentStyle: { backgroundColor: color.bg.base } }}
         >
@@ -144,6 +145,7 @@ export default function RootLayout() {
             <Stack.Screen name="coach/availability" />
             <Stack.Screen name="trainer-slots" />
             <Stack.Screen name="calendar" />
+            <Stack.Screen name="appearance" />
             <Stack.Screen name="legal/[doc]" />
             <Stack.Screen
               name="guide"

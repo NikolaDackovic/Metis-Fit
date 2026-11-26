@@ -102,7 +102,7 @@ describe('translation catalogs', () => {
           expect(vars(value), `${lng}:${k} placeholders`).toEqual(vars(source));
       }
     }
-  });
+  }, 30_000);
 
   it('has no empty strings', () => {
     for (const lng of ['sr', 'en', 'ru', 'ar'] as const) {

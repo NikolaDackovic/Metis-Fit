@@ -3,11 +3,9 @@ import { ArrowLeft } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Toggle } from '@/components/Toggle';
 import { Button, ErrorNote, Field, Screen } from '@/components/ui';
 import { ApiError } from '@/lib/api';
 import { signUp } from '@/lib/auth';
-import { cleanPhone, parseBirthDate } from '@/lib/join';
 import { dirIcon } from '@/lib/rtl';
 import { color, fonts, type } from '@/theme';
 
@@ -18,10 +16,7 @@ export default function RegisterScreen() {
     lastName: '',
     email: '',
     password: '',
-    phone: '',
-    dateOfBirth: '',
   });
-  const [hasCode, setHasCode] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,10 +27,6 @@ export default function RegisterScreen() {
     if (!form.firstName.trim() || !form.lastName.trim()) return setError('validation.required');
     if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) return setError('validation.invalid_email');
     if (form.password.length < 10) return setError('app.auth.password_rules');
-    const dob = parseBirthDate(form.dateOfBirth);
-    if (dob === undefined) return setError('validation.invalid_date');
-    const phone = cleanPhone(form.phone);
-    if (phone === undefined) return setError('validation.invalid_phone');
     setLoading(true);
     try {
       const result = await signUp({
@@ -44,7 +35,8 @@ export default function RegisterScreen() {
         firstName: form.firstName.trim(),
         lastName: form.lastName.trim(),
         locale: i18n.language,
-        join: hasCode ? null : { phone, dateOfBirth: dob },
+        // Account only: a gym membership comes from the gym (desk) or by choosing a gym later.
+        join: null,
       });
       // 'signedIn' (dev): the root layout moves on to the tabs by itself.
       if (result === 'confirm') setDone(true);
@@ -111,37 +103,9 @@ export default function RegisterScreen() {
           />
           <Text style={styles.hint}>{t('app.auth.password_rules')}</Text>
 
-          <View style={styles.toggle}>
-            <View style={{ flex: 1, gap: 2 }}>
-              <Text style={styles.toggleLabel}>{t('app.auth.has_code')}</Text>
-              <Text style={styles.hint}>{t('app.auth.has_code_hint')}</Text>
-            </View>
-            <Toggle
-              value={hasCode}
-              onValueChange={setHasCode}
-              accessibilityLabel={t('app.auth.has_code')}
-            />
+          <View style={styles.info}>
+            <Text style={styles.hint}>{t('app.auth.account_only')}</Text>
           </View>
-
-          {!hasCode && (
-            <>
-              <Field
-                label={t('app.auth.phone_optional')}
-                value={form.phone}
-                onChangeText={set('phone')}
-                keyboardType="phone-pad"
-                autoComplete="tel"
-              />
-              <Field
-                label={t('app.auth.dob_optional')}
-                value={form.dateOfBirth}
-                onChangeText={set('dateOfBirth')}
-                placeholder="15.05.1995"
-                keyboardType="numbers-and-punctuation"
-                autoComplete="birthdate-full"
-              />
-            </>
-          )}
           {error && <ErrorNote message={error} />}
           <Button label={t('app.auth.register')} onPress={() => void submit()} loading={loading} />
           <Text style={styles.hint}>{t('app.auth.terms_note')}</Text>
@@ -155,6 +119,11 @@ const styles = StyleSheet.create({
   back: { width: 44, height: 44, justifyContent: 'center', marginTop: 4 },
   done: { gap: 12 },
   hint: { color: color.text.secondary, fontFamily: fonts.regular, fontSize: 13 },
-  toggle: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  toggleLabel: { color: color.text.primary, fontFamily: fonts.semibold, fontSize: 15 },
+  info: {
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: color.border.subtle,
+    backgroundColor: color.bg.surface,
+  },
 });

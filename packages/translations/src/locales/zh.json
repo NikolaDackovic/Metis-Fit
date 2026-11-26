@@ -41,7 +41,8 @@
       "qr_label": "入场二维码",
       "health": "健康",
       "club": "俱乐部",
-      "coach": "工作"
+      "coach": "工作",
+      "more": "更多"
     },
     "home": {
       "greeting": {
@@ -78,7 +79,8 @@
       "has_code": "我已是会员（有前台给的代码）",
       "has_code_hint": "如果你已在俱乐部登记，请打开此项，然后用代码关联。",
       "phone_optional": "电话（选填）",
-      "dob_optional": "出生日期（选填）"
+      "dob_optional": "出生日期（选填）",
+      "account_only": "你正在创建 Metis Fit 账户。训练、饮食和进度立即可用；健身房可稍后在前台或应用中添加（更多 → 健身房）。"
     },
     "settings": {
       "title": "设置",
@@ -238,7 +240,9 @@
       "search": "搜索器械",
       "no_results": "没有结果。",
       "no_equipment": "器械即将添加。",
-      "rooms": "房间"
+      "rooms": "房间",
+      "zoom": "放大地图",
+      "zoom_hint": "用手指拖动地图；点击房间查看器材。"
     },
     "equipment": {
       "not_available": "这台器械目前不可用，感谢你的耐心。",
@@ -1142,7 +1146,9 @@
       "ready_text": "你可以随时在“个人资料”中再次打开指南。",
       "ready_1": "入场：中间的二维码按钮",
       "ready_2": "其他健身房：个人资料 → 健身房",
-      "ready_3": "指南：个人资料 → 应用指南"
+      "ready_3": "指南：个人资料 → 应用指南",
+      "language_title": "选择语言",
+      "language_text": "应用和本指南将使用你选择的语言。可随时在个人资料中更改。"
     },
     "legal": {
       "terms": "使用条款",
@@ -1193,6 +1199,20 @@
       "serving_label": "份量名称",
       "serving_label_hint": "例如 1 杯",
       "save": "保存并添加"
+    },
+    "more": {
+      "title": "更多",
+      "no_gym": "尚未关联健身房",
+      "profile": "个人资料",
+      "gyms": "健身房",
+      "settings": "设置与账户"
+    },
+    "theme": {
+      "title": "外观",
+      "hint": "选择浅色或深色主题，或跟随手机设置。应用会短暂重新加载。",
+      "light": "浅色",
+      "dark": "深色",
+      "system": "跟随系统"
     }
   },
   "errors": {
@@ -1840,7 +1860,9 @@
       "requests_empty": "没有待处理的申请。",
       "pause_requests": "暂停申请",
       "pause_requests_hint": "会员在应用中申请冻结会员卡。",
-      "pause_requests_empty": "没有暂停申请。"
+      "pause_requests_empty": "没有暂停申请。",
+      "hidden": "提醒已隐藏",
+      "hide": "隐藏 {{days}} 天"
     },
     "members": {
       "title": "会员",
@@ -2842,7 +2864,7 @@
     },
     "map": {
       "title": "场馆地图",
-      "subtitle": "楼层、房间和器械布局。发布后更改才可见。",
+      "subtitle": "楼层、房间和器材布局。保存的更改会员会立即在应用中看到。",
       "save": "保存草稿",
       "saved_state": "已保存",
       "saved": "草稿已保存。",
@@ -2918,7 +2940,8 @@
       },
       "unsaved_banner": "地图有未保存的修改。",
       "unpublished_banner": "会员仍看到旧地图。你的修改已保存为草稿。",
-      "publish_now": "立即发布"
+      "publish_now": "立即发布",
+      "save_publish": "保存并发布"
     },
     "club": {
       "title": "俱乐部与品牌",

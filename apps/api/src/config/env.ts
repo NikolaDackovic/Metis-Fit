@@ -43,12 +43,16 @@ const envSchema = z
     /** 'local' disk (development) or 'supabase' Storage (staging/production, public bucket). */
     MEDIA_STORE: z.enum(['local', 'supabase']).default('local'),
     MEDIA_BUCKET: z.string().default('club-media'),
-    /** Claude API key for AI meal plans. Optional: without it members get targets only. */
+    /** AI provider key for AI meal plans. Optional: without it members get targets only. */
     ANTHROPIC_API_KEY: z
       .string()
       .optional()
       .or(z.literal('').transform(() => undefined)),
-    AI_NUTRITION_MODEL: z.string().default('claude-opus-5-5'),
+    /** Model name from the AI provider (set on the server together with the key). */
+    AI_NUTRITION_MODEL: z
+      .string()
+      .optional()
+      .or(z.literal('').transform(() => undefined)),
     /** Push provider: 'none' (in-app inbox only) or 'expo' (Expo push service, EAS builds). */
     PUSH_PROVIDER: z.enum(['none', 'expo']).default('none'),
     /** Optional Expo access token (when push security is enabled in the Expo project). */

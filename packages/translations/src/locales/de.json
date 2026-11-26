@@ -41,7 +41,8 @@
       "qr_label": "QR-Code für den Eintritt",
       "health": "Gesundheit",
       "club": "Studio",
-      "coach": "Arbeit"
+      "coach": "Arbeit",
+      "more": "Mehr"
     },
     "home": {
       "greeting": {
@@ -78,7 +79,8 @@
       "has_code": "Ich bin schon Mitglied (ich habe einen Code von der Rezeption)",
       "has_code_hint": "Aktivieren, wenn du schon im Club angemeldet bist, und dann mit dem Code verknüpfen.",
       "phone_optional": "Telefon (optional)",
-      "dob_optional": "Geburtsdatum (optional)"
+      "dob_optional": "Geburtsdatum (optional)",
+      "account_only": "Du erstellst dein Metis-Fit-Konto. Training, Ernährung und Fortschritt gehen sofort; ein Studio fügst du später hinzu, an der Theke oder in der App (Mehr → Studios)."
     },
     "settings": {
       "title": "Einstellungen",
@@ -245,7 +247,9 @@
       "search": "Geräte suchen",
       "no_results": "Keine Ergebnisse.",
       "no_equipment": "Geräte werden bald hinzugefügt.",
-      "rooms": "Räume"
+      "rooms": "Räume",
+      "zoom": "Karte vergrößern",
+      "zoom_hint": "Karte mit dem Finger verschieben; Raum antippen, um die Geräte zu sehen."
     },
     "equipment": {
       "not_available": "Dieses Gerät ist derzeit nicht verfügbar. Danke für deine Geduld.",
@@ -1165,7 +1169,9 @@
       "ready_text": "Die Anleitung findest du jederzeit im Profil.",
       "ready_1": "Eingang: QR-Taste in der Mitte",
       "ready_2": "Anderes Studio: Profil → Studio",
-      "ready_3": "Anleitung: Profil → App-Anleitung"
+      "ready_3": "Anleitung: Profil → App-Anleitung",
+      "language_title": "Sprache wählen",
+      "language_text": "App und Anleitung nutzen die gewählte Sprache. Du kannst sie jederzeit im Profil ändern."
     },
     "legal": {
       "terms": "Nutzungsbedingungen",
@@ -1216,6 +1222,20 @@
       "serving_label": "Portionsname",
       "serving_label_hint": "z. B. 1 Glas",
       "save": "Speichern und hinzufügen"
+    },
+    "more": {
+      "title": "Mehr",
+      "no_gym": "Noch mit keinem Studio verbunden",
+      "profile": "Profil",
+      "gyms": "Studios",
+      "settings": "Einstellungen und Konto"
+    },
+    "theme": {
+      "title": "Darstellung",
+      "hint": "Helles oder dunkles Design wählen oder wie im Telefon. Die App lädt kurz neu.",
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "System"
     }
   },
   "errors": {
@@ -1865,7 +1885,9 @@
       "requests_empty": "Keine offenen Anfragen.",
       "pause_requests": "Pausenanfragen",
       "pause_requests_hint": "Mitglieder haben in der App eine Pause ihrer Mitgliedschaft beantragt.",
-      "pause_requests_empty": "Keine Pausenanfragen."
+      "pause_requests_empty": "Keine Pausenanfragen.",
+      "hidden": "Hinweis ausgeblendet",
+      "hide": "{{days}} Tage ausblenden"
     },
     "members": {
       "title": "Mitglieder",
@@ -2887,7 +2909,7 @@
     },
     "map": {
       "title": "Gebäudeplan",
-      "subtitle": "Etagen, Räume und Geräteanordnung. Änderungen sind erst nach dem Veröffentlichen sichtbar.",
+      "subtitle": "Etagen, Räume und Geräte. Gespeicherte Änderungen sehen Mitglieder sofort in der App.",
       "save": "Entwurf speichern",
       "saved_state": "Gespeichert",
       "saved": "Entwurf gespeichert.",
@@ -2963,7 +2985,8 @@
       },
       "unsaved_banner": "Du hast ungespeicherte Kartenänderungen.",
       "unpublished_banner": "Mitglieder sehen noch die alte Karte. Deine Änderungen sind als Entwurf gespeichert.",
-      "publish_now": "Jetzt veröffentlichen"
+      "publish_now": "Jetzt veröffentlichen",
+      "save_publish": "Speichern und veröffentlichen"
     },
     "club": {
       "title": "Club und Branding",

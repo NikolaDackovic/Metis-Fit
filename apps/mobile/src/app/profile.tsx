@@ -14,6 +14,7 @@ import {
   Link2,
   LogOut,
   Mail,
+  Palette,
   Phone,
   ShieldCheck,
   Trash2,
@@ -29,6 +30,7 @@ import { LanguagePicker } from '@/components/LanguagePicker';
 import { NotificationPrefs } from '@/components/NotificationPrefs';
 import { Button, Card, ErrorNote, Screen, SectionTitle } from '@/components/ui';
 import { exportMyData } from '@/lib/account';
+import { themePref } from '@/lib/brand-boot';
 import { api, ApiError } from '@/lib/api';
 import { AUTH_MODE, signOut } from '@/lib/auth';
 import { clubShortName, useClub, useMe } from '@/lib/queries';
@@ -151,7 +153,15 @@ export default function ProfileScreen() {
 
       <SectionTitle>{t('app.profile.app')}</SectionTitle>
       <Card style={styles.card}>
-        <LanguagePicker row />
+        <Row
+          icon={Palette}
+          label={t('app.theme.title')}
+          value={t('app.theme.' + themePref)}
+          onPress={go('/appearance')}
+        />
+        <View style={styles.divider}>
+          <LanguagePicker row />
+        </View>
         <Row icon={CircleHelp} label={t('app.guide.open')} onPress={go('/guide')} divider />
       </Card>
 

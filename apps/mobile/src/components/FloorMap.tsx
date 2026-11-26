@@ -17,12 +17,16 @@ export function FloorMap({
   floor,
   selected,
   onSelect,
+  fixedWidth,
 }: {
   floor: Floor;
   selected: string | null;
   onSelect: (roomKey: string) => void;
+  /** Full-screen zoom: draw at this width instead of filling the parent. */
+  fixedWidth?: number;
 }) {
-  const [width, setWidth] = useState(0);
+  const [measured, setMeasured] = useState(0);
+  const width = fixedWidth ?? measured;
   const pad = 0.5;
   const vbW = floor.width + pad * 2;
   const vbH = floor.height + pad * 2;
@@ -30,8 +34,8 @@ export function FloorMap({
 
   return (
     <View
-      onLayout={(e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width)}
-      style={{ width: '100%' }}
+      onLayout={(e: LayoutChangeEvent) => !fixedWidth && setMeasured(e.nativeEvent.layout.width)}
+      style={{ width: fixedWidth ?? '100%' }}
     >
       {width > 0 && (
         <Svg width={width} height={height} viewBox={`${-pad} ${-pad} ${vbW} ${vbH}`}>
@@ -52,7 +56,7 @@ export function FloorMap({
             const fill = isSel
               ? color.accent[500]
               : ACTIVE_TYPES.has(r.type)
-                ? '#2A1A14'
+                ? color.accent.tint
                 : color.bg.surface2;
             return (
               <G key={r.key}>
@@ -91,7 +95,7 @@ export function FloorMap({
                     y={s.y + s.h / 2}
                     textAnchor="middle"
                     alignmentBaseline="middle"
-                    fontSize={Math.min(1.1, s.w / 6)}
+                    fontSize={Math.min(1.4, s.w / 5)}
                     fontFamily={fonts.bold}
                     fill={color.bg.base}
                     stroke={color.bg.base}
@@ -106,7 +110,7 @@ export function FloorMap({
                   y={s.y + s.h / 2}
                   textAnchor="middle"
                   alignmentBaseline="middle"
-                  fontSize={Math.min(1.1, s.w / 6)}
+                  fontSize={Math.min(1.4, s.w / 5)}
                   fontFamily={fonts.bold}
                   fill={color.text.primary}
                 >

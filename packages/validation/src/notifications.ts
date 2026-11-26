@@ -148,3 +148,12 @@ export const alertsDto = z.object({
   ),
 });
 export type AlertsDto = z.infer<typeof alertsDto>;
+
+/** Hide an alert row for a while (it comes back if the reason is still there). */
+export const ALERT_KINDS = ['expiring', 'debts', 'inactive', 'birthdays', 'signups'] as const;
+export const alertDismissBody = z.object({
+  kind: z.enum(ALERT_KINDS),
+  memberId: z.string().uuid(),
+  days: z.number().int().min(1).max(365),
+});
+export type AlertDismissBody = z.infer<typeof alertDismissBody>;

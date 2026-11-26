@@ -862,7 +862,7 @@
     },
     "map": {
       "title": "Mapa objekta",
-      "subtitle": "Spratovi, prostorije i raspored opreme. Izmene se vide tek posle objave.",
+      "subtitle": "Spratovi, prostorije i raspored opreme. Sačuvane izmene članovi odmah vide u aplikaciji.",
       "save": "Sačuvaj nacrt",
       "saved_state": "Sačuvano",
       "saved": "Nacrt je sačuvan.",
@@ -938,7 +938,8 @@
       },
       "unsaved_banner": "Imaš nesačuvane izmene mape.",
       "unpublished_banner": "Članovi još vide staru verziju mape. Izmene su sačuvane kao nacrt.",
-      "publish_now": "Objavi sada"
+      "publish_now": "Objavi sada",
+      "save_publish": "Sačuvaj i objavi"
     },
     "classes": {
       "title": "Raspored",
@@ -1277,7 +1278,9 @@
       "requests_empty": "Nema zahteva na čekanju.",
       "pause_requests": "Zahtevi za pauzu",
       "pause_requests_hint": "Članovi su iz aplikacije tražili zamrzavanje članarine.",
-      "pause_requests_empty": "Nema zahteva za pauzu."
+      "pause_requests_empty": "Nema zahteva za pauzu.",
+      "hidden": "Upozorenje je sklonjeno",
+      "hide": "Skloni na {{days}} dana"
     },
     "announcements": {
       "title": "Obaveštenja članovima",
@@ -2261,7 +2264,8 @@
       "qr_label": "QR kod za ulaz",
       "health": "Zdravlje",
       "club": "Klub",
-      "coach": "Posao"
+      "coach": "Posao",
+      "more": "Više"
     },
     "auth": {
       "tagline": "Treniraj pametnije",
@@ -2283,7 +2287,8 @@
       "has_code": "Već sam član (imam kod sa recepcije)",
       "has_code_hint": "Uključi ako si već upisan/a u klubu, pa poveži nalog kodom.",
       "phone_optional": "Telefon (opciono)",
-      "dob_optional": "Datum rođenja (opciono)"
+      "dob_optional": "Datum rođenja (opciono)",
+      "account_only": "Praviš svoj Metis Fit nalog. Trening, ishranu i napredak koristiš odmah; teretanu dodaješ posle, na recepciji ili u aplikaciji (Više → Teretane)."
     },
     "home": {
       "greeting": {
@@ -2384,7 +2389,9 @@
       "search": "Pretraži opremu",
       "no_results": "Nema rezultata.",
       "no_equipment": "Oprema će uskoro biti dodata.",
-      "rooms": "Prostorije"
+      "rooms": "Prostorije",
+      "zoom": "Uvećaj mapu",
+      "zoom_hint": "Pomeraj mapu prstom; dodirni prostoriju da vidiš opremu."
     },
     "equipment": {
       "not_available": "Sprava trenutno nije dostupna. Hvala na strpljenju.",
@@ -3408,7 +3415,9 @@
       "ready_text": "Vodič uvek možeš ponovo da otvoriš u Profilu.",
       "ready_1": "Ulaz: QR dugme u sredini",
       "ready_2": "Druga teretana: Profil → Teretana",
-      "ready_3": "Vodič: Profil → Vodič kroz aplikaciju"
+      "ready_3": "Vodič: Profil → Vodič kroz aplikaciju",
+      "language_title": "Izaberi jezik",
+      "language_text": "Aplikacija i ovaj vodič biće na izabranom jeziku. Jezik menjaš kad god želiš u Profilu."
     },
     "legal": {
       "terms": "Uslovi korišćenja",
@@ -3491,6 +3500,20 @@
       "serving_label": "Naziv porcije",
       "serving_label_hint": "npr. 1 čaša",
       "save": "Sačuvaj i dodaj"
+    },
+    "more": {
+      "title": "Više",
+      "no_gym": "Još nisi povezan/a sa teretanom",
+      "profile": "Profil",
+      "gyms": "Teretane",
+      "settings": "Podešavanja i nalog"
+    },
+    "theme": {
+      "title": "Izgled",
+      "hint": "Izaberi svetlu ili tamnu temu, ili neka prati podešavanje telefona. Aplikacija se kratko ponovo učita.",
+      "light": "Svetla",
+      "dark": "Tamna",
+      "system": "Sistem"
     }
   },
   "equipment": {

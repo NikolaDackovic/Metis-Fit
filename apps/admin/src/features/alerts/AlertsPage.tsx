@@ -1,9 +1,10 @@
-import type { AlertsDto } from '@grit/validation';
-import { useQuery } from '@tanstack/react-query';
+import type { AlertDismissBody, AlertsDto } from '@grit/validation';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Cake,
   CircleDollarSign,
   Clock,
+  EyeOff,
   Moon,
   PauseCircle,
   Phone,
@@ -16,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { toast } from '@/components/ui/Toast';
 import { Card, ErrorState, PageHeader, Skeleton } from '@/components/ui/States';
 import { api } from '@/lib/api';
 import { useFormat } from '@/lib/format';
@@ -44,6 +46,29 @@ export const alertCount = (a: AlertsDto | undefined) =>
       a.inactive.length +
       a.birthdays.filter((b) => b.inDays === 0).length
     : 0;
+
+type Kind = AlertDismissBody['kind'];
+/** How long "Hide" hides a row: things to act on come back after a week, news after a month. */
+const HIDE_DAYS: Record<Kind, number> = {
+  expiring: 7,
+  debts: 7,
+  inactive: 7,
+  birthdays: 30,
+  signups: 30,
+};
+
+function useDismiss() {
+  const { t } = useTranslation();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (b: { kind: Kind; memberId: string }) =>
+      api.post('/admin/alerts/dismiss', { ...b, days: HIDE_DAYS[b.kind] }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['alerts'] });
+      toast.success(t('admin.alerts.hidden'));
+    },
+  });
+}
 
 /** Alert center: what the front desk and the owner should act on today. */
 export function AlertsPage() {
@@ -122,6 +147,7 @@ export function AlertsPage() {
           <Section
             icon={Clock}
             title={t('admin.alerts.expiring', { days: a.settings.expiringDays })}
+            kind="expiring"
             empty={t('admin.alerts.expiring_empty')}
             rows={a.expiring}
             render={(r) => (
@@ -138,6 +164,7 @@ export function AlertsPage() {
           <Section
             icon={CircleDollarSign}
             title={t('admin.alerts.debts')}
+            kind="debts"
             empty={t('admin.alerts.debts_empty')}
             rows={a.debts}
             render={(r) => (
@@ -152,6 +179,7 @@ export function AlertsPage() {
           <Section
             icon={Moon}
             title={t('admin.alerts.inactive', { days: a.settings.inactiveDays })}
+            kind="inactive"
             hint={t('admin.alerts.inactive_hint')}
             empty={t('admin.alerts.inactive_empty')}
             rows={a.inactive}
@@ -166,6 +194,7 @@ export function AlertsPage() {
           <Section
             icon={Cake}
             title={t('admin.alerts.birthdays')}
+            kind="birthdays"
             empty={t('admin.alerts.birthdays_empty')}
             rows={a.birthdays}
             render={(r) => (
@@ -181,6 +210,7 @@ export function AlertsPage() {
           <Section
             icon={UserPlus}
             title={t('admin.alerts.signups')}
+            kind="signups"
             empty={t('admin.alerts.signups_empty')}
             rows={a.signups}
             render={(r) => (
@@ -217,7 +247,9 @@ function Section<T extends Row>({
   rows,
   render,
   rowKey = (r) => r.memberId,
+  kind,
 }: {
+  kind?: Kind;
   icon: LucideIcon;
   title: string;
   hint?: string;
@@ -227,6 +259,7 @@ function Section<T extends Row>({
   rowKey?: (r: T) => string;
 }) {
   const { t } = useTranslation();
+  const dismiss = useDismiss();
   return (
     <Card>
       <div className="flex items-center gap-2 border-b border-border-subtle px-4 py-3">
@@ -258,6 +291,18 @@ function Section<T extends Row>({
                 >
                   <Phone className="size-4" />
                 </a>
+              )}
+              {kind && (
+                <button
+                  type="button"
+                  onClick={() => dismiss.mutate({ kind, memberId: r.memberId })}
+                  disabled={dismiss.isPending}
+                  className="inline-flex size-8 shrink-0 items-center justify-center rounded-sm text-text-secondary hover:bg-bg-surface2 hover:text-text-primary disabled:opacity-50"
+                  aria-label={`${t('admin.alerts.hide', { days: HIDE_DAYS[kind] })}: ${r.name}`}
+                  title={t('admin.alerts.hide', { days: HIDE_DAYS[kind] })}
+                >
+                  <EyeOff className="size-4" />
+                </button>
               )}
             </li>
           ))}

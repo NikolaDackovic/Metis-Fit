@@ -96,7 +96,7 @@ describe('nutrition wizard', () => {
       seen = targets.kcal;
       expect(locale).toBe('ru');
       return {
-        model: 'claude-opus-5-5',
+        model: 'test-model',
         plan: {
           summary: 'План',
           meals: [

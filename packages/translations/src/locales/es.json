@@ -41,7 +41,8 @@
       "qr_label": "Código QR de entrada",
       "health": "Salud",
       "club": "Club",
-      "coach": "Trabajo"
+      "coach": "Trabajo",
+      "more": "Más"
     },
     "home": {
       "greeting": {
@@ -78,7 +79,8 @@
       "has_code": "Ya soy socio (tengo un código de recepción)",
       "has_code_hint": "Actívalo si ya estás registrado en el club y vincula la cuenta con el código.",
       "phone_optional": "Teléfono (opcional)",
-      "dob_optional": "Fecha de nacimiento (opcional)"
+      "dob_optional": "Fecha de nacimiento (opcional)",
+      "account_only": "Creas tu cuenta de Metis Fit. Entrenamiento, comida y progreso funcionan ya; el gimnasio lo añades después, en recepción o en la app (Más → Gimnasios)."
     },
     "settings": {
       "title": "Ajustes",
@@ -245,7 +247,9 @@
       "search": "Buscar equipos",
       "no_results": "Sin resultados.",
       "no_equipment": "Los equipos se añadirán pronto.",
-      "rooms": "Salas"
+      "rooms": "Salas",
+      "zoom": "Ampliar mapa",
+      "zoom_hint": "Mueve el mapa con el dedo; toca una sala para ver su equipo."
     },
     "equipment": {
       "not_available": "Esta máquina no está disponible ahora. Gracias por tu paciencia.",
@@ -1165,7 +1169,9 @@
       "ready_text": "Puedes volver a abrir la guía en Perfil.",
       "ready_1": "Entrada: botón QR central",
       "ready_2": "Otro gimnasio: Perfil → Gimnasio",
-      "ready_3": "Guía: Perfil → Guía de la app"
+      "ready_3": "Guía: Perfil → Guía de la app",
+      "language_title": "Elige tu idioma",
+      "language_text": "La app y esta guía usarán el idioma que elijas. Puedes cambiarlo en Perfil."
     },
     "legal": {
       "terms": "Condiciones de uso",
@@ -1216,6 +1222,20 @@
       "serving_label": "Nombre de la ración",
       "serving_label_hint": "p. ej. 1 vaso",
       "save": "Guardar y añadir"
+    },
+    "more": {
+      "title": "Más",
+      "no_gym": "Aún sin gimnasio",
+      "profile": "Perfil",
+      "gyms": "Gimnasios",
+      "settings": "Ajustes y cuenta"
+    },
+    "theme": {
+      "title": "Apariencia",
+      "hint": "Elige tema claro u oscuro, o el del teléfono. La app se recarga un momento.",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
     }
   },
   "errors": {
@@ -1865,7 +1885,9 @@
       "requests_empty": "No hay solicitudes pendientes.",
       "pause_requests": "Solicitudes de pausa",
       "pause_requests_hint": "Socios pidieron en la app congelar su membresía.",
-      "pause_requests_empty": "No hay solicitudes de pausa."
+      "pause_requests_empty": "No hay solicitudes de pausa.",
+      "hidden": "Aviso ocultado",
+      "hide": "Ocultar {{days}} días"
     },
     "members": {
       "title": "Socios",
@@ -2887,7 +2909,7 @@
     },
     "map": {
       "title": "Mapa del centro",
-      "subtitle": "Plantas, salas y distribución del equipamiento. Los cambios solo se ven después de publicar.",
+      "subtitle": "Plantas, salas y equipos. Los socios ven los cambios guardados al instante en la app.",
       "save": "Guardar borrador",
       "saved_state": "Guardado",
       "saved": "Borrador guardado.",
@@ -2963,7 +2985,8 @@
       },
       "unsaved_banner": "Tienes cambios del mapa sin guardar.",
       "unpublished_banner": "Los socios aún ven el mapa anterior. Los cambios están guardados como borrador.",
-      "publish_now": "Publicar ahora"
+      "publish_now": "Publicar ahora",
+      "save_publish": "Guardar y publicar"
     },
     "club": {
       "title": "Club e imagen",

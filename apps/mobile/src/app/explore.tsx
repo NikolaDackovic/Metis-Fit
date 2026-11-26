@@ -2,10 +2,20 @@ import type { EquipmentDto, MapDto } from '@grit/validation';
 import { BackHeader } from '@/components/BackHeader';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { ChevronRight, Info, MapPinned, Search } from 'lucide-react-native';
+import { ChevronRight, Info, MapPinned, Maximize2, Search, X } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { FloorMap } from '@/components/FloorMap';
 import { Card, EmptyState, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { EquipmentStatusBadge } from '@/components/EquipmentStatusBadge';
@@ -27,6 +37,8 @@ export default function ExploreScreen() {
   const [floorIdx, setFloorIdx] = useState(0);
   const [roomKey, setRoomKey] = useState<string | null>(null);
   const [q, setQ] = useState('');
+  const [zoom, setZoom] = useState(false);
+  const { width: screenW } = useWindowDimensions();
   const equipment = useQuery({
     queryKey: ['equipment', i18n.language],
     queryFn: () => api.get<EquipmentDto[]>('/public/equipment', { locale: i18n.language }),
@@ -43,6 +55,37 @@ export default function ExploreScreen() {
     );
   }, [equipment.data, q]);
 
+  const zoomModal = floor ? (
+    <Modal visible={zoom} animationType="fade" onRequestClose={() => setZoom(false)}>
+      <SafeAreaView style={styles.zoomRoot} edges={['top', 'bottom']}>
+        <View style={styles.zoomTop}>
+          <Text style={[type.h3, { flex: 1 }]}>{floor.name}</Text>
+          <Pressable
+            onPress={() => setZoom(false)}
+            accessibilityRole="button"
+            accessibilityLabel={t('common.close')}
+            hitSlop={10}
+          >
+            <X size={26} color={color.text.primary} />
+          </Pressable>
+        </View>
+        <ScrollView contentContainerStyle={{ padding: 12 }}>
+          <ScrollView horizontal contentContainerStyle={{ paddingEnd: 12 }}>
+            <FloorMap
+              floor={floor}
+              selected={roomKey}
+              onSelect={setRoomKey}
+              fixedWidth={Math.max(screenW * 2, 700)}
+            />
+          </ScrollView>
+        </ScrollView>
+        <Text style={[type.bodySm, { textAlign: 'center', padding: 12 }]}>
+          {t('app.explore.zoom_hint')}
+        </Text>
+      </SafeAreaView>
+    </Modal>
+  ) : null;
+
   return (
     <Screen
       refreshing={map.isFetching || equipment.isFetching}
@@ -52,6 +95,7 @@ export default function ExploreScreen() {
       }}
     >
       <BackHeader title={t('app.hub.map')} />
+      {zoomModal}
 
       {mapHidden ? null : map.isPending ? (
         <Skeleton height={240} />
@@ -96,6 +140,15 @@ export default function ExploreScreen() {
           {floor && (
             <Card style={{ padding: 8 }}>
               <FloorMap floor={floor} selected={roomKey} onSelect={setRoomKey} />
+              <Pressable
+                onPress={() => setZoom(true)}
+                accessibilityRole="button"
+                accessibilityLabel={t('app.explore.zoom')}
+                style={styles.zoomBtn}
+                hitSlop={6}
+              >
+                <Maximize2 size={18} color={color.text.primary} />
+              </Pressable>
             </Card>
           )}
           {floor && (
@@ -208,6 +261,27 @@ export default function ExploreScreen() {
 }
 
 const styles = StyleSheet.create({
+  zoomBtn: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: color.bg.surface2,
+    borderWidth: 1,
+    borderColor: color.border.strong,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  zoomRoot: { flex: 1, backgroundColor: color.bg.base },
+  zoomTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 16,
+    minHeight: 52,
+  },
   title: { fontSize: 24, lineHeight: 30, paddingTop: 12 },
   notice: {
     flexDirection: 'row',

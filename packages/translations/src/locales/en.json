@@ -856,7 +856,7 @@
     },
     "map": {
       "title": "Facility map",
-      "subtitle": "Floors, rooms and equipment layout. Changes are visible only after publishing.",
+      "subtitle": "Floors, rooms and equipment layout. Members see saved changes in the app right away.",
       "save": "Save draft",
       "saved_state": "Saved",
       "saved": "Draft saved.",
@@ -932,7 +932,8 @@
       },
       "unsaved_banner": "You have unsaved map changes.",
       "unpublished_banner": "Members still see the old map. Your changes are saved as a draft.",
-      "publish_now": "Publish now"
+      "publish_now": "Publish now",
+      "save_publish": "Save and publish"
     },
     "classes": {
       "title": "Schedule",
@@ -1259,7 +1260,9 @@
       "requests_empty": "No pending requests.",
       "pause_requests": "Pause requests",
       "pause_requests_hint": "Members asked in the app to freeze their membership.",
-      "pause_requests_empty": "No pause requests."
+      "pause_requests_empty": "No pause requests.",
+      "hidden": "Alert hidden",
+      "hide": "Hide for {{days}} days"
     },
     "announcements": {
       "title": "Member announcements",
@@ -2237,7 +2240,8 @@
       "qr_label": "Entry QR code",
       "health": "Health",
       "club": "Club",
-      "coach": "Work"
+      "coach": "Work",
+      "more": "More"
     },
     "auth": {
       "tagline": "Train smarter",
@@ -2259,7 +2263,8 @@
       "has_code": "I am already a member (I have a code from the desk)",
       "has_code_hint": "Turn on if you are already registered at the club, then link with the code.",
       "phone_optional": "Phone (optional)",
-      "dob_optional": "Date of birth (optional)"
+      "dob_optional": "Date of birth (optional)",
+      "account_only": "You are creating your Metis Fit account. Training, food and progress work right away; you add a gym later, at the desk or in the app (More → Gyms)."
     },
     "home": {
       "greeting": {
@@ -2356,7 +2361,9 @@
       "search": "Search equipment",
       "no_results": "No results.",
       "no_equipment": "Equipment will be added soon.",
-      "rooms": "Rooms"
+      "rooms": "Rooms",
+      "zoom": "Enlarge map",
+      "zoom_hint": "Drag the map with your finger; tap a room to see its equipment."
     },
     "equipment": {
       "not_available": "This machine is currently unavailable. Thanks for your patience.",
@@ -3361,7 +3368,9 @@
       "ready_text": "You can open this guide again in Profile.",
       "ready_1": "Entry: the QR button in the middle",
       "ready_2": "Another gym: Profile → Gym",
-      "ready_3": "Guide: Profile → App guide"
+      "ready_3": "Guide: Profile → App guide",
+      "language_title": "Choose your language",
+      "language_text": "The app and this guide will use the language you pick. You can change it any time in Profile."
     },
     "legal": {
       "terms": "Terms of use",
@@ -3444,6 +3453,20 @@
       "serving_label": "Serving name",
       "serving_label_hint": "e.g. 1 glass",
       "save": "Save and add"
+    },
+    "more": {
+      "title": "More",
+      "no_gym": "Not linked to a gym yet",
+      "profile": "Profile",
+      "gyms": "Gyms",
+      "settings": "Settings and account"
+    },
+    "theme": {
+      "title": "Appearance",
+      "hint": "Pick a light or dark theme, or follow the phone setting. The app reloads briefly.",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
     }
   },
   "equipment": {

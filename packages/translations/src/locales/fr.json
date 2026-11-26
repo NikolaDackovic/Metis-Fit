@@ -41,7 +41,8 @@
       "qr_label": "QR code d'entrée",
       "health": "Santé",
       "club": "Club",
-      "coach": "Travail"
+      "coach": "Travail",
+      "more": "Plus"
     },
     "home": {
       "greeting": {
@@ -78,7 +79,8 @@
       "has_code": "Je suis déjà membre (j’ai un code de l’accueil)",
       "has_code_hint": "Active cette option si tu es déjà inscrit au club, puis relie ton compte avec le code.",
       "phone_optional": "Téléphone (facultatif)",
-      "dob_optional": "Date de naissance (facultatif)"
+      "dob_optional": "Date de naissance (facultatif)",
+      "account_only": "Tu crées ton compte Metis Fit. Entraînement, alimentation et progrès marchent tout de suite ; la salle s’ajoute plus tard, à l’accueil ou dans l’app (Plus → Salles)."
     },
     "settings": {
       "title": "Réglages",
@@ -252,7 +254,9 @@
       "search": "Rechercher un équipement",
       "no_results": "Aucun résultat.",
       "no_equipment": "Les équipements seront bientôt ajoutés.",
-      "rooms": "Salles"
+      "rooms": "Salles",
+      "zoom": "Agrandir la carte",
+      "zoom_hint": "Fais glisser la carte ; touche une salle pour voir son équipement."
     },
     "equipment": {
       "not_available": "Cette machine est indisponible pour le moment. Merci de ta patience.",
@@ -1188,7 +1192,9 @@
       "ready_text": "Tu peux rouvrir ce guide dans Profil.",
       "ready_1": "Entrée : bouton QR au centre",
       "ready_2": "Autre salle : Profil → Salle",
-      "ready_3": "Guide : Profil → Guide de l’app"
+      "ready_3": "Guide : Profil → Guide de l’app",
+      "language_title": "Choisis ta langue",
+      "language_text": "L’app et ce guide utiliseront la langue choisie. Tu peux la changer dans Profil."
     },
     "legal": {
       "terms": "Conditions d’utilisation",
@@ -1239,6 +1245,20 @@
       "serving_label": "Nom de la portion",
       "serving_label_hint": "ex. 1 verre",
       "save": "Enregistrer et ajouter"
+    },
+    "more": {
+      "title": "Plus",
+      "no_gym": "Pas encore lié à une salle",
+      "profile": "Profil",
+      "gyms": "Salles",
+      "settings": "Réglages et compte"
+    },
+    "theme": {
+      "title": "Apparence",
+      "hint": "Choisis un thème clair ou sombre, ou celui du téléphone. L’app se recharge un instant.",
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
     }
   },
   "errors": {
@@ -1890,7 +1910,9 @@
       "requests_empty": "Aucune demande en attente.",
       "pause_requests": "Demandes de pause",
       "pause_requests_hint": "Des membres ont demandé dans l'appli à suspendre leur abonnement.",
-      "pause_requests_empty": "Aucune demande de pause."
+      "pause_requests_empty": "Aucune demande de pause.",
+      "hidden": "Alerte masquée",
+      "hide": "Masquer {{days}} jours"
     },
     "members": {
       "title": "Membres",
@@ -2932,7 +2954,7 @@
     },
     "map": {
       "title": "Plan du centre",
-      "subtitle": "Étages, salles et disposition des équipements. Les changements ne sont visibles qu’après publication.",
+      "subtitle": "Étages, salles et équipements. Les membres voient tout de suite les changements enregistrés.",
       "save": "Enregistrer le brouillon",
       "saved_state": "Enregistré",
       "saved": "Brouillon enregistré.",
@@ -3008,7 +3030,8 @@
       },
       "unsaved_banner": "Tu as des modifications du plan non enregistrées.",
       "unpublished_banner": "Les membres voient encore l'ancien plan. Tes modifications sont enregistrées en brouillon.",
-      "publish_now": "Publier maintenant"
+      "publish_now": "Publier maintenant",
+      "save_publish": "Enregistrer et publier"
     },
     "club": {
       "title": "Club et image",

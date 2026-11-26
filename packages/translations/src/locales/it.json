@@ -41,7 +41,8 @@
       "qr_label": "Codice QR d'ingresso",
       "health": "Salute",
       "club": "Club",
-      "coach": "Lavoro"
+      "coach": "Lavoro",
+      "more": "Altro"
     },
     "home": {
       "greeting": {
@@ -78,7 +79,8 @@
       "has_code": "Sono già socio (ho un codice della reception)",
       "has_code_hint": "Attiva se sei già registrato al club, poi collega l’account con il codice.",
       "phone_optional": "Telefono (facoltativo)",
-      "dob_optional": "Data di nascita (facoltativa)"
+      "dob_optional": "Data di nascita (facoltativa)",
+      "account_only": "Crei il tuo account Metis Fit. Allenamento, alimentazione e progressi funzionano subito; la palestra la aggiungi dopo, in reception o nell’app (Altro → Palestre)."
     },
     "settings": {
       "title": "Impostazioni",
@@ -245,7 +247,9 @@
       "search": "Cerca attrezzature",
       "no_results": "Nessun risultato.",
       "no_equipment": "Le attrezzature verranno aggiunte presto.",
-      "rooms": "Sale"
+      "rooms": "Sale",
+      "zoom": "Ingrandisci mappa",
+      "zoom_hint": "Sposta la mappa con il dito; tocca una sala per vedere l’attrezzatura."
     },
     "equipment": {
       "not_available": "Questo macchinario al momento non è disponibile. Grazie per la pazienza.",
@@ -1165,7 +1169,9 @@
       "ready_text": "Puoi riaprire la guida dal Profilo.",
       "ready_1": "Ingresso: pulsante QR al centro",
       "ready_2": "Altra palestra: Profilo → Palestra",
-      "ready_3": "Guida: Profilo → Guida all’app"
+      "ready_3": "Guida: Profilo → Guida all’app",
+      "language_title": "Scegli la lingua",
+      "language_text": "L’app e questa guida useranno la lingua scelta. Puoi cambiarla nel Profilo."
     },
     "legal": {
       "terms": "Condizioni d’uso",
@@ -1216,6 +1222,20 @@
       "serving_label": "Nome porzione",
       "serving_label_hint": "es. 1 bicchiere",
       "save": "Salva e aggiungi"
+    },
+    "more": {
+      "title": "Altro",
+      "no_gym": "Non ancora collegato a una palestra",
+      "profile": "Profilo",
+      "gyms": "Palestre",
+      "settings": "Impostazioni e account"
+    },
+    "theme": {
+      "title": "Aspetto",
+      "hint": "Scegli tema chiaro o scuro, oppure quello del telefono. L’app si ricarica un attimo.",
+      "light": "Chiaro",
+      "dark": "Scuro",
+      "system": "Sistema"
     }
   },
   "errors": {
@@ -1865,7 +1885,9 @@
       "requests_empty": "Nessuna richiesta in attesa.",
       "pause_requests": "Richieste di pausa",
       "pause_requests_hint": "I soci hanno chiesto nell'app di sospendere l'abbonamento.",
-      "pause_requests_empty": "Nessuna richiesta di pausa."
+      "pause_requests_empty": "Nessuna richiesta di pausa.",
+      "hidden": "Avviso nascosto",
+      "hide": "Nascondi per {{days}} giorni"
     },
     "members": {
       "title": "Soci",
@@ -2887,7 +2909,7 @@
     },
     "map": {
       "title": "Mappa della struttura",
-      "subtitle": "Piani, sale e disposizione delle attrezzature. Le modifiche sono visibili solo dopo la pubblicazione.",
+      "subtitle": "Piani, sale e attrezzature. I soci vedono subito le modifiche salvate nell’app.",
       "save": "Salva bozza",
       "saved_state": "Salvato",
       "saved": "Bozza salvata.",
@@ -2963,7 +2985,8 @@
       },
       "unsaved_banner": "Hai modifiche alla mappa non salvate.",
       "unpublished_banner": "I soci vedono ancora la mappa precedente. Le modifiche sono salvate come bozza.",
-      "publish_now": "Pubblica ora"
+      "publish_now": "Pubblica ora",
+      "save_publish": "Salva e pubblica"
     },
     "club": {
       "title": "Club e immagine",

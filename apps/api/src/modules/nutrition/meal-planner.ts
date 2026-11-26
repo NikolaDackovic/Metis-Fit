@@ -74,10 +74,12 @@ Write every text field in the language requested in the message.`;
 
 export function createMealPlanner(opts: {
   apiKey: string | undefined;
-  model: string;
+  model: string | undefined;
   logger: Logger;
 }): MealPlanner {
-  if (!opts.apiKey) return async () => null;
+  // Off unless both the key and the model are set on the server.
+  if (!opts.apiKey || !opts.model) return async () => null;
+  const model = opts.model;
   const client = new Anthropic({ apiKey: opts.apiKey, timeout: 90_000, maxRetries: 1 });
 
   return async ({ input, targets, locale }) => {
@@ -90,7 +92,7 @@ export function createMealPlanner(opts: {
     ].join('\n');
     try {
       const response = await client.beta.messages.create({
-        model: opts.model,
+        model,
         max_tokens: 16000,
         // A safety decline is retried server-side on a fallback model.
         betas: ['server-side-fallback-2026-07-01'],
