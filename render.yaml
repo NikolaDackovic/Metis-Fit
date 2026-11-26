@@ -32,8 +32,11 @@ services:
         value: false
       - key: DEV_LOGIN
         value: false
+      # Images live in the database and are served by the API (no storage keys needed).
       - key: MEDIA_STORE
-        value: supabase
+        value: db
+      - key: MEDIA_PUBLIC_URL
+        value: https://api.fit.metis.rs/media
       - key: MEDIA_BUCKET
         value: club-media
       - key: STAFF_INVITE_REDIRECT_URL

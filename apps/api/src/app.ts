@@ -48,6 +48,8 @@ export interface AppDeps {
   posSecretConfigured?: boolean;
   /** Creates staff accounts (Supabase invite in production, local users in dev/tests). */
   authAdmin?: AuthAdmin;
+  /** Images kept in the database (MEDIA_STORE=db), served at /media/<folder>/<file>. */
+  mediaReader?: { get(key: string): Promise<{ type: string; data: Buffer } | null> };
   /** Local media folder served at /media (development and tests only). */
   localMediaDir?: string;
 }
@@ -160,6 +162,27 @@ export function createApp(deps: AppDeps, routes: RouteDef[] = allRoutes): expres
       },
       express.static(deps.localMediaDir, { fallthrough: false, maxAge: '7d', index: false }),
     );
+  }
+  if (deps.mediaReader) {
+    const reader = deps.mediaReader;
+    app.get('/media/:folder/:file', (req, res, next) => {
+      reader
+        .get(`${req.params.folder}/${req.params.file}`)
+        .then((img) => {
+          res.setHeader('cross-origin-resource-policy', 'cross-origin');
+          res.setHeader('x-content-type-options', 'nosniff');
+          if (!img) return void res.status(404).end();
+          // Uploaded keys are random and never reused; the built-in defaults may change.
+          res.setHeader(
+            'cache-control',
+            req.params.folder === 'defaults'
+              ? 'public, max-age=86400'
+              : 'public, max-age=31536000, immutable',
+          );
+          res.type(img.type).send(img.data);
+        })
+        .catch(next);
+    });
   }
   app.use(helmet());
   app.use(

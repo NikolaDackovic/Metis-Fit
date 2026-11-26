@@ -1,6 +1,9 @@
 import { mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { randomBytes } from 'node:crypto';
+import type { Kysely } from 'kysely';
+import type { DB } from '@grit/database';
+import { withStaffTx } from '../database/tx';
 import { AppError } from './errors';
 
 /**
@@ -104,6 +107,63 @@ export type SeedableMediaStore = MediaStore & { exists(key: string): Promise<boo
  * Supabase Storage (public bucket) for staging/production: container disks are temporary,
  * so uploads must live outside the API. Uses the service-role key, server side only.
  */
+/**
+ * Images in the database (table media_objects), served by the API at `publicBaseUrl/<key>`.
+ * Works anywhere the API runs; no external storage or keys.
+ */
+export function createDbMediaStore(
+  db: Kysely<DB>,
+  publicBaseUrl: string,
+): SeedableMediaStore & { get(key: string): Promise<{ type: string; data: Buffer } | null> } {
+  const valid = (key: string) => /^[a-z0-9_-]+\/[a-zA-Z0-9_.-]+$/.test(key);
+  const check = (key: string) => {
+    if (!valid(key)) throw new Error('invalid media key');
+    return key;
+  };
+  return {
+    async put(key, data, contentType) {
+      await withStaffTx(db, (tx) =>
+        tx
+          .insertInto('media_objects')
+          .values({ key: check(key), content_type: contentType, data })
+          .onConflict((oc) =>
+            oc
+              .column('key')
+              .doUpdateSet({ content_type: contentType, data, created_at: new Date() }),
+          )
+          .execute(),
+      );
+    },
+    async remove(key) {
+      await withStaffTx(db, (tx) =>
+        tx.deleteFrom('media_objects').where('key', '=', check(key)).execute(),
+      );
+    },
+    async exists(key) {
+      const row = await withStaffTx(db, (tx) =>
+        tx
+          .selectFrom('media_objects')
+          .select('key')
+          .where('key', '=', check(key))
+          .executeTakeFirst(),
+      );
+      return Boolean(row);
+    },
+    async get(key) {
+      if (!valid(key)) return null;
+      const row = await withStaffTx(db, (tx) =>
+        tx
+          .selectFrom('media_objects')
+          .select(['content_type', 'data'])
+          .where('key', '=', key)
+          .executeTakeFirst(),
+      );
+      return row ? { type: row.content_type, data: Buffer.from(row.data) } : null;
+    },
+    url: (key) => `${publicBaseUrl.replace(/\/$/, '')}/${key}`,
+  };
+}
+
 /**
  * Headers for server-side Supabase calls. Legacy service_role keys are JWTs (sent as apikey and
  * Bearer); the newer sb_secret_... keys are not JWTs and Supabase rejects them as Bearer.

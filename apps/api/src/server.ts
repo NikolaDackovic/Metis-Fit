@@ -13,6 +13,7 @@ import {
   createSupabaseMediaStore,
   installDefaultClubMedia,
   seedDefaultClubMedia,
+  createDbMediaStore,
 } from './shared/media';
 
 const env = loadEnv();
@@ -20,15 +21,17 @@ const logger = pino({ level: env.LOG_LEVEL });
 const pool = createPool(env.DATABASE_URL);
 const db = createDb(pool);
 
-// Local disk in development; Supabase Storage (public bucket) on staging/production.
+// Local disk in development; the database or Supabase Storage on staging/production.
+const dbMedia = env.MEDIA_STORE === 'db' ? createDbMediaStore(db, env.MEDIA_PUBLIC_URL) : null;
 const remoteMedia =
-  env.MEDIA_STORE === 'supabase'
+  dbMedia ??
+  (env.MEDIA_STORE === 'supabase'
     ? createSupabaseMediaStore({
         supabaseUrl: env.SUPABASE_URL!,
         serviceRoleKey: env.SUPABASE_SERVICE_ROLE_KEY!,
         bucket: env.MEDIA_BUCKET,
       })
-    : null;
+    : null);
 const media = remoteMedia ?? createLocalMediaStore(env.MEDIA_DIR, env.MEDIA_PUBLIC_URL);
 await (
   remoteMedia ? seedDefaultClubMedia(remoteMedia) : installDefaultClubMedia(env.MEDIA_DIR)
@@ -53,6 +56,7 @@ const app = createApp({
   accessTokenSecret: env.QR_TOKEN_SECRET,
   media,
   localMediaDir: remoteMedia ? undefined : env.MEDIA_DIR,
+  mediaReader: dbMedia ?? undefined,
   mealPlanner: createMealPlanner({
     apiKey: env.ANTHROPIC_API_KEY,
     model: env.AI_NUTRITION_MODEL,

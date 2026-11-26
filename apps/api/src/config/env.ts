@@ -40,8 +40,11 @@ const envSchema = z
     MEDIA_DIR: z.string().default('.tmp/media'),
     /** Public base URL of uploaded images. */
     MEDIA_PUBLIC_URL: z.string().default('http://localhost:4000/media'),
-    /** 'local' disk (development) or 'supabase' Storage (staging/production, public bucket). */
-    MEDIA_STORE: z.enum(['local', 'supabase']).default('local'),
+    /**
+     * 'local' disk (development), 'db' (images in the database, served at MEDIA_PUBLIC_URL) or
+     * 'supabase' Storage (public bucket).
+     */
+    MEDIA_STORE: z.enum(['local', 'db', 'supabase']).default('local'),
     MEDIA_BUCKET: z.string().default('club-media'),
     /** AI provider key for AI meal plans. Optional: without it members get targets only. */
     ANTHROPIC_API_KEY: z
@@ -96,8 +99,8 @@ const envSchema = z
       (e.CORS_ORIGINS.length > 0 && e.CORS_ORIGINS.every((o) => o.startsWith('https://'))),
     { error: 'staging/production need CORS_ORIGINS with https:// URLs (admin, website)' },
   )
-  .refine((e) => !isDeployed(e.NODE_ENV) || e.MEDIA_STORE === 'supabase', {
-    error: 'staging/production must use MEDIA_STORE=supabase (container disks are temporary)',
+  .refine((e) => !isDeployed(e.NODE_ENV) || e.MEDIA_STORE !== 'local', {
+    error: 'staging/production must use MEDIA_STORE=db or supabase (container disks are temporary)',
   });
 
 function isDeployed(env: string) {

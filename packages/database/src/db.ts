@@ -1283,6 +1283,13 @@ export interface WorkoutTemplates {
   updated_at: Generated<Timestamp>;
 }
 
+export interface MediaObjects {
+  content_type: string;
+  created_at: Generated<Timestamp>;
+  data: Buffer;
+  key: string;
+}
+
 export interface ProgressPhotos {
   content_type: string;
   created_at: Generated<Timestamp>;
@@ -1506,6 +1513,7 @@ export interface DB {
   member_link_codes: MemberLinkCodes;
   member_notes: MemberNotes;
   member_nutrition_plans: MemberNutritionPlans;
+  media_objects: MediaObjects;
   members: Members;
   membership_overview: MembershipOverview;
   membership_pauses: MembershipPauses;
