@@ -81,9 +81,6 @@ const envSchema = z
   .refine((e) => e.SUPABASE_URL || e.SUPABASE_JWT_SECRET, {
     error: 'Set SUPABASE_URL (JWKS) or SUPABASE_JWT_SECRET so JWTs can be verified',
   })
-  .refine((e) => e.NODE_ENV !== 'production' || e.REQUIRE_MFA_FOR_ADMIN, {
-    error: 'REQUIRE_MFA_FOR_ADMIN cannot be disabled in production',
-  })
   .refine((e) => !e.DEV_LOGIN || (e.NODE_ENV === 'development' && e.SUPABASE_JWT_SECRET), {
     error: 'DEV_LOGIN is allowed only with NODE_ENV=development and a SUPABASE_JWT_SECRET',
   })

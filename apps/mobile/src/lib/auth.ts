@@ -183,6 +183,17 @@ export async function setNewPassword(password: string) {
   useAuth.setState({ recovery: false });
 }
 
+/** Signed in: confirm the current password, then set the new one. */
+export async function changePassword(current: string, next: string) {
+  const { data } = await sb().auth.getUser();
+  const email = data.user?.email;
+  if (!email) throw new ApiError(401, 'UNAUTHENTICATED', 'app.auth.invalid_credentials');
+  const check = await sb().auth.signInWithPassword({ email, password: current });
+  if (check.error) throw new ApiError(400, 'BUSINESS_RULE', 'app.auth.current_password_wrong');
+  const { error } = await sb().auth.updateUser({ password: next });
+  if (error) throw new ApiError(400, 'BUSINESS_RULE', 'app.auth.password_update_failed');
+}
+
 /** Google sign-in (web). Until Google is switched on in Supabase it explains that it is coming. */
 export async function signInWithGoogle() {
   const url = process.env.EXPO_PUBLIC_SUPABASE_URL;

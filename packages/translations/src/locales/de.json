@@ -92,7 +92,11 @@
       "new_password": "Neues Passwort",
       "repeat_password": "Passwort wiederholen",
       "save_password": "Passwort speichern",
-      "password_mismatch": "Die Passwörter stimmen nicht überein."
+      "password_mismatch": "Die Passwörter stimmen nicht überein.",
+      "change_password": "Passwort ändern",
+      "current_password": "Aktuelles Passwort",
+      "current_password_wrong": "Das aktuelle Passwort ist falsch.",
+      "password_changed": "Dein Passwort wurde geändert."
     },
     "settings": {
       "title": "Einstellungen",

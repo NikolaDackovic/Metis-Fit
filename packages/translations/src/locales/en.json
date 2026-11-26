@@ -2330,7 +2330,11 @@
       "new_password": "New password",
       "repeat_password": "Repeat password",
       "save_password": "Save password",
-      "password_mismatch": "The passwords do not match."
+      "password_mismatch": "The passwords do not match.",
+      "change_password": "Change password",
+      "current_password": "Current password",
+      "current_password_wrong": "The current password is not correct.",
+      "password_changed": "Your password has been changed."
     },
     "home": {
       "greeting": {

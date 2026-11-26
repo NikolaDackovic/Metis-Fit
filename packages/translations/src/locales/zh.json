@@ -92,7 +92,11 @@
       "new_password": "新密码",
       "repeat_password": "重复密码",
       "save_password": "保存密码",
-      "password_mismatch": "两次输入的密码不一致。"
+      "password_mismatch": "两次输入的密码不一致。",
+      "change_password": "修改密码",
+      "current_password": "当前密码",
+      "current_password_wrong": "当前密码不正确。",
+      "password_changed": "密码已修改。"
     },
     "settings": {
       "title": "设置",

@@ -92,7 +92,11 @@
       "new_password": "Nouveau mot de passe",
       "repeat_password": "Répète le mot de passe",
       "save_password": "Enregistrer",
-      "password_mismatch": "Les mots de passe ne correspondent pas."
+      "password_mismatch": "Les mots de passe ne correspondent pas.",
+      "change_password": "Changer le mot de passe",
+      "current_password": "Mot de passe actuel",
+      "current_password_wrong": "Le mot de passe actuel est incorrect.",
+      "password_changed": "Ton mot de passe a été modifié."
     },
     "settings": {
       "title": "Réglages",

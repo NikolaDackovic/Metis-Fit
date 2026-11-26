@@ -22,10 +22,18 @@ describe('env guards', () => {
     expect(loadEnv({ ...base, NODE_ENV: 'development', DEV_LOGIN: 'true' }).DEV_LOGIN).toBe(true);
   });
 
-  it('refuses disabling MFA in production', () => {
-    expect(() =>
-      loadEnv({ ...base, NODE_ENV: 'production', REQUIRE_MFA_FOR_ADMIN: 'false' }),
-    ).toThrow(/MFA/);
+  it('MFA for the admin is on by default; the platform owner may switch it off', () => {
+    const prod = {
+      DATABASE_URL: 'postgres://x',
+      QR_TOKEN_SECRET: 'q'.repeat(40),
+      NODE_ENV: 'production',
+      SUPABASE_URL: 'https://abc.supabase.co',
+      SUPABASE_SERVICE_ROLE_KEY: 'service-key',
+      CORS_ORIGINS: 'https://admin.example.rs',
+      MEDIA_STORE: 'supabase',
+    };
+    expect(loadEnv(prod).REQUIRE_MFA_FOR_ADMIN).toBe(true);
+    expect(loadEnv({ ...prod, REQUIRE_MFA_FOR_ADMIN: 'false' }).REQUIRE_MFA_FOR_ADMIN).toBe(false);
   });
 
   it('production needs JWKS, https CORS and remote media storage', () => {

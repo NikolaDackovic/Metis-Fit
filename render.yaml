@@ -27,8 +27,9 @@ services:
         value: info
       - key: CORS_ORIGINS
         value: https://admin.fit.metis.rs,https://fit.metis.rs
+      # Two-step sign-in for owners/managers in the admin: off for now (owner's choice), true to require it.
       - key: REQUIRE_MFA_FOR_ADMIN
-        value: true
+        value: false
       - key: DEV_LOGIN
         value: false
       - key: MEDIA_STORE

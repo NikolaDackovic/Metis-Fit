@@ -494,7 +494,11 @@
       "new_password": "كلمة مرور جديدة",
       "repeat_password": "كرر كلمة المرور",
       "save_password": "حفظ كلمة المرور",
-      "password_mismatch": "كلمتا المرور غير متطابقتين."
+      "password_mismatch": "كلمتا المرور غير متطابقتين.",
+      "change_password": "تغيير كلمة المرور",
+      "current_password": "كلمة المرور الحالية",
+      "current_password_wrong": "كلمة المرور الحالية غير صحيحة.",
+      "password_changed": "تم تغيير كلمة المرور."
     },
     "home": {
       "greeting": {

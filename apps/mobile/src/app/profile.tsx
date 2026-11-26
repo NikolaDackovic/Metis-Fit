@@ -11,6 +11,7 @@ import {
   Download,
   FileText,
   IdCard,
+  KeyRound,
   Link2,
   LogOut,
   Mail,
@@ -134,6 +135,14 @@ export default function ProfileScreen() {
         />
         {member && (
           <Row icon={IdCard} label={t('app.hub.membership')} onPress={go('/membership')} divider />
+        )}
+        {AUTH_MODE !== 'dev' && (
+          <Row
+            icon={KeyRound}
+            label={t('app.auth.change_password')}
+            onPress={go('/change-password')}
+            divider
+          />
         )}
       </Card>
 

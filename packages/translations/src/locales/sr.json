@@ -2354,7 +2354,11 @@
       "new_password": "Nova lozinka",
       "repeat_password": "Ponovi lozinku",
       "save_password": "Sačuvaj lozinku",
-      "password_mismatch": "Lozinke se ne poklapaju."
+      "password_mismatch": "Lozinke se ne poklapaju.",
+      "change_password": "Promeni lozinku",
+      "current_password": "Trenutna lozinka",
+      "current_password_wrong": "Trenutna lozinka nije tačna.",
+      "password_changed": "Lozinka je promenjena."
     },
     "home": {
       "greeting": {
