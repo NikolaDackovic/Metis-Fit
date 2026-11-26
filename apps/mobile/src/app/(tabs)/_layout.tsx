@@ -7,6 +7,7 @@ import {
   HeartPulse,
   House,
   QrCode,
+  UserRound,
 } from 'lucide-react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
@@ -20,9 +21,8 @@ import { registerForPush, usePushNavigation } from '@/lib/push';
 import { color, fonts } from '@/theme';
 
 /**
- * Bottom navigation, four clear places and the entry QR in the middle:
- * Home (today) · Training · [QR] · Health (life outside the gym) · Club (membership, café, map...).
- * Profile opens from the avatar on Home.
+ * Bottom navigation with the entry QR exactly in the middle:
+ * Home · Training · Health · [QR] · Club (Work for trainers) · Profile · More.
  */
 export default function TabsLayout() {
   const { t } = useTranslation();
@@ -81,6 +81,15 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="health"
+        options={{
+          title: t('app.tabs.health'),
+          tabBarIcon: ({ focused, size }) => (
+            <HeartPulse size={size} color={focused ? color.accent[400] : color.text.secondary} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="qr"
         options={{
           title: t('app.tabs.qr'),
@@ -97,15 +106,6 @@ export default function TabsLayout() {
                 <QrCode size={28} color={color.onAccent} />
               </Pressable>
             </View>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="health"
-        options={{
-          title: t('app.tabs.health'),
-          tabBarIcon: ({ focused, size }) => (
-            <HeartPulse size={size} color={focused ? color.accent[400] : color.text.secondary} />
           ),
         }}
       />
@@ -130,6 +130,24 @@ export default function TabsLayout() {
           tabBarIcon: ({ focused, size }) => (
             <Building2 size={size} color={focused ? color.accent[400] : color.text.secondary} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="me"
+        options={{
+          title: t('app.tabs.profile'),
+          // Profile is its own screen (settings, account); the tab just opens it.
+          tabBarButton: ({ style, children }) => (
+            <Pressable
+              onPress={() => router.push('/profile')}
+              accessibilityRole="link"
+              accessibilityLabel={t('app.tabs.profile')}
+              style={style}
+            >
+              {children}
+            </Pressable>
+          ),
+          tabBarIcon: ({ size }) => <UserRound size={size} color={color.text.secondary} />,
         }}
       />
       <Tabs.Screen

@@ -7,6 +7,7 @@ import {
   HeartPulse,
   House,
   QrCode,
+  UserRound,
   type LucideIcon,
 } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
@@ -26,11 +27,12 @@ export function SubNav() {
   const items: Array<{ key: string; label: string; icon: LucideIcon; href: Href }> = [
     { key: 'home', label: t('app.tabs.home'), icon: House, href: '/(tabs)' },
     { key: 'training', label: t('app.tabs.training'), icon: Dumbbell, href: '/(tabs)/classes' },
-    { key: 'qr', label: t('app.tabs.qr'), icon: QrCode, href: '/card' },
     { key: 'health', label: t('app.tabs.health'), icon: HeartPulse, href: '/(tabs)/health' },
+    { key: 'qr', label: t('app.tabs.qr'), icon: QrCode, href: '/card' },
     isTrainer
       ? { key: 'coach', label: t('app.tabs.coach'), icon: BriefcaseBusiness, href: '/(tabs)/coach' }
       : { key: 'club', label: t('app.tabs.club'), icon: Building2, href: '/(tabs)/club' },
+    { key: 'profile', label: t('app.tabs.profile'), icon: UserRound, href: '/profile' },
     { key: 'more', label: t('app.tabs.more'), icon: Ellipsis, href: '/(tabs)/more' },
   ];
   return (
