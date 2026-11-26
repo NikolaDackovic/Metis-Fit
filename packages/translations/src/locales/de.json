@@ -1734,7 +1734,8 @@
       "my_shifts": "Meine Schichten",
       "shifts": "Schichten und Dienstplan",
       "platform": "Plattform",
-      "ratings": "Bewertungen"
+      "ratings": "Bewertungen",
+      "reception": "Empfang"
     },
     "payments": {
       "fiscal_notice": "Interne Erfassung, kein steuerlicher Beleg. Der steuerliche Beleg wird an der Kasse ausgestellt.",
@@ -3442,6 +3443,29 @@
       "add": "Zeitraum hinzufügen",
       "save": "Zeiten speichern",
       "saved": "Zeiten gespeichert"
+    },
+    "reception": {
+      "title": "Empfang",
+      "subtitle": "Mitglied scannen oder suchen, dann mit einem Klick: Check-in, Verlängerung, Zahlung, Verkauf.",
+      "search": "QR scannen oder Name, Telefon oder Mitgliedsnummer eingeben",
+      "new_member": "Neues Mitglied",
+      "fullscreen": "Vollbild",
+      "checkin": "Check-in",
+      "checkin_hint": "Manueller Einlass nach Mitgliedschaftsregeln",
+      "pay_debt": "Schulden kassieren",
+      "renew": "Mitgliedschaft verlängern",
+      "renew_hint": "Neue Mitgliedschaft oder Paket",
+      "payment": "Zahlung erfassen",
+      "sell": "Leistung verkaufen",
+      "cafe": "Café",
+      "locker": "Spinde",
+      "book": "Kurs buchen",
+      "profile": "Mitgliedsprofil",
+      "no_membership": "Keine gültige Mitgliedschaft",
+      "next": "Nächstes Mitglied",
+      "waiting": "Bereit für das nächste Mitglied",
+      "waiting_hint": "QR-Code mit Scanner oder Kamera scannen oder Name, Telefon oder Nummer eintippen.",
+      "member_created": "Mitglied angelegt"
     }
   }
 }

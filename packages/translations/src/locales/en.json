@@ -476,7 +476,8 @@
       "my_shifts": "My shifts",
       "shifts": "Shifts and schedule",
       "platform": "Platform",
-      "ratings": "Ratings"
+      "ratings": "Ratings",
+      "reception": "Reception"
     },
     "roles": {
       "owner": "Owner",
@@ -2223,6 +2224,29 @@
       "add": "Add period",
       "save": "Save hours",
       "saved": "Hours saved"
+    },
+    "reception": {
+      "title": "Reception",
+      "subtitle": "Scan or find a member, then one click: check in, renew, take payment, sell.",
+      "search": "Scan a QR code or type a name, phone or member number",
+      "new_member": "New member",
+      "fullscreen": "Full screen",
+      "checkin": "Check in",
+      "checkin_hint": "Manual entry, by the membership rules",
+      "pay_debt": "Collect debt",
+      "renew": "Renew membership",
+      "renew_hint": "New membership or package",
+      "payment": "Record payment",
+      "sell": "Sell a service",
+      "cafe": "Café",
+      "locker": "Lockers",
+      "book": "Book a class",
+      "profile": "Member profile",
+      "no_membership": "No valid membership",
+      "next": "Next member",
+      "waiting": "Ready for the next member",
+      "waiting_hint": "Scan the QR code with the reader or camera, or start typing a name, phone or member number.",
+      "member_created": "Member added"
     }
   },
   "app": {

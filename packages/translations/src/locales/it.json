@@ -1734,7 +1734,8 @@
       "my_shifts": "I miei turni",
       "shifts": "Turni e orario",
       "platform": "Piattaforma",
-      "ratings": "Valutazioni"
+      "ratings": "Valutazioni",
+      "reception": "Reception"
     },
     "payments": {
       "fiscal_notice": "Registrazione interna, non è uno scontrino fiscale. Lo scontrino fiscale viene emesso alla cassa.",
@@ -3442,6 +3443,29 @@
       "add": "Aggiungi periodo",
       "save": "Salva orari",
       "saved": "Orari salvati"
+    },
+    "reception": {
+      "title": "Reception",
+      "subtitle": "Scansiona o trova un socio, poi con un clic: ingresso, rinnovo, pagamento, vendita.",
+      "search": "Scansiona un QR o scrivi nome, telefono o numero socio",
+      "new_member": "Nuovo socio",
+      "fullscreen": "Schermo intero",
+      "checkin": "Registra ingresso",
+      "checkin_hint": "Ingresso manuale secondo l’abbonamento",
+      "pay_debt": "Incassa il debito",
+      "renew": "Rinnova abbonamento",
+      "renew_hint": "Nuovo abbonamento o pacchetto",
+      "payment": "Registra pagamento",
+      "sell": "Vendi un servizio",
+      "cafe": "Bar",
+      "locker": "Armadietti",
+      "book": "Prenota un corso",
+      "profile": "Profilo socio",
+      "no_membership": "Nessun abbonamento valido",
+      "next": "Socio successivo",
+      "waiting": "Pronto per il prossimo socio",
+      "waiting_hint": "Scansiona il QR con il lettore o la fotocamera, o inizia a scrivere nome, telefono o numero.",
+      "member_created": "Socio aggiunto"
     }
   }
 }

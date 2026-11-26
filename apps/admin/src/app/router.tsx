@@ -4,6 +4,7 @@ import { Skeleton } from '@/components/ui/States';
 import { RouteError } from './RouteError';
 import { AttendancePage } from '@/features/checkin/AttendancePage';
 import { CheckinPage } from '@/features/checkin/CheckinPage';
+import { ReceptionPage } from '@/features/checkin/ReceptionPage';
 import { KioskPage } from '@/features/checkin/KioskPage';
 import { RatingsPage } from '@/features/ratings/RatingsPage';
 import { PtRequestsPage } from '@/features/classes/PtRequestsPage';
@@ -76,6 +77,14 @@ const router = createBrowserRouter([
                 <Suspense fallback={<Skeleton className="h-96" />}>
                   <DashboardPage />
                 </Suspense>
+              </RequirePermission>
+            ),
+          },
+          {
+            path: 'reception',
+            element: (
+              <RequirePermission permission="attendance.checkin">
+                <ReceptionPage />
               </RequirePermission>
             ),
           },

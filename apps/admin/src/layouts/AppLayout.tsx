@@ -9,6 +9,7 @@ import {
   Handshake,
   Salad,
   BellRing,
+  ConciergeBell,
   CalendarRange,
   ShieldCheck,
   HandCoins,
@@ -77,6 +78,13 @@ const NAV: Array<{
     label: 'admin.nav.alerts',
     icon: BellRing,
     permission: 'alerts.read',
+  },
+  {
+    to: '/reception',
+    group: 'front',
+    label: 'admin.nav.reception',
+    icon: ConciergeBell,
+    permission: 'attendance.checkin',
   },
   {
     to: '/checkin',

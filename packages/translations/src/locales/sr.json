@@ -476,7 +476,8 @@
       "my_shifts": "Moje smene",
       "shifts": "Smene i raspored",
       "platform": "Platforma",
-      "ratings": "Ocene"
+      "ratings": "Ocene",
+      "reception": "Recepcija"
     },
     "roles": {
       "owner": "Vlasnik",
@@ -2247,6 +2248,29 @@
       "add": "Dodaj period",
       "save": "Sačuvaj termine",
       "saved": "Termini su sačuvani"
+    },
+    "reception": {
+      "title": "Recepcija",
+      "subtitle": "Skeniraj ili pronađi člana, pa jednim klikom: dolazak, produženje, naplata, prodaja.",
+      "search": "Skeniraj QR ili upiši ime, telefon ili broj člana",
+      "new_member": "Novi član",
+      "fullscreen": "Ceo ekran",
+      "checkin": "Zabeleži dolazak",
+      "checkin_hint": "Ručni ulaz, po pravilima članarine",
+      "pay_debt": "Naplati dug",
+      "renew": "Produži članarinu",
+      "renew_hint": "Nova članarina ili paket",
+      "payment": "Evidentiraj uplatu",
+      "sell": "Prodaj uslugu",
+      "cafe": "Kafić",
+      "locker": "Garderoba",
+      "book": "Rezerviši trening",
+      "profile": "Profil člana",
+      "no_membership": "Nema važeću članarinu",
+      "next": "Sledeći član",
+      "waiting": "Spremno za sledećeg člana",
+      "waiting_hint": "Skeniraj QR kod čitačem ili kamerom, ili počni da kucaš ime, telefon ili broj člana.",
+      "member_created": "Član je dodat"
     }
   },
   "app": {

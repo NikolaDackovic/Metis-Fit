@@ -1734,7 +1734,8 @@
       "my_shifts": "Mis turnos",
       "shifts": "Turnos y horario",
       "platform": "Plataforma",
-      "ratings": "Valoraciones"
+      "ratings": "Valoraciones",
+      "reception": "Recepción"
     },
     "payments": {
       "fiscal_notice": "Registro interno: no es un recibo fiscal. El recibo fiscal se emite en caja.",
@@ -3442,6 +3443,29 @@
       "add": "Añadir periodo",
       "save": "Guardar horas",
       "saved": "Horas guardadas"
+    },
+    "reception": {
+      "title": "Recepción",
+      "subtitle": "Escanea o busca un socio y con un clic: entrada, renovación, cobro, venta.",
+      "search": "Escanea un QR o escribe nombre, teléfono o número de socio",
+      "new_member": "Nuevo socio",
+      "fullscreen": "Pantalla completa",
+      "checkin": "Registrar entrada",
+      "checkin_hint": "Entrada manual según la membresía",
+      "pay_debt": "Cobrar deuda",
+      "renew": "Renovar membresía",
+      "renew_hint": "Nueva membresía o paquete",
+      "payment": "Registrar pago",
+      "sell": "Vender servicio",
+      "cafe": "Cafetería",
+      "locker": "Taquillas",
+      "book": "Reservar clase",
+      "profile": "Perfil del socio",
+      "no_membership": "Sin membresía válida",
+      "next": "Siguiente socio",
+      "waiting": "Listo para el siguiente socio",
+      "waiting_hint": "Escanea el QR con el lector o la cámara, o empieza a escribir nombre, teléfono o número.",
+      "member_created": "Socio añadido"
     }
   }
 }

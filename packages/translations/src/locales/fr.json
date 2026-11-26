@@ -1757,7 +1757,8 @@
       "my_shifts": "Mes équipes",
       "shifts": "Équipes et planning",
       "platform": "Plateforme",
-      "ratings": "Avis"
+      "ratings": "Avis",
+      "reception": "Accueil"
     },
     "payments": {
       "fiscal_notice": "Enregistrement interne, pas un reçu fiscal. Le reçu fiscal est émis à la caisse.",
@@ -3489,6 +3490,29 @@
       "add": "Ajouter une période",
       "save": "Enregistrer les horaires",
       "saved": "Horaires enregistrés"
+    },
+    "reception": {
+      "title": "Accueil",
+      "subtitle": "Scanne ou trouve un membre, puis en un clic : entrée, renouvellement, paiement, vente.",
+      "search": "Scanne un QR ou tape un nom, un téléphone ou un numéro de membre",
+      "new_member": "Nouveau membre",
+      "fullscreen": "Plein écran",
+      "checkin": "Enregistrer l’entrée",
+      "checkin_hint": "Entrée manuelle selon l’abonnement",
+      "pay_debt": "Encaisser la dette",
+      "renew": "Renouveler l’abonnement",
+      "renew_hint": "Nouvel abonnement ou forfait",
+      "payment": "Enregistrer un paiement",
+      "sell": "Vendre un service",
+      "cafe": "Café",
+      "locker": "Casiers",
+      "book": "Réserver un cours",
+      "profile": "Profil du membre",
+      "no_membership": "Aucun abonnement valide",
+      "next": "Membre suivant",
+      "waiting": "Prêt pour le membre suivant",
+      "waiting_hint": "Scanne le QR avec le lecteur ou la caméra, ou commence à taper un nom, un téléphone ou un numéro.",
+      "member_created": "Membre ajouté"
     }
   }
 }

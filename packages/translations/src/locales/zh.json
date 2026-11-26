@@ -1711,7 +1711,8 @@
       "my_shifts": "我的班次",
       "shifts": "班次与排班",
       "platform": "平台",
-      "ratings": "评价"
+      "ratings": "评价",
+      "reception": "前台"
     },
     "payments": {
       "fiscal_notice": "内部记录，并非税务收据。税务收据在收银台开具。",
@@ -3395,6 +3396,29 @@
       "add": "添加时间段",
       "save": "保存时间",
       "saved": "时间已保存"
+    },
+    "reception": {
+      "title": "前台",
+      "subtitle": "扫描或查找会员，然后一键完成：入场、续费、收款、销售。",
+      "search": "扫描二维码或输入姓名、电话或会员号",
+      "new_member": "新会员",
+      "fullscreen": "全屏",
+      "checkin": "登记入场",
+      "checkin_hint": "按会员卡规则手动入场",
+      "pay_debt": "收取欠款",
+      "renew": "续费会员卡",
+      "renew_hint": "新会员卡或套餐",
+      "payment": "登记收款",
+      "sell": "销售服务",
+      "cafe": "咖啡厅",
+      "locker": "储物柜",
+      "book": "预约课程",
+      "profile": "会员资料",
+      "no_membership": "没有有效会员卡",
+      "next": "下一位会员",
+      "waiting": "准备接待下一位会员",
+      "waiting_hint": "用扫描器或摄像头扫描二维码，或开始输入姓名、电话或会员号。",
+      "member_created": "会员已添加"
     }
   }
 }

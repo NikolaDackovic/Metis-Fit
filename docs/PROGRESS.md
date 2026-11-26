@@ -1,5 +1,12 @@
 # GRIT DIGITAL CLUB - Dnevnik napretka
 
+## F17-1 - Recepcijski režim (2026-11-26) · status: **završeno**
+
+| Oblast            | Stanje                                                                                                                                                                                                                                                                                                                                                                                    |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Admin → Recepcija | Jedan ekran za pult: veliko polje (QR čitač ili kamera, ili ime, telefon, broj člana), kartica člana (paket, status, ističe, preostali dolasci, dug), velika dugmad: Zabeleži dolazak, Naplati dug ili Evidentiraj uplatu, Produži članarinu, Prodaj uslugu, Kafić, Garderoba, Rezerviši trening, Profil; Novi član (pa odmah članarina); Ceo ekran; desno ko je u klubu i današnji ulazi |
+| Dozvole           | Svako dugme prati dozvole zaposlenog (vlasnik ih podešava u "Osoblje i prava", po ulozi); recepcija posle prijave odmah dolazi na ovaj ekran                                                                                                                                                                                                                                                            |
+
 ## F16 - Ispravke posle pregleda: registracija, "Više", tema, mape, upozorenja (2026-11-22) · status: **završeno**
 
 Ko kako koristi sistem: [TOKOVI.md](TOKOVI.md).

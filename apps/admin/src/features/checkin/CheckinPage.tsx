@@ -166,7 +166,7 @@ export function CheckinPage() {
   );
 }
 
-function ResultPanel({
+export function ResultPanel({
   result,
   error,
   canOverride,
@@ -405,7 +405,7 @@ function ManualCheckin({
   );
 }
 
-function RecentAttempts() {
+export function RecentAttempts() {
   const { t } = useTranslation();
   const f = useFormat();
   const today = clubToday();

@@ -10,7 +10,7 @@ export function HomeRedirect() {
   const to = can('reports.read')
     ? '/dashboard'
     : can('attendance.checkin')
-      ? '/checkin'
+      ? '/reception'
       : '/members';
   return <Navigate to={to} replace />;
 }
