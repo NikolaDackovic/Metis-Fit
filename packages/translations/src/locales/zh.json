@@ -1776,7 +1776,8 @@
       "platform": "平台",
       "ratings": "评价",
       "reception": "前台",
-      "templates": "训练计划模板"
+      "templates": "训练计划模板",
+      "more": "更多"
     },
     "payments": {
       "fiscal_notice": "内部记录，并非税务收据。税务收据在收银台开具。",

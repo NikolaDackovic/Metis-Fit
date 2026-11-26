@@ -489,7 +489,8 @@
       "platform": "Platforma",
       "ratings": "Ocene",
       "reception": "Recepcija",
-      "templates": "Šabloni programa"
+      "templates": "Šabloni programa",
+      "more": "Više"
     },
     "roles": {
       "owner": "Vlasnik",

@@ -1799,7 +1799,8 @@
       "platform": "Plattform",
       "ratings": "Bewertungen",
       "reception": "Empfang",
-      "templates": "Programmvorlagen"
+      "templates": "Programmvorlagen",
+      "more": "Mehr"
     },
     "payments": {
       "fiscal_notice": "Interne Erfassung, kein steuerlicher Beleg. Der steuerliche Beleg wird an der Kasse ausgestellt.",

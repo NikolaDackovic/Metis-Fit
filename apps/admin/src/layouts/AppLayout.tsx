@@ -1,4 +1,6 @@
 import {
+  LayoutGrid,
+  X,
   CalendarCheck,
   CalendarDays,
   Timer,
@@ -44,7 +46,7 @@ import type { AlertsDto } from '@grit/validation';
 import { useQuery } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, Outlet } from 'react-router';
+import { NavLink, Outlet, useLocation } from 'react-router';
 import { LanguageSelect } from '@/components/LanguageSelect';
 import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/components/ui/cn';
@@ -55,6 +57,9 @@ import { api } from '@/lib/api';
 import { useCan, useMe } from '@/lib/me';
 import { ClubSwitcher, PendingBanner } from '@/features/clubs/ClubSwitcher';
 import { BrandMark } from './BrandMark';
+
+/** Tabs in the phone bottom bar before "More". */
+const PHONE_TABS = 4;
 
 type NavGroup = 'front' | 'training' | 'cafe' | 'content' | 'business' | 'team' | 'club';
 /** Grouped by who uses it: reception, trainers, content for the member app, the facility. */
@@ -358,6 +363,9 @@ export function AppLayout() {
   );
   const alerts = useAlertCount(can('alerts.read'));
   const [accountOpen, setAccountOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const { pathname } = useLocation();
+  const inMore = !items.slice(0, PHONE_TABS).some((n) => pathname.startsWith(n.to));
 
   return (
     <div className="flex min-h-dvh">
@@ -479,8 +487,8 @@ export function AppLayout() {
         aria-label={t('admin.nav.main')}
         className="fixed inset-x-0 bottom-0 z-30 flex border-t border-border-subtle bg-bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
       >
-        {/* Phones: at most 5 thumb-reachable tabs; plan editing is a desktop task. */}
-        {items.slice(0, 5).map(({ to, label, icon: Icon }) => (
+        {/* Phones: four thumb-reachable tabs, then "More" with everything else in desktop order. */}
+        {items.slice(0, PHONE_TABS).map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
             to={to}
@@ -501,7 +509,38 @@ export function AppLayout() {
             )}
           </NavLink>
         ))}
+        <button
+          type="button"
+          onClick={() => setMoreOpen(true)}
+          aria-expanded={moreOpen}
+          className={cn(
+            'relative flex h-16 flex-1 flex-col items-center justify-center gap-1 text-[11px] font-semibold',
+            inMore
+              ? 'text-text-primary after:absolute after:top-0 after:h-[3px] after:w-8 after:rounded-b-full after:bg-accent-500'
+              : 'text-text-secondary',
+          )}
+        >
+          <span className="relative">
+            <LayoutGrid className={cn('size-5', inMore && 'text-accent-400')} aria-hidden />
+            {alerts > 0 && (
+              <span className="absolute -end-2 -top-1 size-2.5 rounded-full bg-accent-500" />
+            )}
+          </span>
+          {t('admin.nav.more')}
+        </button>
       </nav>
+
+      {moreOpen && (
+        <PhoneMenu
+          items={items}
+          alerts={alerts}
+          onClose={() => setMoreOpen(false)}
+          onAccount={() => {
+            setMoreOpen(false);
+            setAccountOpen(true);
+          }}
+        />
+      )}
 
       <Modal
         open={accountOpen}
@@ -511,6 +550,94 @@ export function AppLayout() {
       >
         <AccountPanel />
       </Modal>
+    </div>
+  );
+}
+
+type NavItem = (typeof NAV)[number];
+
+/** Phone "More": every admin page in the same order and groups as the desktop sidebar. */
+function PhoneMenu({
+  items,
+  alerts,
+  onClose,
+  onAccount,
+}: {
+  items: NavItem[];
+  alerts: number;
+  onClose: () => void;
+  onAccount: () => void;
+}) {
+  const { t } = useTranslation();
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('admin.nav.more')}
+      className="fixed inset-0 z-40 flex flex-col bg-bg-base md:hidden"
+    >
+      <div className="flex h-14 shrink-0 items-center justify-between border-b border-border-subtle px-4">
+        <span className="text-base font-bold">{t('admin.nav.more')}</span>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={t('common.close')}
+          className="flex size-10 items-center justify-center rounded-full text-text-secondary hover:text-text-primary"
+        >
+          <X className="size-5" aria-hidden />
+        </button>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 pt-3 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+        <div className="-mx-3">
+          <ClubSwitcher />
+        </div>
+        {items.map(({ to, group, label, icon: Icon }, i) => (
+          <Fragment key={to}>
+            {group && group !== items[i - 1]?.group && (
+              <p className="mt-4 mb-1 px-1 text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+                {t(`admin.nav.group.${group}`)}
+              </p>
+            )}
+            <NavLink
+              to={to}
+              end={to === '/cafe'}
+              onClick={onClose}
+              className={({ isActive }) =>
+                cn(
+                  'flex min-h-12 items-center gap-3 rounded-sm px-3 text-[15px] font-semibold',
+                  isActive ? 'bg-accent-tint text-text-primary' : 'text-text-secondary',
+                )
+              }
+            >
+              <Icon className="size-5 shrink-0" aria-hidden />
+              <span className="min-w-0 flex-1 truncate">{t(label)}</span>
+              {to === '/alerts' && alerts > 0 && (
+                <span className="min-w-[20px] rounded-full bg-accent-500 px-1.5 text-center text-[11px] leading-5 font-bold text-on-accent">
+                  {alerts > 99 ? '99+' : alerts}
+                </span>
+              )}
+            </NavLink>
+          </Fragment>
+        ))}
+        <div className="mt-4 border-t border-border-subtle pt-3">
+          <NavLink
+            to="/settings"
+            onClick={onClose}
+            className="flex min-h-12 items-center gap-3 rounded-sm px-3 text-[15px] font-semibold text-text-secondary"
+          >
+            <Settings className="size-5" aria-hidden />
+            {t('admin.nav.settings')}
+          </NavLink>
+          <button
+            type="button"
+            onClick={onAccount}
+            className="flex min-h-12 w-full items-center gap-3 rounded-sm px-3 text-[15px] font-semibold text-text-secondary"
+          >
+            <UserCircle2 className="size-5" aria-hidden />
+            {t('admin.nav.account')}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

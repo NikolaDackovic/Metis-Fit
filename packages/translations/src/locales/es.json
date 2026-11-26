@@ -1799,7 +1799,8 @@
       "platform": "Plataforma",
       "ratings": "Valoraciones",
       "reception": "Recepción",
-      "templates": "Plantillas de programa"
+      "templates": "Plantillas de programa",
+      "more": "Más"
     },
     "payments": {
       "fiscal_notice": "Registro interno: no es un recibo fiscal. El recibo fiscal se emite en caja.",

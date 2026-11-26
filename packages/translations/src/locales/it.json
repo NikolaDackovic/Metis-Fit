@@ -1799,7 +1799,8 @@
       "platform": "Piattaforma",
       "ratings": "Valutazioni",
       "reception": "Reception",
-      "templates": "Modelli di programma"
+      "templates": "Modelli di programma",
+      "more": "Altro"
     },
     "payments": {
       "fiscal_notice": "Registrazione interna, non è uno scontrino fiscale. Lo scontrino fiscale viene emesso alla cassa.",

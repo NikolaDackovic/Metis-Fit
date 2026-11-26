@@ -489,7 +489,8 @@
       "platform": "Платформа",
       "ratings": "Оценки",
       "reception": "Ресепшен",
-      "templates": "Шаблоны программ"
+      "templates": "Шаблоны программ",
+      "more": "Ещё"
     },
     "roles": {
       "owner": "Владелец",

@@ -489,7 +489,8 @@
       "platform": "Platform",
       "ratings": "Ratings",
       "reception": "Reception",
-      "templates": "Program templates"
+      "templates": "Program templates",
+      "more": "More"
     },
     "roles": {
       "owner": "Owner",

@@ -1822,7 +1822,8 @@
       "platform": "Plateforme",
       "ratings": "Avis",
       "reception": "Accueil",
-      "templates": "Modèles de programme"
+      "templates": "Modèles de programme",
+      "more": "Plus"
     },
     "payments": {
       "fiscal_notice": "Enregistrement interne, pas un reçu fiscal. Le reçu fiscal est émis à la caisse.",
