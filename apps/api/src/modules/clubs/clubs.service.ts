@@ -193,14 +193,13 @@ export function createClubsService(db: Kysely<DB>, media?: MediaStore) {
         const rows = await tx
           .selectFrom('clubs')
           .select(['id', 'slug', 'name', 'city'])
-          // The gym's own logo (settings are per gym; this runs across gyms as the API owner).
-          .select((eb) =>
-            eb
-              .selectFrom('settings')
-              .whereRef('settings.club_id', '=', 'clubs.id')
-              .where('settings.key', '=', 'club.logo')
-              .select(sql<string | null>`settings.value #>> '{}'`.as('v'))
-              .as('logo'),
+          // Each gym's logo: settings are isolated per gym, so the paths come from a function.
+          .select(
+            sql<
+              string | null
+            >`(select l.path from public.club_logo_paths() l where l.club_id = clubs.id)`.as(
+              'logo',
+            ),
           )
           .where('status', '=', 'active')
           .$if(Boolean(term), (x) =>
