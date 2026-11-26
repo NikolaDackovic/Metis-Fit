@@ -5,7 +5,7 @@ import QRCode from 'qrcode';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
-import { BrandMark } from '@/layouts/BrandMark';
+import { GymOrPlatformMark } from '@/layouts/BrandMark';
 import { api } from '@/lib/api';
 
 /**
@@ -63,7 +63,7 @@ export function KioskPage() {
       >
         <Maximize2 className="size-5" />
       </button>
-      <BrandMark className="h-12 w-auto" />
+      <GymOrPlatformMark className="h-12 w-auto" />
       {latest ? (
         <div
           role="status"

@@ -110,7 +110,7 @@ export async function mfaEnrollIfNeeded(): Promise<{
   if (verified) return null;
   const { data: enrolled, error } = await sb().auth.mfa.enroll({
     factorType: 'totp',
-    friendlyName: 'GRIT Admin',
+    friendlyName: 'Metis Fit Admin',
   });
   if (error || !enrolled) throw new ApiError(400, 'BUSINESS_RULE', 'admin.mfa.enroll_failed');
   return { factorId: enrolled.id, qrCode: enrolled.totp.qr_code, secret: enrolled.totp.secret };

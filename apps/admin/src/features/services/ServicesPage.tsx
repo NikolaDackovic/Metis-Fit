@@ -1,3 +1,4 @@
+import { PLATFORM_NAME } from '@grit/design-tokens';
 import {
   SERVICE_PAYMENT_METHODS,
   type ServiceBody,
@@ -103,7 +104,7 @@ function SellTab() {
   const n = Math.max(1, Number(qty) || 1);
   const receipt = (s: ServiceSaleDto) =>
     printReceipt({
-      club: String(club.data?.info.name ?? 'GRIT'),
+      club: String(club.data?.info.name ?? PLATFORM_NAME),
       title: t('admin.receipt.title'),
       number: s.id.slice(0, 8).toUpperCase(),
       date: f.dateTime(s.soldAt),

@@ -32,6 +32,7 @@ import { FinancePage } from '@/features/purchases/FinancePage';
 import { BusinessPage } from '@/features/business/BusinessPage';
 import { NutritionPage } from '@/features/nutrition/NutritionPage';
 import { ClientsPage } from '@/features/workouts/ClientsPage';
+import { TemplatesPage } from '@/features/workouts/TemplatesPage';
 import { ExercisesPage } from '@/features/workouts/ExercisesPage';
 import { EquipmentPage } from '@/features/facility/EquipmentPage';
 import { MaintenancePage } from '@/features/facility/MaintenancePage';
@@ -329,6 +330,14 @@ const router = createBrowserRouter([
             element: (
               <RequirePermission permission="exercises.manage">
                 <ExercisesPage />
+              </RequirePermission>
+            ),
+          },
+          {
+            path: 'workout-templates',
+            element: (
+              <RequirePermission permission="progress.view_clients">
+                <TemplatesPage />
               </RequirePermission>
             ),
           },

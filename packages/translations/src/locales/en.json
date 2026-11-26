@@ -374,6 +374,13 @@
       "barcode_not_found": "There is no data for this barcode.",
       "limit_reached": "You have the maximum number of your own foods (300).",
       "duplicate_barcode": "You already have a food with this barcode."
+    },
+    "template": {
+      "not_yours": "Only the author or a manager can change this template.",
+      "exercise": "The template has an exercise that no longer exists."
+    },
+    "workout_template": {
+      "not_found": "Template not found."
     }
   },
   "validation": {
@@ -477,7 +484,8 @@
       "shifts": "Shifts and schedule",
       "platform": "Platform",
       "ratings": "Ratings",
-      "reception": "Reception"
+      "reception": "Reception",
+      "templates": "Program templates"
     },
     "roles": {
       "owner": "Owner",
@@ -2247,6 +2255,24 @@
       "waiting": "Ready for the next member",
       "waiting_hint": "Scan the QR code with the reader or camera, or start typing a name, phone or member number.",
       "member_created": "Member added"
+    },
+    "templates": {
+      "title": "Program templates",
+      "subtitle": "Write a program once and give it to clients; each gets their own copy you can adjust later.",
+      "new": "New template",
+      "empty": "No templates yet",
+      "empty_hint": "Create one, or save an existing plan as a template from a client.",
+      "shared": "Shared",
+      "shared_label": "Shared with all trainers",
+      "saved": "Template saved",
+      "save_as": "Save as template",
+      "assign": "Give to clients",
+      "assign_title": "Give: {{title}}",
+      "assign_hint": "Pick clients. Each gets their own plan, which you can change separately.",
+      "assign_n": "Give (selected: {{n}})",
+      "assigned": "Program given: {{n}}",
+      "no_clients": "No clients to choose from.",
+      "delete_confirm": "Delete template \"{{title}}\"? Plans already given stay."
     }
   },
   "app": {
@@ -3273,7 +3299,17 @@
       "waist": "waist",
       "goals": "Goals",
       "recent": "Recent workouts",
-      "no_workouts": "No workouts logged yet."
+      "no_workouts": "No workouts logged yet.",
+      "assign_title": "Give a program",
+      "no_templates": "No templates yet",
+      "no_templates_text": "Create templates in the admin (Program templates) or save an existing plan as a template.",
+      "give": "Give",
+      "give_program": "Give a program",
+      "stat_clients": "clients",
+      "stat_today": "today",
+      "stat_programs": "programs",
+      "stat_waiting": "waiting",
+      "waiting_title": "Waiting for a program"
     },
     "plan_day": {
       "today": "Today on the plan",

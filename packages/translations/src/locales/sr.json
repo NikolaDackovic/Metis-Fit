@@ -374,6 +374,13 @@
       "barcode_not_found": "Za ovaj bar-kod nema podataka.",
       "limit_reached": "Imaš najveći broj svojih namirnica (300).",
       "duplicate_barcode": "Već imaš namirnicu sa ovim bar-kodom."
+    },
+    "template": {
+      "not_yours": "Ovaj šablon može da menja samo njegov autor ili menadžer.",
+      "exercise": "Šablon sadrži vežbu koja više ne postoji."
+    },
+    "workout_template": {
+      "not_found": "Šablon nije pronađen."
     }
   },
   "validation": {
@@ -477,7 +484,8 @@
       "shifts": "Smene i raspored",
       "platform": "Platforma",
       "ratings": "Ocene",
-      "reception": "Recepcija"
+      "reception": "Recepcija",
+      "templates": "Šabloni programa"
     },
     "roles": {
       "owner": "Vlasnik",
@@ -2271,6 +2279,24 @@
       "waiting": "Spremno za sledećeg člana",
       "waiting_hint": "Skeniraj QR kod čitačem ili kamerom, ili počni da kucaš ime, telefon ili broj člana.",
       "member_created": "Član je dodat"
+    },
+    "templates": {
+      "title": "Šabloni programa",
+      "subtitle": "Napiši program jednom i dodeli ga klijentima; svako dobija svoju kopiju koju posle možeš da prilagodiš.",
+      "new": "Novi šablon",
+      "empty": "Još nema šablona",
+      "empty_hint": "Napravi novi ili kod klijenta sačuvaj postojeći plan kao šablon.",
+      "shared": "Deljen",
+      "shared_label": "Deljen sa svim trenerima",
+      "saved": "Šablon je sačuvan",
+      "save_as": "Sačuvaj kao šablon",
+      "assign": "Dodeli klijentima",
+      "assign_title": "Dodeli: {{title}}",
+      "assign_hint": "Izaberi klijente. Svako dobija svoj plan, koji posle možeš da menjaš posebno.",
+      "assign_n": "Dodeli (izabrano: {{n}})",
+      "assigned": "Program dodeljen: {{n}}",
+      "no_clients": "Nema klijenata za izbor.",
+      "delete_confirm": "Obrisati šablon \"{{title}}\"? Već dodeljeni planovi ostaju."
     }
   },
   "app": {
@@ -3319,7 +3345,17 @@
       "waist": "struk",
       "goals": "Ciljevi",
       "recent": "Poslednji treninzi",
-      "no_workouts": "Još nema zabeleženih treninga."
+      "no_workouts": "Još nema zabeleženih treninga.",
+      "assign_title": "Dodeli program",
+      "no_templates": "Još nema šablona",
+      "no_templates_text": "Šablone praviš u adminu (Šabloni programa) ili čuvaš postojeći plan kao šablon.",
+      "give": "Dodeli",
+      "give_program": "Dodeli program",
+      "stat_clients": "klijenata",
+      "stat_today": "danas",
+      "stat_programs": "programa",
+      "stat_waiting": "čeka program",
+      "waiting_title": "Čekaju program"
     },
     "plan_day": {
       "today": "Danas po planu",

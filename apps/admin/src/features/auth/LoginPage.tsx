@@ -40,7 +40,7 @@ export function LoginPage() {
       </div>
       <div className="relative z-10 w-full max-w-sm">
         <div className="mb-10 flex flex-col items-center gap-4">
-          <BrandMark className="h-12 w-auto" />
+          <BrandMark className="h-12" />
           <p className="text-xs font-semibold tracking-[0.3em] text-text-secondary uppercase">
             {t('admin.login.subtitle')}
           </p>

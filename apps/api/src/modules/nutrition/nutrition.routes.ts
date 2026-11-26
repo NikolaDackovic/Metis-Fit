@@ -3,6 +3,10 @@ import {
   foodDayDto,
   foodDayQuery,
   foodEntryInput,
+  workoutTemplateBody,
+  workoutTemplateDto,
+  assignTemplateBody,
+  coachDashboardDto,
   foodCopyBody,
   foodSearchQuery,
   foodInput,
@@ -24,6 +28,7 @@ import {
 import { access, defineRoute } from '../../shared/route';
 import { createFoodLogService } from './food-log.service';
 import { createFoodsService } from './foods.service';
+import { createWorkoutTemplateService } from './workout-templates.service';
 import { createMealPlanService } from './meal-plans.service';
 import { createNutritionService } from './nutrition.service';
 import { createWorkoutPlanService } from './workout-plans.service';
@@ -219,6 +224,89 @@ export const nutritionRoutes = [
         body,
         headerLocale(req.get('accept-language')),
       ),
+    }),
+  }),
+  // ── F17-2 Program templates and the trainer dashboard ──────────────────────
+  defineRoute({
+    method: 'get',
+    path: '/admin/workout-templates',
+    access: access.can('progress.view_clients'),
+    summary: 'Program templates: mine and the shared ones (managers: all)',
+    tags: ['Workouts'],
+    response: z.array(workoutTemplateDto),
+    handler: async ({ actor, req, deps }) => ({
+      data: await createWorkoutTemplateService(deps.db).list(
+        actor!,
+        headerLocale(req.get('accept-language')),
+      ),
+    }),
+  }),
+  defineRoute({
+    method: 'post',
+    path: '/admin/workout-templates',
+    access: access.can('progress.view_clients'),
+    summary: 'Save a program template',
+    tags: ['Workouts'],
+    body: workoutTemplateBody,
+    response: z.object({ id: z.string() }),
+    handler: async ({ actor, req, body, deps }) => ({
+      status: 201,
+      data: await createWorkoutTemplateService(deps.db).create(actor!, req, body),
+    }),
+  }),
+  defineRoute({
+    method: 'put',
+    path: '/admin/workout-templates/:id',
+    access: access.can('progress.view_clients'),
+    summary: 'Change a program template (my own, or any for a manager)',
+    tags: ['Workouts'],
+    params: idParams,
+    body: workoutTemplateBody,
+    response: z.object({ id: z.string() }),
+    handler: async ({ actor, req, params, body, deps }) => ({
+      data: await createWorkoutTemplateService(deps.db).update(actor!, req, params.id, body),
+    }),
+  }),
+  defineRoute({
+    method: 'delete',
+    path: '/admin/workout-templates/:id',
+    access: access.can('progress.view_clients'),
+    summary: 'Delete a program template (plans already assigned stay)',
+    tags: ['Workouts'],
+    params: idParams,
+    response: z.object({ ok: z.boolean() }),
+    handler: async ({ actor, req, params, deps }) => ({
+      data: await createWorkoutTemplateService(deps.db).remove(actor!, req, params.id),
+    }),
+  }),
+  defineRoute({
+    method: 'post',
+    path: '/admin/workout-templates/:id/assign',
+    access: access.can('progress.view_clients'),
+    summary: 'Give a template to clients (each gets their own plan they can adjust)',
+    tags: ['Workouts'],
+    params: idParams,
+    body: assignTemplateBody,
+    response: z.object({ created: z.number() }),
+    handler: async ({ actor, req, params, body, deps }) => ({
+      status: 201,
+      data: await createWorkoutTemplateService(deps.db).assign(
+        actor!,
+        req,
+        params.id,
+        body.memberIds,
+      ),
+    }),
+  }),
+  defineRoute({
+    method: 'get',
+    path: '/admin/my-dashboard',
+    access: access.can('schedule.own'),
+    summary: "Trainer dashboard: clients, today's sessions, programs, who needs a program",
+    tags: ['Workouts'],
+    response: coachDashboardDto,
+    handler: async ({ actor, deps }) => ({
+      data: await createWorkoutTemplateService(deps.db).dashboard(actor!),
     }),
   }),
   // ── Food diary ──────────────────────────────────────────────────────────────

@@ -10,7 +10,7 @@ import {
   type WorkoutPlanDto,
 } from '@grit/validation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowDown, ArrowUp, ClipboardList, Plus, Sparkles, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowUp, ClipboardList, Copy, Plus, Sparkles, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/Badge';
@@ -30,6 +30,7 @@ export function WorkoutPlansPanel({ memberId }: { memberId: string }) {
   const { t, i18n } = useTranslation();
   const f = useFormat();
   const [editing, setEditing] = useState<WorkoutPlanDto | 'new' | null>(null);
+  const [asTemplate, setAsTemplate] = useState<WorkoutPlanDto | null>(null);
   const q = useQuery({
     queryKey: ['workout-plans', memberId, i18n.language],
     queryFn: () => api.get<WorkoutPlanDto[]>(`/admin/members/${memberId}/workout-plans`),
@@ -53,11 +54,11 @@ export function WorkoutPlansPanel({ memberId }: { memberId: string }) {
       ) : (
         <ul className="divide-y divide-border-subtle">
           {q.data.map((p) => (
-            <li key={p.id}>
+            <li key={p.id} className="flex items-center gap-1 pe-2">
               <button
                 type="button"
                 onClick={() => setEditing(p)}
-                className="flex w-full items-center gap-3 px-4 py-3 text-start hover:bg-bg-surface2"
+                className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3 text-start hover:bg-bg-surface2"
               >
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-semibold">{p.title}</span>
@@ -69,9 +70,19 @@ export function WorkoutPlansPanel({ memberId }: { memberId: string }) {
                   {p.isActive ? t('admin.plans_w.active') : t('admin.plans_w.inactive')}
                 </Badge>
               </button>
+              <IconButton label={t('admin.templates.save_as')} onClick={() => setAsTemplate(p)}>
+                <Copy className="size-4" />
+              </IconButton>
             </li>
           ))}
         </ul>
+      )}
+      {asTemplate && (
+        <PlanEditor
+          existing={{ title: asTemplate.title, notes: asTemplate.notes, days: asTemplate.days }}
+          template={{ id: null, shared: false }}
+          onClose={() => setAsTemplate(null)}
+        />
       )}
       {editing && (
         <PlanEditor
@@ -84,14 +95,22 @@ export function WorkoutPlansPanel({ memberId }: { memberId: string }) {
   );
 }
 
-function PlanEditor({
+type Editable = Pick<WorkoutPlanDto, 'title' | 'notes' | 'days'> & {
+  id?: string;
+  isActive?: boolean;
+};
+
+/** Plan editor; with `template` it edits an F17-2 program template instead of a member's plan. */
+export function PlanEditor({
   memberId,
   existing,
   onClose,
+  template,
 }: {
-  memberId: string;
-  existing: WorkoutPlanDto | null;
+  memberId?: string;
+  existing: Editable | null;
   onClose: () => void;
+  template?: { id: string | null; shared: boolean };
 }) {
   const { t, i18n } = useTranslation();
   const qc = useQueryClient();
@@ -103,6 +122,7 @@ function PlanEditor({
   const [title, setTitle] = useState(existing?.title ?? '');
   const [notes, setNotes] = useState(existing?.notes ?? '');
   const [active, setActive] = useState(existing?.isActive ?? true);
+  const [shared, setShared] = useState(template?.shared ?? false);
   const [days, setDays] = useState<Day[]>(
     existing?.days.map((d) => ({
       title: d.title,
@@ -131,14 +151,21 @@ function PlanEditor({
 
   const save = useMutation({
     mutationFn: () => {
+      if (template) {
+        const body = { title, notes: notes || null, shared, days };
+        return template.id
+          ? api.put(`/admin/workout-templates/${template.id}`, body)
+          : api.post('/admin/workout-templates', body);
+      }
       const body = { title, notes: notes || null, isActive: active, days };
-      return existing
+      return existing?.id
         ? api.put(`/admin/workout-plans/${existing.id}`, body)
         : api.post(`/admin/members/${memberId}/workout-plans`, body);
     },
     onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: ['workout-plans', memberId] });
-      toast.success(t('admin.plans_w.saved'));
+      if (template) void qc.invalidateQueries({ queryKey: ['workout-templates'] });
+      else void qc.invalidateQueries({ queryKey: ['workout-plans', memberId] });
+      toast.success(t(template ? 'admin.templates.saved' : 'admin.plans_w.saved'));
       onClose();
     },
   });
@@ -148,7 +175,15 @@ function PlanEditor({
       open
       onClose={onClose}
       size="lg"
-      title={existing ? existing.title : t('admin.plans_w.new')}
+      title={
+        template
+          ? template.id && existing
+            ? existing.title
+            : t('admin.templates.new')
+          : existing?.id
+            ? existing.title
+            : t('admin.plans_w.new')
+      }
       footer={
         <>
           <Button variant="ghost" onClick={onClose}>
@@ -175,11 +210,11 @@ function PlanEditor({
           <label className="flex items-end gap-2 pb-2 text-sm">
             <input
               type="checkbox"
-              checked={active}
-              onChange={(e) => setActive(e.target.checked)}
+              checked={template ? shared : active}
+              onChange={(e) => (template ? setShared : setActive)(e.target.checked)}
               className="size-4 accent-accent-500"
             />
-            {t('admin.plans_w.active_label')}
+            {t(template ? 'admin.templates.shared_label' : 'admin.plans_w.active_label')}
           </label>
         </div>
         <Field label={t('admin.plans_w.notes')}>

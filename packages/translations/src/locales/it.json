@@ -1050,7 +1050,17 @@
       "waist": "vita",
       "goals": "Obiettivi",
       "recent": "Ultimi allenamenti",
-      "no_workouts": "Ancora nessun allenamento."
+      "no_workouts": "Ancora nessun allenamento.",
+      "assign_title": "Assegna un programma",
+      "no_templates": "Ancora nessun modello",
+      "no_templates_text": "Crea i modelli nell’admin o salva un piano esistente come modello.",
+      "give": "Assegna",
+      "give_program": "Assegna programma",
+      "stat_clients": "clienti",
+      "stat_today": "oggi",
+      "stat_programs": "programmi",
+      "stat_waiting": "in attesa",
+      "waiting_title": "In attesa di un programma"
     },
     "plan_day": {
       "today": "Oggi secondo il piano",
@@ -1583,6 +1593,13 @@
       "barcode_not_found": "Nessun dato per questo codice.",
       "limit_reached": "Hai il numero massimo di alimenti tuoi (300).",
       "duplicate_barcode": "Hai già un alimento con questo codice."
+    },
+    "template": {
+      "not_yours": "Solo l’autore o un manager può modificare questo modello.",
+      "exercise": "Il modello contiene un esercizio che non esiste più."
+    },
+    "workout_template": {
+      "not_found": "Modello non trovato."
     }
   },
   "validation": {
@@ -1735,7 +1752,8 @@
       "shifts": "Turni e orario",
       "platform": "Piattaforma",
       "ratings": "Valutazioni",
-      "reception": "Reception"
+      "reception": "Reception",
+      "templates": "Modelli di programma"
     },
     "payments": {
       "fiscal_notice": "Registrazione interna, non è uno scontrino fiscale. Lo scontrino fiscale viene emesso alla cassa.",
@@ -3466,6 +3484,24 @@
       "waiting": "Pronto per il prossimo socio",
       "waiting_hint": "Scansiona il QR con il lettore o la fotocamera, o inizia a scrivere nome, telefono o numero.",
       "member_created": "Socio aggiunto"
+    },
+    "templates": {
+      "title": "Modelli di programma",
+      "subtitle": "Scrivi un programma una volta e assegnalo ai clienti; ognuno riceve la sua copia modificabile.",
+      "new": "Nuovo modello",
+      "empty": "Ancora nessun modello",
+      "empty_hint": "Creane uno o salva come modello il piano di un cliente.",
+      "shared": "Condiviso",
+      "shared_label": "Condiviso con tutti i trainer",
+      "saved": "Modello salvato",
+      "save_as": "Salva come modello",
+      "assign": "Assegna ai clienti",
+      "assign_title": "Assegna: {{title}}",
+      "assign_hint": "Scegli i clienti. Ognuno riceve il suo piano, modificabile a parte.",
+      "assign_n": "Assegna (selezionati: {{n}})",
+      "assigned": "Programma assegnato: {{n}}",
+      "no_clients": "Nessun cliente da scegliere.",
+      "delete_confirm": "Eliminare il modello \"{{title}}\"? I piani già assegnati restano."
     }
   }
 }

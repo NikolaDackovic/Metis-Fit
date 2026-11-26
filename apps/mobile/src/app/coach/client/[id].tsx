@@ -1,10 +1,12 @@
 import type { ClientProgressDto } from '@grit/validation';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Lock, Salad, Target, Trophy } from 'lucide-react-native';
+import { Lock, Salad, Target, Trophy, ClipboardList } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { BackHeader } from '@/components/BackHeader';
+import { AssignTemplate } from '@/components/coach/AssignTemplate';
 import { Button, Card, EmptyState, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { useFormat } from '@/lib/format';
@@ -25,6 +27,7 @@ export default function CoachClientScreen() {
     retry: false,
   });
   const d = q.data;
+  const [assign, setAssign] = useState(false);
   const blocked = q.error instanceof ApiError && (q.error.status === 403 || q.error.status === 422);
   const m = d?.progress.latestMeasurement;
 
@@ -45,6 +48,19 @@ export default function CoachClientScreen() {
           })
         }
       />
+      <Button
+        label={t('app.coach.give_program')}
+        icon={ClipboardList}
+        variant="secondary"
+        onPress={() => setAssign(true)}
+      />
+      {assign && (
+        <AssignTemplate
+          memberId={id}
+          name={d ? `${d.member.firstName} ${d.member.lastName}` : ''}
+          onClose={() => setAssign(false)}
+        />
+      )}
       {q.isPending ? (
         <Skeleton height={300} />
       ) : !d ? (

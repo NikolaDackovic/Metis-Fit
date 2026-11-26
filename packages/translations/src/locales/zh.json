@@ -1028,7 +1028,17 @@
       "waist": "腰围",
       "goals": "目标",
       "recent": "最近训练",
-      "no_workouts": "暂无训练记录。"
+      "no_workouts": "暂无训练记录。",
+      "assign_title": "分配计划",
+      "no_templates": "暂无模板",
+      "no_templates_text": "在管理后台创建模板，或将现有计划保存为模板。",
+      "give": "分配",
+      "give_program": "分配计划",
+      "stat_clients": "客户",
+      "stat_today": "今天",
+      "stat_programs": "计划",
+      "stat_waiting": "待分配",
+      "waiting_title": "等待计划"
     },
     "plan_day": {
       "today": "今日计划",
@@ -1560,6 +1570,13 @@
       "barcode_not_found": "此条形码没有数据。",
       "limit_reached": "你自己的食物已达上限（300）。",
       "duplicate_barcode": "你已经有使用此条形码的食物。"
+    },
+    "template": {
+      "not_yours": "只有作者或经理可以修改此模板。",
+      "exercise": "模板中包含已不存在的动作。"
+    },
+    "workout_template": {
+      "not_found": "未找到模板。"
     }
   },
   "validation": {
@@ -1712,7 +1729,8 @@
       "shifts": "班次与排班",
       "platform": "平台",
       "ratings": "评价",
-      "reception": "前台"
+      "reception": "前台",
+      "templates": "训练计划模板"
     },
     "payments": {
       "fiscal_notice": "内部记录，并非税务收据。税务收据在收银台开具。",
@@ -3419,6 +3437,24 @@
       "waiting": "准备接待下一位会员",
       "waiting_hint": "用扫描器或摄像头扫描二维码，或开始输入姓名、电话或会员号。",
       "member_created": "会员已添加"
+    },
+    "templates": {
+      "title": "训练计划模板",
+      "subtitle": "写一次计划即可分配给多位客户；每人获得一份可单独调整的副本。",
+      "new": "新建模板",
+      "empty": "暂无模板",
+      "empty_hint": "新建模板，或在客户处将现有计划保存为模板。",
+      "shared": "共享",
+      "shared_label": "与所有教练共享",
+      "saved": "模板已保存",
+      "save_as": "保存为模板",
+      "assign": "分配给客户",
+      "assign_title": "分配：{{title}}",
+      "assign_hint": "选择客户。每人获得自己的计划，之后可单独修改。",
+      "assign_n": "分配（已选：{{n}}）",
+      "assigned": "已分配计划：{{n}}",
+      "no_clients": "没有可选择的客户。",
+      "delete_confirm": "删除模板“{{title}}”？已分配的计划会保留。"
     }
   }
 }

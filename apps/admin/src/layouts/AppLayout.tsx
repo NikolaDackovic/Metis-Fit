@@ -9,6 +9,7 @@ import {
   Handshake,
   Salad,
   BellRing,
+  ClipboardList,
   ConciergeBell,
   CalendarRange,
   ShieldCheck,
@@ -176,6 +177,13 @@ const NAV: Array<{
     group: 'training',
     label: 'admin.nav.clients',
     icon: HeartPulse,
+    permission: 'progress.view_clients',
+  },
+  {
+    to: '/workout-templates',
+    group: 'training',
+    label: 'admin.nav.templates',
+    icon: ClipboardList,
     permission: 'progress.view_clients',
   },
   {
@@ -356,7 +364,8 @@ export function AppLayout() {
       {/* Sidebar / rail (tablet and desktop) */}
       <aside className="sticky top-0 hidden h-dvh w-[72px] shrink-0 flex-col border-e border-border-subtle bg-bg-surface md:flex lg:w-56">
         <div className="flex h-16 shrink-0 items-center justify-center px-2 lg:justify-start lg:px-5">
-          <BrandMark className="h-4 w-auto max-w-full object-contain lg:h-6" />
+          <BrandMark className="h-7 lg:hidden" markOnly />
+          <BrandMark className="hidden h-7 lg:inline-flex" />
         </div>
         <ClubSwitcher />
         <nav
@@ -443,7 +452,7 @@ export function AppLayout() {
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top bar (phone) */}
         <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border-subtle bg-bg-base/90 px-4 backdrop-blur md:hidden">
-          <BrandMark className="h-4" />
+          <BrandMark className="h-6" />
           <div className="flex items-center gap-2">
             {AUTH_MODE === 'dev' && <Badge tone="warning">DEV</Badge>}
             <button

@@ -1050,7 +1050,17 @@
       "waist": "Taille",
       "goals": "Ziele",
       "recent": "Letzte Trainings",
-      "no_workouts": "Noch keine Trainings."
+      "no_workouts": "Noch keine Trainings.",
+      "assign_title": "Programm zuweisen",
+      "no_templates": "Noch keine Vorlagen",
+      "no_templates_text": "Vorlagen im Admin anlegen oder einen Plan als Vorlage speichern.",
+      "give": "Zuweisen",
+      "give_program": "Programm zuweisen",
+      "stat_clients": "Kunden",
+      "stat_today": "heute",
+      "stat_programs": "Programme",
+      "stat_waiting": "warten",
+      "waiting_title": "Warten auf ein Programm"
     },
     "plan_day": {
       "today": "Heute nach Plan",
@@ -1583,6 +1593,13 @@
       "barcode_not_found": "Für diesen Barcode gibt es keine Daten.",
       "limit_reached": "Du hast die Höchstzahl eigener Lebensmittel (300).",
       "duplicate_barcode": "Du hast schon ein Lebensmittel mit diesem Barcode."
+    },
+    "template": {
+      "not_yours": "Nur der Autor oder ein Manager kann diese Vorlage ändern.",
+      "exercise": "Die Vorlage enthält eine Übung, die es nicht mehr gibt."
+    },
+    "workout_template": {
+      "not_found": "Vorlage nicht gefunden."
     }
   },
   "validation": {
@@ -1735,7 +1752,8 @@
       "shifts": "Schichten und Dienstplan",
       "platform": "Plattform",
       "ratings": "Bewertungen",
-      "reception": "Empfang"
+      "reception": "Empfang",
+      "templates": "Programmvorlagen"
     },
     "payments": {
       "fiscal_notice": "Interne Erfassung, kein steuerlicher Beleg. Der steuerliche Beleg wird an der Kasse ausgestellt.",
@@ -3466,6 +3484,24 @@
       "waiting": "Bereit für das nächste Mitglied",
       "waiting_hint": "QR-Code mit Scanner oder Kamera scannen oder Name, Telefon oder Nummer eintippen.",
       "member_created": "Mitglied angelegt"
+    },
+    "templates": {
+      "title": "Programmvorlagen",
+      "subtitle": "Programm einmal schreiben und Kunden zuweisen; jeder bekommt eine eigene, anpassbare Kopie.",
+      "new": "Neue Vorlage",
+      "empty": "Noch keine Vorlagen",
+      "empty_hint": "Neue anlegen oder einen bestehenden Plan als Vorlage speichern.",
+      "shared": "Geteilt",
+      "shared_label": "Mit allen Trainern geteilt",
+      "saved": "Vorlage gespeichert",
+      "save_as": "Als Vorlage speichern",
+      "assign": "Kunden zuweisen",
+      "assign_title": "Zuweisen: {{title}}",
+      "assign_hint": "Kunden wählen. Jeder bekommt einen eigenen Plan, den du einzeln ändern kannst.",
+      "assign_n": "Zuweisen (ausgewählt: {{n}})",
+      "assigned": "Programm zugewiesen: {{n}}",
+      "no_clients": "Keine Kunden zur Auswahl.",
+      "delete_confirm": "Vorlage „{{title}}“ löschen? Zugewiesene Pläne bleiben."
     }
   }
 }

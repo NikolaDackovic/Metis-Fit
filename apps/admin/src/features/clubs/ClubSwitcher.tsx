@@ -1,4 +1,5 @@
-import { Building2, Clock, Plus } from 'lucide-react';
+import { Clock, Plus } from 'lucide-react';
+import { ClubMark } from '@/layouts/BrandMark';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { currentClub, staffClubs, switchClub, useMyClubs } from '@/lib/current-club';
@@ -43,8 +44,10 @@ export function ClubSwitcher() {
         </label>
       ) : (
         <p className="flex items-center gap-2 truncate text-xs text-text-secondary">
-          <Building2 className="size-3.5 shrink-0" />
-          <span className="truncate">{active.name}</span>
+          <span className="flex h-6 max-w-20 shrink-0 items-center">
+            <ClubMark className="h-full w-auto max-w-20 object-contain" />
+          </span>
+          <span className="truncate font-semibold text-text-primary">{active.name}</span>
         </p>
       )}
       <Link

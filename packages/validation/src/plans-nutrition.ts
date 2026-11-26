@@ -58,6 +58,37 @@ export const workoutPlanDto = z.object({
 });
 export type WorkoutPlanDto = z.infer<typeof workoutPlanDto>;
 
+// ── F17-2 Program templates and the trainer dashboard ──────────────────────────
+export const workoutTemplateBody = z.object({
+  title: z.string().trim().min(1, { error: 'validation.required' }).max(120),
+  notes: optText(2000),
+  shared: z.boolean().default(false),
+  days: z.array(workoutPlanDayInput).min(1, { error: 'validation.required' }).max(14),
+});
+export type WorkoutTemplateBody = z.infer<typeof workoutTemplateBody>;
+export const workoutTemplateDto = workoutPlanDto
+  .omit({ memberId: true, isActive: true, trainerName: true })
+  .extend({
+    shared: z.boolean(),
+    /** Who wrote it (null = the gym). */
+    trainerName: z.string().nullable(),
+    /** The caller may edit or delete it (their own, or a manager). */
+    mine: z.boolean(),
+  });
+export type WorkoutTemplateDto = z.infer<typeof workoutTemplateDto>;
+export const assignTemplateBody = z.object({
+  memberIds: z.array(z.string().uuid()).min(1).max(50),
+});
+
+export const coachDashboardDto = z.object({
+  clients: z.number(),
+  today: z.number(),
+  activePrograms: z.number(),
+  /** Active clients without an active program. */
+  waiting: z.array(z.object({ memberId: z.string(), name: z.string() })),
+});
+export type CoachDashboardDto = z.infer<typeof coachDashboardDto>;
+
 // ── Nutrition wizard ──────────────────────────────────────────────────────────
 export const NUTRITION_GOALS = ['lose', 'maintain', 'gain'] as const;
 export const ACTIVITY_LEVELS = ['sedentary', 'light', 'moderate', 'active', 'very_active'] as const;

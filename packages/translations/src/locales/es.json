@@ -1050,7 +1050,17 @@
       "waist": "cintura",
       "goals": "Objetivos",
       "recent": "Últimos entrenamientos",
-      "no_workouts": "Aún no hay entrenamientos."
+      "no_workouts": "Aún no hay entrenamientos.",
+      "assign_title": "Asignar programa",
+      "no_templates": "Aún no hay plantillas",
+      "no_templates_text": "Crea plantillas en el admin o guarda un plan existente como plantilla.",
+      "give": "Asignar",
+      "give_program": "Asignar programa",
+      "stat_clients": "clientes",
+      "stat_today": "hoy",
+      "stat_programs": "programas",
+      "stat_waiting": "esperan",
+      "waiting_title": "Esperan un programa"
     },
     "plan_day": {
       "today": "Hoy según el plan",
@@ -1583,6 +1593,13 @@
       "barcode_not_found": "No hay datos para este código.",
       "limit_reached": "Tienes el máximo de alimentos propios (300).",
       "duplicate_barcode": "Ya tienes un alimento con este código."
+    },
+    "template": {
+      "not_yours": "Solo el autor o un gerente pueden cambiar esta plantilla.",
+      "exercise": "La plantilla tiene un ejercicio que ya no existe."
+    },
+    "workout_template": {
+      "not_found": "Plantilla no encontrada."
     }
   },
   "validation": {
@@ -1735,7 +1752,8 @@
       "shifts": "Turnos y horario",
       "platform": "Plataforma",
       "ratings": "Valoraciones",
-      "reception": "Recepción"
+      "reception": "Recepción",
+      "templates": "Plantillas de programa"
     },
     "payments": {
       "fiscal_notice": "Registro interno: no es un recibo fiscal. El recibo fiscal se emite en caja.",
@@ -3466,6 +3484,24 @@
       "waiting": "Listo para el siguiente socio",
       "waiting_hint": "Escanea el QR con el lector o la cámara, o empieza a escribir nombre, teléfono o número.",
       "member_created": "Socio añadido"
+    },
+    "templates": {
+      "title": "Plantillas de programa",
+      "subtitle": "Escribe un programa una vez y asígnalo a clientes; cada uno recibe su copia ajustable.",
+      "new": "Nueva plantilla",
+      "empty": "Aún no hay plantillas",
+      "empty_hint": "Crea una o guarda como plantilla el plan de un cliente.",
+      "shared": "Compartida",
+      "shared_label": "Compartida con todos los entrenadores",
+      "saved": "Plantilla guardada",
+      "save_as": "Guardar como plantilla",
+      "assign": "Asignar a clientes",
+      "assign_title": "Asignar: {{title}}",
+      "assign_hint": "Elige clientes. Cada uno recibe su propio plan, que puedes cambiar por separado.",
+      "assign_n": "Asignar (seleccionados: {{n}})",
+      "assigned": "Programa asignado: {{n}}",
+      "no_clients": "No hay clientes para elegir.",
+      "delete_confirm": "¿Eliminar la plantilla \"{{title}}\"? Los planes asignados se mantienen."
     }
   }
 }

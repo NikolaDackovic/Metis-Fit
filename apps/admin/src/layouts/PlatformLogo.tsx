@@ -15,7 +15,12 @@ export function PlatformLogo({ className, markOnly }: { className?: string; mark
         <defs>
           <mask id={mask} maskUnits="userSpaceOnUse" x="-200" y="-50" width="500" height="220">
             <rect x="-200" y="-50" width="500" height="220" fill="white" />
-            <path d={PLATFORM_MARK.cut} stroke="black" strokeWidth={PLATFORM_MARK.cutWidth} fill="none" />
+            <path
+              d={PLATFORM_MARK.cut}
+              stroke="black"
+              strokeWidth={PLATFORM_MARK.cutWidth}
+              fill="none"
+            />
           </mask>
         </defs>
         <g transform={`skewX(${PLATFORM_MARK.skewX})`} fill={PLATFORM_COLOR} mask={`url(#${mask})`}>

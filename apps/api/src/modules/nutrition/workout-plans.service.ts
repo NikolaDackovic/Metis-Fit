@@ -107,6 +107,43 @@ async function writeDays(tx: Tx, planId: string, days: WorkoutPlanBody['days']) 
   }
 }
 
+/** Creates a plan for a member in an open transaction (plans and F17-2 templates). */
+export async function insertPlan(
+  tx: Tx,
+  actor: Actor,
+  req: Request,
+  memberId: string,
+  b: WorkoutPlanBody,
+): Promise<string> {
+  const m = await tx
+    .selectFrom('members')
+    .select('id')
+    .where('id', '=', memberId)
+    .executeTakeFirst();
+  if (!m) throw notFound('member');
+  const trainerId = await assertCanPlan(tx, actor, memberId);
+  const p = await tx
+    .insertInto('workout_plans')
+    .values({
+      member_id: memberId,
+      trainer_id: trainerId,
+      title: b.title,
+      notes: b.notes ?? null,
+      is_active: b.isActive,
+      created_by: actor.userId,
+    })
+    .returning('id')
+    .executeTakeFirstOrThrow();
+  await writeDays(tx, p.id, b.days);
+  await writeAudit(tx, actor, req, {
+    action: 'workout_plan.create',
+    entityType: 'workout_plan',
+    entityId: p.id,
+    diff: { after: { memberId, title: b.title, days: b.days.length } },
+  });
+  return p.id;
+}
+
 export function createWorkoutPlanService(db: Kysely<DB>) {
   return {
     mine: (actor: Actor, locale: string) =>
@@ -120,33 +157,8 @@ export function createWorkoutPlanService(db: Kysely<DB>) {
 
     create: (actor: Actor, req: Request, memberId: string, b: WorkoutPlanBody, locale: string) =>
       withStaffTx(db, async (tx) => {
-        const m = await tx
-          .selectFrom('members')
-          .select('id')
-          .where('id', '=', memberId)
-          .executeTakeFirst();
-        if (!m) throw notFound('member');
-        const trainerId = await assertCanPlan(tx, actor, memberId);
-        const p = await tx
-          .insertInto('workout_plans')
-          .values({
-            member_id: memberId,
-            trainer_id: trainerId,
-            title: b.title,
-            notes: b.notes ?? null,
-            is_active: b.isActive,
-            created_by: actor.userId,
-          })
-          .returning('id')
-          .executeTakeFirstOrThrow();
-        await writeDays(tx, p.id, b.days);
-        await writeAudit(tx, actor, req, {
-          action: 'workout_plan.create',
-          entityType: 'workout_plan',
-          entityId: p.id,
-          diff: { after: { memberId, title: b.title, days: b.days.length } },
-        });
-        return (await plans(tx, memberId, locale, false, p.id))[0]!;
+        const id = await insertPlan(tx, actor, req, memberId, b);
+        return (await plans(tx, memberId, locale, false, id))[0]!;
       }),
 
     update: (actor: Actor, req: Request, planId: string, b: WorkoutPlanBody, locale: string) =>

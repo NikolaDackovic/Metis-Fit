@@ -1,3 +1,4 @@
+import { PLATFORM_NAME } from '@grit/design-tokens';
 import type { PaymentDto, PaymentMethod } from '@grit/validation';
 import { PAYMENT_METHODS } from '@grit/validation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -67,7 +68,7 @@ export function PaymentActions({ payment }: { payment: PaymentDto }) {
   };
   const print = () =>
     printReceipt({
-      club: String(club.data?.info.name ?? 'GRIT'),
+      club: String(club.data?.info.name ?? PLATFORM_NAME),
       title: t('admin.receipt.title'),
       number: payment.id.slice(0, 8).toUpperCase(),
       date: f.dateTime(payment.paidAt),

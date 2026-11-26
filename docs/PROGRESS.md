@@ -1,11 +1,31 @@
 # GRIT DIGITAL CLUB - Dnevnik napretka
 
+## F17-3 - Admin pod Metis Fit brendom (2026-11-26) · status: **završeno**
+
+| Oblast   | Stanje                                                                                                                                                                          |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Admin    | Metis Fit logo na vrhu menija, na prijavi, MFA i učitavanju; naslov kartice "Metis Fit Admin" i Metis ikonica; naziv u autentifikatoru "Metis Fit Admin"                        |
+| Teretana | Logo teretane (Klub → podešavanja) stoji pored njenog naziva u meniju; kiosk na ulazu prikazuje logo teretane ako ga ima, inače Metis Fit; GRIT zadržava svoj logo kao teretana |
+
+## F17-2 - Šabloni programa i trenerska tabla (2026-11-26) · status: **završeno**
+
+| Oblast                   | Stanje                                                                                                                                                                                                                                                                                       |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Admin → Šabloni programa | Trener piše program jednom (isti editor kao plan: dani, vežbe, serije, ponavljanja, težina, pauza), može da ga podeli sa svim trenerima; "Dodeli klijentima" pravi svakom izabranom klijentu njegov plan (kopiju koja se posle menja posebno). Kod plana klijenta dugme "Sačuvaj kao šablon" |
+| Pravila                  | Trener dodeljuje samo svojim aktivnim klijentima, menja samo svoje šablone; menadžer vidi i menja sve i bira bilo kog člana. Brisanje šablona ne dira već dodeljene planove                                                                                                                  |
+| Aplikacija → Posao       | Tabla na vrhu: klijenti, termini danas, aktivni programi, ko čeka program; "Dodeli program" iz šablona sa table i sa ekrana klijenta                                                                                                                                                         |
+| Baza                     | Migracija 052: workout_templates (izolacija po teretani)                                                                                                                                                                                                                                     |
+
+### Testovi
+
+api workout-templates +2 (šablon za dva klijenta odjednom i tabla; privatnost, samo svoji klijenti, samo autor menja, deljeni šablon, član nema pristup)
+
 ## F17-1 - Recepcijski režim (2026-11-26) · status: **završeno**
 
 | Oblast            | Stanje                                                                                                                                                                                                                                                                                                                                                                                    |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Admin → Recepcija | Jedan ekran za pult: veliko polje (QR čitač ili kamera, ili ime, telefon, broj člana), kartica člana (paket, status, ističe, preostali dolasci, dug), velika dugmad: Zabeleži dolazak, Naplati dug ili Evidentiraj uplatu, Produži članarinu, Prodaj uslugu, Kafić, Garderoba, Rezerviši trening, Profil; Novi član (pa odmah članarina); Ceo ekran; desno ko je u klubu i današnji ulazi |
-| Dozvole           | Svako dugme prati dozvole zaposlenog (vlasnik ih podešava u "Osoblje i prava", po ulozi); recepcija posle prijave odmah dolazi na ovaj ekran                                                                                                                                                                                                                                                            |
+| Dozvole           | Svako dugme prati dozvole zaposlenog (vlasnik ih podešava u "Osoblje i prava", po ulozi); recepcija posle prijave odmah dolazi na ovaj ekran                                                                                                                                                                                                                                              |
 
 ## F16 - Ispravke posle pregleda: registracija, "Više", tema, mape, upozorenja (2026-11-22) · status: **završeno**
 

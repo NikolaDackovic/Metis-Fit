@@ -46,7 +46,10 @@ describe('trainer free slots (F14-4)', () => {
     const s = await slots(ana);
     expect(s.length).toBeGreaterThan(100);
     expect(Date.parse(s[0]!)).toBeGreaterThan(Date.now() + 2 * 3600_000 - 60_000);
-    expect(Date.parse(s[1]!) - Date.parse(s[0]!)).toBe(3600_000);
+    // Hourly slots (the gap can be longer only across midnight, where the last slot does not fit).
+    const gaps = s.slice(1).map((x, i) => Date.parse(x) - Date.parse(s[i]!));
+    expect(Math.min(...gaps)).toBe(3600_000);
+    expect(gaps.filter((g) => g === 3600_000).length).toBeGreaterThan(gaps.length / 2);
     expect(new Set(s).size).toBe(s.length);
   });
 

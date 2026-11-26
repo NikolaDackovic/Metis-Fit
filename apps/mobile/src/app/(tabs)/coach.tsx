@@ -5,6 +5,7 @@ import { CalendarDays, ChevronRight, Clock, Lock, Users } from 'lucide-react-nat
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { CoachSummary } from '@/components/coach/CoachSummary';
 import { ConversationList } from '@/components/ConversationList';
 import { Button, Card, EmptyState, ErrorNote, Screen, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
@@ -32,6 +33,7 @@ export default function CoachScreen() {
       <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
         {t('app.coach.title')}
       </Text>
+      <CoachSummary />
       <View style={styles.segments} accessibilityRole="tablist">
         {(['schedule', 'clients', 'messages'] as const).map((s) => (
           <Pressable

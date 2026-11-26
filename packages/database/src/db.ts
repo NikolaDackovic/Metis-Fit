@@ -1270,6 +1270,19 @@ export interface AlertDismissals {
   until: string;
 }
 
+export interface WorkoutTemplates {
+  club_id: Generated<string>;
+  created_at: Generated<Timestamp>;
+  created_by: string | null;
+  days: Json;
+  id: Generated<string>;
+  notes: string | null;
+  shared: Generated<boolean>;
+  title: string;
+  trainer_id: string | null;
+  updated_at: Generated<Timestamp>;
+}
+
 export interface CalendarFeeds {
   club_id: Generated<string>;
   created_at: Generated<Timestamp>;
@@ -1532,6 +1545,7 @@ export interface DB {
   trainer_translations: TrainerTranslations;
   trainer_availability: TrainerAvailability;
   calendar_feeds: CalendarFeeds;
+  workout_templates: WorkoutTemplates;
   alert_dismissals: AlertDismissals;
   foods: Foods;
   trainers: Trainers;
