@@ -104,6 +104,14 @@ export type SeedableMediaStore = MediaStore & { exists(key: string): Promise<boo
  * Supabase Storage (public bucket) for staging/production: container disks are temporary,
  * so uploads must live outside the API. Uses the service-role key, server side only.
  */
+/**
+ * Headers for server-side Supabase calls. Legacy service_role keys are JWTs (sent as apikey and
+ * Bearer); the newer sb_secret_... keys are not JWTs and Supabase rejects them as Bearer.
+ */
+export function supabaseServiceHeaders(key: string): Record<string, string> {
+  return key.startsWith('eyJ') ? { apikey: key, authorization: `Bearer ${key}` } : { apikey: key };
+}
+
 export function createSupabaseMediaStore(opts: {
   supabaseUrl: string;
   serviceRoleKey: string;
@@ -116,10 +124,7 @@ export function createSupabaseMediaStore(opts: {
     if (!/^[a-z0-9_-]+\/[a-zA-Z0-9_.-]+$/.test(key)) throw new Error('invalid media key');
     return `${encodeURIComponent(opts.bucket)}/${key}`;
   };
-  const headers = {
-    authorization: `Bearer ${opts.serviceRoleKey}`,
-    apikey: opts.serviceRoleKey,
-  };
+  const headers = supabaseServiceHeaders(opts.serviceRoleKey);
   return {
     async put(key, data, contentType) {
       const res = await f(`${base}/storage/v1/object/${check(key)}`, {

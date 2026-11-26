@@ -68,7 +68,7 @@ describe('supabase media store', () => {
     }) as unknown as typeof fetch;
     const store = createSupabaseMediaStore({
       supabaseUrl: 'https://abc.supabase.co/',
-      serviceRoleKey: 'srk',
+      serviceRoleKey: 'eyJsrk',
       bucket: 'club-media',
       fetchImpl,
     });
@@ -78,7 +78,7 @@ describe('supabase media store', () => {
     expect(calls[0]).toEqual({
       url: 'https://abc.supabase.co/storage/v1/object/club-media/club/logo-1.png',
       method: 'POST',
-      auth: 'Bearer srk',
+      auth: 'Bearer eyJsrk',
     });
     expect(calls[1]!.method).toBe('DELETE');
     expect(calls[2]!.auth).toBeUndefined();
@@ -86,6 +86,12 @@ describe('supabase media store', () => {
       'https://abc.supabase.co/storage/v1/object/public/club-media/club/logo-1.png',
     );
     await expect(store.put('../etc/passwd', Buffer.from('x'), 'image/png')).rejects.toThrow();
+  });
+
+  it('a new sb_secret_ key goes only in the apikey header (it is not a JWT)', async () => {
+    const { supabaseServiceHeaders } = await import('../src/shared/media');
+    expect(supabaseServiceHeaders('sb_secret_abc')).toEqual({ apikey: 'sb_secret_abc' });
+    expect(supabaseServiceHeaders('eyJabc').authorization).toBe('Bearer eyJabc');
   });
 });
 

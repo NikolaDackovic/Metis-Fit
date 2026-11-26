@@ -1,4 +1,5 @@
 import { sql, type Kysely } from 'kysely';
+import { supabaseServiceHeaders } from '../../shared/media';
 import type { DB } from '@grit/database';
 import { AppError } from '../../shared/errors';
 
@@ -39,8 +40,7 @@ export function createAuthAdmin(opts: {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
-            apikey: opts.serviceRoleKey,
-            authorization: `Bearer ${opts.serviceRoleKey}`,
+            ...supabaseServiceHeaders(opts.serviceRoleKey),
           },
           body: JSON.stringify({
             email,
@@ -69,10 +69,7 @@ export function createAuthAdmin(opts: {
           `${opts.supabaseUrl.replace(/\/$/, '')}/auth/v1/admin/users/${encodeURIComponent(userId)}`,
           {
             method: 'DELETE',
-            headers: {
-              apikey: opts.serviceRoleKey,
-              authorization: `Bearer ${opts.serviceRoleKey}`,
-            },
+            headers: supabaseServiceHeaders(opts.serviceRoleKey),
           },
         );
         if (!res.ok && res.status !== 404)
