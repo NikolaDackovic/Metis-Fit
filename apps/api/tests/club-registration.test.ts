@@ -79,7 +79,7 @@ describe('gym self-registration (F12-3)', () => {
       (await h.http.post(`/v1/platform/clubs/${id}/approve`).set(platform.auth).send()).status,
     ).toBe(200);
     const dir = (await h.http.get('/v1/public/clubs').query({ q: 'kragu' })).body.data;
-    expect(dir).toEqual([{ id, slug, name: 'Gvozdeni Dom', city: 'Kragujevac' }]);
+    expect(dir).toEqual([{ id, slug, name: 'Gvozdeni Dom', city: 'Kragujevac', logoUrl: null }]);
     const info = (await h.http.get('/v1/public/club').set('X-Club', slug)).body.data.info;
     expect(info.name).toBe('Gvozdeni Dom');
   });

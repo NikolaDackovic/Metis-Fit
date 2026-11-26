@@ -51,6 +51,7 @@ export const publicClubDto = z.object({
   slug: z.string(),
   name: z.string(),
   city: z.string().nullable(),
+  logoUrl: z.string().nullable(),
 });
 export type PublicClubDto = z.infer<typeof publicClubDto>;
 

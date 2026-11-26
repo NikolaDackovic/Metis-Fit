@@ -1,4 +1,5 @@
 import type { Request } from 'express';
+import type { MediaStore } from '../../shared/media';
 import { sql, type Kysely } from 'kysely';
 import type { DB } from '@grit/database';
 import type {
@@ -29,7 +30,7 @@ export function slugify(name: string): string {
 
 const MAX_PENDING_PER_PERSON = 3;
 
-export function createClubsService(db: Kysely<DB>) {
+export function createClubsService(db: Kysely<DB>, media?: MediaStore) {
   const platformList = (status?: ClubStatus) =>
     withStaffTx(db, async (tx): Promise<PlatformClubDto[]> => {
       const rows = await sql<{
@@ -189,9 +190,18 @@ export function createClubsService(db: Kysely<DB>) {
     directory: (q?: string) =>
       withStaffTx(db, async (tx): Promise<PublicClubDto[]> => {
         const term = q?.trim() ? `%${q.trim().toLowerCase()}%` : null;
-        return tx
+        const rows = await tx
           .selectFrom('clubs')
           .select(['id', 'slug', 'name', 'city'])
+          // The gym's own logo (settings are per gym; this runs across gyms as the API owner).
+          .select((eb) =>
+            eb
+              .selectFrom('settings')
+              .whereRef('settings.club_id', '=', 'clubs.id')
+              .where('settings.key', '=', 'club.logo')
+              .select(sql<string | null>`settings.value #>> '{}'`.as('v'))
+              .as('logo'),
+          )
           .where('status', '=', 'active')
           .$if(Boolean(term), (x) =>
             x.where((eb) =>
@@ -204,6 +214,10 @@ export function createClubsService(db: Kysely<DB>) {
           .orderBy('name')
           .limit(100)
           .execute();
+        return rows.map(({ logo, ...c }) => ({
+          ...c,
+          logoUrl: logo && media ? media.url(logo) : null,
+        }));
       }),
 
     platformList,

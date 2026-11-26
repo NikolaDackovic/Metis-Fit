@@ -14,7 +14,10 @@ import { access, defineRoute } from '../../shared/route';
 import { createClubsService } from './clubs.service';
 
 const TAG = ['Clubs'];
-const svc = (deps: { db: Parameters<typeof createClubsService>[0] }) => createClubsService(deps.db);
+const svc = (deps: {
+  db: Parameters<typeof createClubsService>[0];
+  media?: Parameters<typeof createClubsService>[1];
+}) => createClubsService(deps.db, deps.media);
 const ok = z.object({ ok: z.literal(true) });
 /** Opening gyms is rare: a few attempts per person per hour stop scripted floods. */
 export const registerLimiter = createAttemptLimiter({ max: 5, windowMs: 60 * 60_000 });

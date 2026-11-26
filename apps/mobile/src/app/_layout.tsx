@@ -19,6 +19,9 @@ import { I18nextProvider } from 'react-i18next';
 import { ApiError } from '@/lib/api';
 import { initAuth, useAuth } from '@/lib/auth';
 import { NewPasswordScreen } from '@/components/auth/NewPasswordScreen';
+import { applyWebHead } from '@/lib/web-head';
+
+applyWebHead();
 import { rememberBrandColors } from '@/lib/brand-boot';
 import { setupI18n } from '@/lib/i18n';
 import { clubShortName, useClub } from '@/lib/queries';

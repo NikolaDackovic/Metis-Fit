@@ -1,3 +1,5 @@
+import type { PublicClubDto } from '@grit/validation';
+import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import {
   ArrowLeftRight,
@@ -17,10 +19,12 @@ import { useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GymLogo } from '@/components/GymLogo';
 import { LanguagePicker } from '@/components/LanguagePicker';
 import { PlatformWordmark } from '@/components/PlatformWordmark';
 import { QrCode } from '@/components/QrCode';
 import { Button } from '@/components/ui';
+import { api } from '@/lib/api';
 import { markGuideSeen } from '@/lib/guide';
 import { clubShortName, useClub, useMe } from '@/lib/queries';
 import { color, fonts, MAX_CONTENT_WIDTH, radius, type } from '@/theme';
@@ -46,6 +50,10 @@ export default function GuideScreen() {
   const { t } = useTranslation();
   const me = useMe();
   const club = useClub();
+  const gyms = useQuery({
+    queryKey: ['public', 'clubs', ''],
+    queryFn: () => api.get<PublicClubDto[]>('/public/clubs'),
+  });
   const [i, setI] = useState(0);
   const step = STEPS[i]!;
   const last = i === STEPS.length - 1;
@@ -67,13 +75,24 @@ export default function GuideScreen() {
     welcome: (
       <View style={{ alignItems: 'center', gap: 22 }}>
         <PlatformWordmark width={240} />
-        <View style={styles.chip}>
-          <View style={styles.chipBadge}>
-            <Text style={styles.chipBadgeText}>
-              {clubShortName(club.data).slice(0, 2).toUpperCase()}
-            </Text>
-          </View>
-          <Text style={type.h3}>{clubShortName(club.data)}</Text>
+        {/* One app for every gym: the gyms on the platform, the current one highlighted. */}
+        <View style={styles.gyms}>
+          {(gyms.data ?? []).slice(0, 4).map((g) => (
+            <View
+              key={g.id}
+              style={[styles.gym, g.name === clubShortName(club.data) && styles.gymActive]}
+            >
+              <GymLogo name={g.name} logoUrl={g.logoUrl} size={44} />
+              <Text style={styles.gymName} numberOfLines={1}>
+                {g.name}
+              </Text>
+              {g.city && (
+                <Text style={styles.gymCity} numberOfLines={1}>
+                  {g.city}
+                </Text>
+              )}
+            </View>
+          ))}
         </View>
       </View>
     ),
@@ -172,26 +191,20 @@ const styles = StyleSheet.create({
   texts: { gap: 10, alignItems: 'center' },
   titleText: { textAlign: 'center' },
   body: { textAlign: 'center', color: color.text.secondary },
-  chip: {
-    flexDirection: 'row',
+  gyms: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 },
+  gym: {
+    width: 76,
     alignItems: 'center',
-    gap: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
+    gap: 6,
+    paddingVertical: 10,
     borderRadius: radius.md,
     borderWidth: 1,
     borderColor: color.border.subtle,
     backgroundColor: color.bg.surface,
   },
-  chipBadge: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: color.accent.tint,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chipBadgeText: { fontFamily: fonts.bold, fontSize: 14, color: color.accent[400] },
+  gymActive: { borderColor: color.accent[500] },
+  gymName: { fontFamily: fonts.semibold, fontSize: 11, color: color.text.primary, maxWidth: 68 },
+  gymCity: { fontFamily: fonts.medium, fontSize: 10, color: color.text.muted, maxWidth: 68 },
   qrCard: { padding: 14, borderRadius: radius.md, backgroundColor: '#fff' },
   fakeTabs: {
     marginTop: 26,

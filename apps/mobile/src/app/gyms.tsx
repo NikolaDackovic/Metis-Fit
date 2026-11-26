@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { BackButton } from '@/components/BackHeader';
+import { GymLogo } from '@/components/GymLogo';
 import { Card, EmptyState, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api } from '@/lib/api';
 import { selectClub, selectedClub } from '@/lib/club-select';
@@ -93,6 +94,7 @@ export default function GymsScreen() {
             <GymRow
               key={c.id}
               name={c.name}
+              logoUrl={c.logoUrl}
               city={c.city}
               active={c.slug === current}
               divider={i > 0}
@@ -108,6 +110,7 @@ export default function GymsScreen() {
 
 function GymRow({
   name,
+  logoUrl,
   city,
   note,
   active,
@@ -115,6 +118,7 @@ function GymRow({
   onPress,
 }: {
   name: string;
+  logoUrl?: string | null;
   city: string | null;
   note?: string;
   active: boolean;
@@ -129,9 +133,7 @@ function GymRow({
       accessibilityState={{ selected: active }}
       style={[styles.row, divider && styles.divider]}
     >
-      <View style={[styles.icon, active && styles.iconActive]}>
-        <Building2 size={18} color={active ? color.onAccent : color.accent[400]} />
-      </View>
+      <GymLogo name={name} logoUrl={logoUrl} size={40} />
       <View style={{ flex: 1 }}>
         <Text style={type.body} numberOfLines={1}>
           {name}
