@@ -2,6 +2,11 @@ import { z } from 'zod';
 import {
   addTrainerClientBody,
   clientProgressDto,
+  progressPhotoBody,
+  progressPhotoDto,
+  progressPhotoFullDto,
+  progressPhotoPatch,
+  memberPhotoParams,
   createExerciseBody,
   exerciseDetailDto,
   exerciseDto,
@@ -30,6 +35,7 @@ import { createAttemptLimiter } from '../../shared/attempt-limiter';
 import { access, defineRoute } from '../../shared/route';
 import { createExerciseService } from './exercises.service';
 import { createWorkoutService } from './workouts.service';
+import { createProgressPhotoService } from './progress-photos.service';
 
 /** Sync is called on app start, after each workout and on reconnect; generous but bounded. */
 export const syncLimiter = createAttemptLimiter({ max: 120, windowMs: 60 * 60_000 });
@@ -389,6 +395,96 @@ export const workoutsRoutes = [
         req,
         params.id,
         headerLocale(req.get('accept-language')),
+      ),
+    }),
+  }),
+  // ── F18-1 Progress photos ──────────────────────────────────────────────────
+  defineRoute({
+    method: 'get',
+    path: '/me/progress-photos',
+    access: access.self,
+    summary: 'My progress photos (thumbnails), newest first',
+    tags: TAG,
+    response: z.array(progressPhotoDto),
+    handler: async ({ actor, deps }) => ({
+      data: await createProgressPhotoService(deps.db).list(actor!),
+    }),
+  }),
+  defineRoute({
+    method: 'post',
+    path: '/me/progress-photos',
+    access: access.self,
+    summary: 'Add a progress photo (private; shared with my trainer only if I say so)',
+    tags: TAG,
+    body: progressPhotoBody,
+    response: progressPhotoDto,
+    handler: async ({ actor, body, deps }) => ({
+      status: 201,
+      data: await createProgressPhotoService(deps.db).add(actor!, body),
+    }),
+  }),
+  defineRoute({
+    method: 'get',
+    path: '/me/progress-photos/:id',
+    access: access.self,
+    summary: 'One of my progress photos in full size',
+    tags: TAG,
+    params: idParams,
+    response: progressPhotoFullDto,
+    handler: async ({ actor, params, deps }) => ({
+      data: await createProgressPhotoService(deps.db).get(actor!, params.id),
+    }),
+  }),
+  defineRoute({
+    method: 'patch',
+    path: '/me/progress-photos/:id',
+    access: access.self,
+    summary: 'Change date, pose, weight, note or sharing of my progress photo',
+    tags: TAG,
+    params: idParams,
+    body: progressPhotoPatch,
+    response: progressPhotoDto,
+    handler: async ({ actor, params, body, deps }) => ({
+      data: await createProgressPhotoService(deps.db).update(actor!, params.id, body),
+    }),
+  }),
+  defineRoute({
+    method: 'delete',
+    path: '/me/progress-photos/:id',
+    access: access.self,
+    summary: 'Delete my progress photo',
+    tags: TAG,
+    params: idParams,
+    response: z.object({ ok: z.boolean() }),
+    handler: async ({ actor, params, deps }) => ({
+      data: await createProgressPhotoService(deps.db).remove(actor!, params.id),
+    }),
+  }),
+  defineRoute({
+    method: 'get',
+    path: '/admin/members/:id/progress-photos',
+    access: access.can('progress.view_clients'),
+    summary: "A client's shared progress photos (their trainer, with the client's consent)",
+    tags: TAG,
+    params: idParams,
+    response: z.array(progressPhotoDto),
+    handler: async ({ actor, req, params, deps }) => ({
+      data: await createProgressPhotoService(deps.db).forClient(actor!, req, params.id),
+    }),
+  }),
+  defineRoute({
+    method: 'get',
+    path: '/admin/members/:id/progress-photos/:photoId',
+    access: access.can('progress.view_clients'),
+    summary: 'One shared progress photo of a client in full size',
+    tags: TAG,
+    params: memberPhotoParams,
+    response: progressPhotoFullDto,
+    handler: async ({ actor, params, deps }) => ({
+      data: await createProgressPhotoService(deps.db).clientPhoto(
+        actor!,
+        params.id,
+        params.photoId,
       ),
     }),
   }),

@@ -1269,6 +1269,32 @@
       "light": "Clair",
       "dark": "Sombre",
       "system": "Système"
+    },
+    "photos": {
+      "title": "Photos de progression",
+      "tile_text": "Face, profil, dos ; compare avant et après",
+      "privacy": "Toi seul vois tes photos. Ton coach ne voit que la photo que tu partages.",
+      "take": "Prendre une photo",
+      "choose": "Depuis la galerie",
+      "compare": "Comparer",
+      "compare_pick": "Choisis-en deux ({{n}}/2)",
+      "compare_show": "Voir la comparaison",
+      "empty": "Pas encore de photos",
+      "empty_text": "Prends une photo chaque semaine ou chaque mois, même pose et même lumière, puis compare ta progression.",
+      "poses": {
+        "front": "Face",
+        "side": "Profil",
+        "back": "Dos",
+        "other": "Autre"
+      },
+      "new": "Nouvelle photo",
+      "pose": "Pose",
+      "weight": "Poids (kg, facultatif)",
+      "share": "Partager avec mon coach",
+      "share_hint": "Ton coach la voit seulement si tu as autorisé le partage de la progression.",
+      "save": "Enregistrer",
+      "delete": "Supprimer la photo",
+      "diff_days": "{{n}} jours d’écart"
     }
   },
   "errors": {
@@ -1623,6 +1649,10 @@
     },
     "workout_template": {
       "not_found": "Modèle introuvable."
+    },
+    "progress_photo": {
+      "not_found": "Photo introuvable.",
+      "limit_reached": "Tu as le maximum de photos (120). Supprime les plus anciennes."
     }
   },
   "validation": {

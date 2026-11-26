@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { BackHeader } from '@/components/BackHeader';
 import { AssignTemplate } from '@/components/coach/AssignTemplate';
+import { ClientPhotos } from '@/components/coach/ClientPhotos';
 import { Button, Card, EmptyState, Screen, SectionTitle, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { useFormat } from '@/lib/format';
@@ -73,6 +74,7 @@ export default function CoachClientScreen() {
         </Card>
       ) : (
         <>
+          <ClientPhotos memberId={id} />
           <View style={styles.stats}>
             <Stat label={t('app.progress.total')} value={String(d.progress.totalWorkouts)} />
             <Stat label={t('app.progress.last30')} value={String(d.progress.last30Days)} />

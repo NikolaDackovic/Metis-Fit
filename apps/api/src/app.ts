@@ -180,6 +180,8 @@ export function createApp(deps: AppDeps, routes: RouteDef[] = allRoutes): expres
   // Photo uploads carry a resized image (≤ 1 MB) as base64; everything else stays small.
   app.use(`${API_PREFIX}/admin/trainers/:id/photo`, express.json({ limit: '1600kb' }));
   app.use(`${API_PREFIX}/me/avatar`, express.json({ limit: '1600kb' }));
+  // F18-1: a progress photo (up to 1 MB) plus its thumbnail, as base64.
+  app.use(`${API_PREFIX}/me/progress-photos`, express.json({ limit: '2mb' }));
   app.use(`${API_PREFIX}/admin/club/media`, express.json({ limit: '1600kb' }));
   app.use(`${API_PREFIX}/admin/cafe/media`, express.json({ limit: '1600kb' }));
   app.use(`${API_PREFIX}/admin/map/background`, express.json({ limit: '1600kb' }));

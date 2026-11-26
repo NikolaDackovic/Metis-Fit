@@ -1246,6 +1246,32 @@
       "light": "Claro",
       "dark": "Oscuro",
       "system": "Sistema"
+    },
+    "photos": {
+      "title": "Fotos de progreso",
+      "tile_text": "De frente, de lado, de espalda; compara antes y después",
+      "privacy": "Solo tú ves tus fotos. Tu entrenador solo ve la foto que compartas.",
+      "take": "Hacer foto",
+      "choose": "De la galería",
+      "compare": "Comparar",
+      "compare_pick": "Elige dos ({{n}}/2)",
+      "compare_show": "Ver comparación",
+      "empty": "Aún no hay fotos",
+      "empty_text": "Hazte una foto semanal o mensual, en la misma pose y luz, y compara tu progreso.",
+      "poses": {
+        "front": "Frente",
+        "side": "Lado",
+        "back": "Espalda",
+        "other": "Otra"
+      },
+      "new": "Nueva foto",
+      "pose": "Pose",
+      "weight": "Peso (kg, opcional)",
+      "share": "Compartir con mi entrenador",
+      "share_hint": "Tu entrenador la ve solo si permitiste compartir el progreso.",
+      "save": "Guardar",
+      "delete": "Eliminar foto",
+      "diff_days": "{{n}} días de diferencia"
     }
   },
   "errors": {
@@ -1600,6 +1626,10 @@
     },
     "workout_template": {
       "not_found": "Plantilla no encontrada."
+    },
+    "progress_photo": {
+      "not_found": "Foto no encontrada.",
+      "limit_reached": "Tienes el máximo de fotos (120). Borra algunas antiguas."
     }
   },
   "validation": {

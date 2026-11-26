@@ -1246,6 +1246,32 @@
       "light": "Hell",
       "dark": "Dunkel",
       "system": "System"
+    },
+    "photos": {
+      "title": "Fortschrittsfotos",
+      "tile_text": "Vorne, seitlich, hinten; vorher und nachher vergleichen",
+      "privacy": "Nur du siehst deine Fotos. Dein Trainer sieht nur ein Foto, das du teilst.",
+      "take": "Foto aufnehmen",
+      "choose": "Aus der Galerie",
+      "compare": "Vergleichen",
+      "compare_pick": "Zwei wählen ({{n}}/2)",
+      "compare_show": "Vergleich zeigen",
+      "empty": "Noch keine Fotos",
+      "empty_text": "Mach wöchentlich oder monatlich ein Foto in gleicher Pose und gleichem Licht und vergleiche deinen Fortschritt.",
+      "poses": {
+        "front": "Vorne",
+        "side": "Seite",
+        "back": "Hinten",
+        "other": "Andere"
+      },
+      "new": "Neues Foto",
+      "pose": "Pose",
+      "weight": "Gewicht (kg, optional)",
+      "share": "Mit meinem Trainer teilen",
+      "share_hint": "Dein Trainer sieht es nur, wenn du das Teilen des Fortschritts erlaubt hast.",
+      "save": "Speichern",
+      "delete": "Foto löschen",
+      "diff_days": "{{n}} Tage Abstand"
     }
   },
   "errors": {
@@ -1600,6 +1626,10 @@
     },
     "workout_template": {
       "not_found": "Vorlage nicht gefunden."
+    },
+    "progress_photo": {
+      "not_found": "Foto nicht gefunden.",
+      "limit_reached": "Du hast die Höchstzahl an Fotos (120). Lösche ältere."
     }
   },
   "validation": {

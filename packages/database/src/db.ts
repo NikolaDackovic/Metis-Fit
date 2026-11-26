@@ -1283,6 +1283,20 @@ export interface WorkoutTemplates {
   updated_at: Generated<Timestamp>;
 }
 
+export interface ProgressPhotos {
+  content_type: string;
+  created_at: Generated<Timestamp>;
+  id: Generated<string>;
+  image: Buffer;
+  note: string | null;
+  pose: Generated<string>;
+  shared: Generated<boolean>;
+  taken_on: Generated<string>;
+  thumb: Buffer;
+  user_id: string;
+  weight_kg: Numeric | null;
+}
+
 export interface CalendarFeeds {
   club_id: Generated<string>;
   created_at: Generated<Timestamp>;
@@ -1545,6 +1559,7 @@ export interface DB {
   trainer_translations: TrainerTranslations;
   trainer_availability: TrainerAvailability;
   calendar_feeds: CalendarFeeds;
+  progress_photos: ProgressPhotos;
   workout_templates: WorkoutTemplates;
   alert_dismissals: AlertDismissals;
   foods: Foods;

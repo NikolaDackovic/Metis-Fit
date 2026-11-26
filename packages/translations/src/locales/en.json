@@ -381,6 +381,10 @@
     },
     "workout_template": {
       "not_found": "Template not found."
+    },
+    "progress_photo": {
+      "not_found": "Photo not found.",
+      "limit_reached": "You have the maximum number of photos (120). Delete some older ones."
     }
   },
   "validation": {
@@ -3527,6 +3531,32 @@
       "light": "Light",
       "dark": "Dark",
       "system": "System"
+    },
+    "photos": {
+      "title": "Progress photos",
+      "tile_text": "Front, side, back; compare before and after",
+      "privacy": "Only you see your photos. Your trainer sees only a photo you share.",
+      "take": "Take photo",
+      "choose": "From gallery",
+      "compare": "Compare",
+      "compare_pick": "Pick two ({{n}}/2)",
+      "compare_show": "Show comparison",
+      "empty": "No photos yet",
+      "empty_text": "Take one weekly or monthly, always in the same pose and light, then compare your progress.",
+      "poses": {
+        "front": "Front",
+        "side": "Side",
+        "back": "Back",
+        "other": "Other"
+      },
+      "new": "New photo",
+      "pose": "Pose",
+      "weight": "Weight (kg, optional)",
+      "share": "Share with my trainer",
+      "share_hint": "Your trainer sees it only if you allowed progress sharing.",
+      "save": "Save",
+      "delete": "Delete photo",
+      "diff_days": "{{n}} days apart"
     }
   },
   "equipment": {

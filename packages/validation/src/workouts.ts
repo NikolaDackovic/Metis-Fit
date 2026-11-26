@@ -319,3 +319,40 @@ export const clientProgressDto = z.object({
   goals: z.array(goalDto),
 });
 export type ClientProgressDto = z.infer<typeof clientProgressDto>;
+
+// ── F18-1 Progress photos (private; shared with the trainer only per photo) ─────
+export const PHOTO_POSES = ['front', 'side', 'back', 'other'] as const;
+const photoDay = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { error: 'validation.invalid_date' });
+export const progressPhotoBody = z.object({
+  /** Resized photo as a data URL (JPEG/PNG/WebP, up to 1 MB). */
+  image: z.string().min(16).max(1_500_000),
+  /** Small preview for lists (up to about 100 kB). */
+  thumb: z.string().min(16).max(160_000),
+  takenOn: photoDay,
+  pose: z.enum(PHOTO_POSES).default('front'),
+  weightKg: z.number().min(20).max(400).nullable().optional(),
+  note: z.string().trim().max(300).nullable().optional(),
+  shared: z.boolean().default(false),
+});
+export type ProgressPhotoBody = z.infer<typeof progressPhotoBody>;
+export const progressPhotoPatch = z.object({
+  takenOn: photoDay.optional(),
+  pose: z.enum(PHOTO_POSES).optional(),
+  weightKg: z.number().min(20).max(400).nullable().optional(),
+  note: z.string().trim().max(300).nullable().optional(),
+  shared: z.boolean().optional(),
+});
+export const progressPhotoDto = z.object({
+  id: z.string(),
+  takenOn: z.string(),
+  pose: z.enum(PHOTO_POSES),
+  weightKg: z.number().nullable(),
+  note: z.string().nullable(),
+  shared: z.boolean(),
+  /** Thumbnail as a data URL (private photos never get a public link). */
+  thumb: z.string(),
+});
+export type ProgressPhotoDto = z.infer<typeof progressPhotoDto>;
+export const progressPhotoFullDto = progressPhotoDto.extend({ image: z.string() });
+export type ProgressPhotoFullDto = z.infer<typeof progressPhotoFullDto>;
+export const memberPhotoParams = z.object({ id: z.string().uuid(), photoId: z.string().uuid() });

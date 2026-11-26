@@ -146,6 +146,7 @@ export default function RootLayout() {
             <Stack.Screen name="trainer-slots" />
             <Stack.Screen name="calendar" />
             <Stack.Screen name="appearance" />
+            <Stack.Screen name="progress-photos" />
             <Stack.Screen name="legal/[doc]" />
             <Stack.Screen
               name="guide"

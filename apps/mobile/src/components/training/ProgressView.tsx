@@ -2,7 +2,7 @@ import type { GoalDto, MeasurementDto, ProgressDto, SharingDto } from '@grit/val
 import { GOAL_KINDS } from '@grit/validation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { Flame, Lock, Ruler, Target, Trophy } from 'lucide-react-native';
+import { Camera, Flame, Lock, Ruler, Target, Trophy } from 'lucide-react-native';
 import { type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -73,6 +73,15 @@ export function ProgressView({ header }: { header: ReactNode }) {
             />
           </Card>
 
+          <Pressable
+            onPress={() => router.push('/progress-photos')}
+            accessibilityRole="link"
+            style={styles.photosLink}
+          >
+            <Camera size={18} color={color.accent[400]} />
+            <Text style={[type.body, { flex: 1 }]}>{t('app.photos.title')}</Text>
+            <Text style={type.bodySm}>{t('app.photos.tile_text')}</Text>
+          </Pressable>
           <SectionTitle>{t('app.progress.records')}</SectionTitle>
           {p.records.length === 0 ? (
             <Text style={type.bodySm}>{t('app.progress.no_records')}</Text>
@@ -471,6 +480,17 @@ function Sharing() {
 }
 
 const styles = StyleSheet.create({
+  photosLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    minHeight: 52,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: color.border.subtle,
+    backgroundColor: color.bg.surface,
+  },
   food: { borderColor: color.border.subtle, backgroundColor: color.bg.surface },
   nutrition: {
     flexDirection: 'row',

@@ -381,6 +381,10 @@
     },
     "workout_template": {
       "not_found": "Šablon nije pronađen."
+    },
+    "progress_photo": {
+      "not_found": "Fotografija nije pronađena.",
+      "limit_reached": "Imaš najveći broj fotografija (120). Obriši neke starije."
     }
   },
   "validation": {
@@ -3574,6 +3578,32 @@
       "light": "Svetla",
       "dark": "Tamna",
       "system": "Sistem"
+    },
+    "photos": {
+      "title": "Fotografije napretka",
+      "tile_text": "Spreda, bočno, leđa; uporedi pre i posle",
+      "privacy": "Fotografije vidiš samo ti. Treneru se prikazuje samo fotografija koju sam podeliš.",
+      "take": "Slikaj",
+      "choose": "Iz galerije",
+      "compare": "Uporedi",
+      "compare_pick": "Izaberi dve ({{n}}/2)",
+      "compare_show": "Prikaži poređenje",
+      "empty": "Još nema fotografija",
+      "empty_text": "Slikaj se jednom nedeljno ili mesečno, uvek u istoj pozi i svetlu, pa uporedi napredak.",
+      "poses": {
+        "front": "Spreda",
+        "side": "Bočno",
+        "back": "Leđa",
+        "other": "Drugo"
+      },
+      "new": "Nova fotografija",
+      "pose": "Poza",
+      "weight": "Težina (kg, nije obavezno)",
+      "share": "Podeli sa trenerom",
+      "share_hint": "Trener je vidi samo ako si mu dozvolio/la praćenje napretka.",
+      "save": "Sačuvaj",
+      "delete": "Obriši fotografiju",
+      "diff_days": "Razmak: {{n}} dana"
     }
   },
   "equipment": {

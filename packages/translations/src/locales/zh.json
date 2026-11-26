@@ -1223,6 +1223,32 @@
       "light": "浅色",
       "dark": "深色",
       "system": "跟随系统"
+    },
+    "photos": {
+      "title": "进度照片",
+      "tile_text": "正面、侧面、背面；对比前后",
+      "privacy": "照片仅你可见。教练只能看到你分享的照片。",
+      "take": "拍照",
+      "choose": "从相册选择",
+      "compare": "对比",
+      "compare_pick": "选择两张（{{n}}/2）",
+      "compare_show": "查看对比",
+      "empty": "暂无照片",
+      "empty_text": "每周或每月以相同姿势和光线拍一张，对比你的进步。",
+      "poses": {
+        "front": "正面",
+        "side": "侧面",
+        "back": "背面",
+        "other": "其他"
+      },
+      "new": "新照片",
+      "pose": "姿势",
+      "weight": "体重（公斤，可选）",
+      "share": "分享给教练",
+      "share_hint": "只有在你允许分享进度时，教练才能看到。",
+      "save": "保存",
+      "delete": "删除照片",
+      "diff_days": "相隔 {{n}} 天"
     }
   },
   "errors": {
@@ -1577,6 +1603,10 @@
     },
     "workout_template": {
       "not_found": "未找到模板。"
+    },
+    "progress_photo": {
+      "not_found": "未找到照片。",
+      "limit_reached": "照片已达上限（120）。请删除一些旧照片。"
     }
   },
   "validation": {

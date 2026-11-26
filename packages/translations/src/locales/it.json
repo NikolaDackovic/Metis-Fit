@@ -1246,6 +1246,32 @@
       "light": "Chiaro",
       "dark": "Scuro",
       "system": "Sistema"
+    },
+    "photos": {
+      "title": "Foto dei progressi",
+      "tile_text": "Fronte, lato, schiena; confronta prima e dopo",
+      "privacy": "Solo tu vedi le tue foto. Il trainer vede solo la foto che condividi.",
+      "take": "Scatta foto",
+      "choose": "Dalla galleria",
+      "compare": "Confronta",
+      "compare_pick": "Scegline due ({{n}}/2)",
+      "compare_show": "Mostra confronto",
+      "empty": "Ancora nessuna foto",
+      "empty_text": "Scatta una foto ogni settimana o mese, stessa posa e stessa luce, e confronta i progressi.",
+      "poses": {
+        "front": "Fronte",
+        "side": "Lato",
+        "back": "Schiena",
+        "other": "Altro"
+      },
+      "new": "Nuova foto",
+      "pose": "Posa",
+      "weight": "Peso (kg, facoltativo)",
+      "share": "Condividi con il trainer",
+      "share_hint": "Il trainer la vede solo se hai permesso la condivisione dei progressi.",
+      "save": "Salva",
+      "delete": "Elimina foto",
+      "diff_days": "{{n}} giorni di distanza"
     }
   },
   "errors": {
@@ -1600,6 +1626,10 @@
     },
     "workout_template": {
       "not_found": "Modello non trovato."
+    },
+    "progress_photo": {
+      "not_found": "Foto non trovata.",
+      "limit_reached": "Hai il numero massimo di foto (120). Eliminane alcune vecchie."
     }
   },
   "validation": {

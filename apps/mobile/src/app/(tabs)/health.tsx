@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { Activity, Droplets, LineChart, Salad, Utensils } from 'lucide-react-native';
+import { Activity, Camera, Droplets, LineChart, Salad, Utensils } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { HubTile } from '@/components/HubTile';
@@ -51,6 +51,12 @@ export default function HealthScreen() {
           title={t('app.hub.progress')}
           text={t('app.hub.progress_text')}
           onPress={() => router.push({ pathname: '/classes', params: { view: 'progress' } })}
+        />
+        <HubTile
+          icon={Camera}
+          title={t('app.photos.title')}
+          text={t('app.photos.tile_text')}
+          onPress={() => router.push('/progress-photos')}
         />
       </View>
     </Screen>

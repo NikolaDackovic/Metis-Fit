@@ -1,5 +1,18 @@
 # GRIT DIGITAL CLUB - Dnevnik napretka
 
+## F18-1 - Fotografije napretka (2026-11-26) · status: **završeno**
+
+| Oblast     | Stanje                                                                                                                                                                                                                                                     |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Član       | Zdravlje → Fotografije napretka (i link u Trening → Napredak): slikaj ili izaberi iz galerije, poza (spreda, bočno, leđa, drugo), težina po želji; mreža sličica; Uporedi: dve fotografije jedna pored druge, razmak u danima i razlika u težini; brisanje |
+| Privatnost | Fotografije su u bazi, bez javne adrese (ne idu u javno skladište slika); aplikacija ih smanjuje pre slanja. Treneru se prikazuje samo fotografija koju član označi za deljenje, i samo dok je deljenje napretka uključeno; svaki pregled se beleži        |
+| Trener     | Na ekranu klijenta deo "Fotografije napretka" sa podeljenim fotografijama                                                                                                                                                                                  |
+| Baza       | Migracija 053: progress_photos (na nalogu, briše se sa nalogom)                                                                                                                                                                                            |
+
+### Testovi
+
+api progress-photos +3 (samo vlasnik, puna veličina na zahtev, privatno po difoltu; ne-slika odbijena; trener samo podeljeno i uz saglasnost)
+
 ## F17-4 - Priprema za fit.metis.rs, bez demo oznaka (2026-11-26) · status: **završeno (čeka naloge)**
 
 | Oblast       | Stanje                                                                                                                                                                                                                                                              |
