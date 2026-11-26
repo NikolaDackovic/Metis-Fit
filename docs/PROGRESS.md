@@ -1,5 +1,12 @@
 # GRIT DIGITAL CLUB - Dnevnik napretka
 
+## F17-4 - Priprema za fit.metis.rs, bez demo oznaka (2026-11-26) · status: **završeno (čeka naloge)**
+
+| Oblast       | Stanje                                                                                                                                                                                                                                                              |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Postavljanje | `render.yaml` (Render Blueprint): API (Docker) na api.fit.metis.rs, admin na admin.fit.metis.rs, aplikacija za članove (web) na fit.metis.rs; tajni ključevi samo u Render dashboard-u. Koraci za Supabase, Render i Loopia DNS: [POSTAVLJANJE.md](POSTAVLJANJE.md) |
+| Demo podaci  | Uklonjene oznake [DEMO] iz početnih podataka i lokalne baze: primer članovi Marko Petrović i Jelena Jovanović, sprave bez oznake, sa kratkim opisom i uputstvom                                                                                                     |
+
 ## F17-3 - Admin pod Metis Fit brendom (2026-11-26) · status: **završeno**
 
 | Oblast   | Stanje                                                                                                                                                                          |

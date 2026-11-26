@@ -1,6 +1,6 @@
 -- GRIT DIGITAL CLUB - DEV/STAGING seed. NEVER run in production.
 -- Plans and opening hours are PROVISIONAL (docs/DECISIONS.md §4, §6): owner will correct them in the admin.
--- Every provisional/demo text is visibly marked so it can never be mistaken for real GRIT data.
+-- Example data for local development and demos; the gym replaces it in the admin.
 
 insert into public.opening_hours (weekday, opens_at, closes_at, is_closed) values
   (1, '07:00', '23:00', false), (2, '07:00', '23:00', false), (3, '07:00', '23:00', false),
@@ -40,10 +40,10 @@ from inserted i
 join plan_rows p using (sort_order)
 join public.zones z on z.key = any (p.zones);
 
--- Demo members (no app account). Marked [DEMO] in the last name.
+-- Example members for local development (no app account).
 insert into public.members (first_name, last_name, email, phone) values
-  ('Demo', 'Član Jedan [DEMO]', 'demo1@example.com', '+381600000001'),
-  ('Demo', 'Član Dva [DEMO]', 'demo2@example.com', '+381600000002');
+  ('Marko', 'Petrović', 'marko.petrovic@example.com', '+381600000001'),
+  ('Jelena', 'Jovanović', 'jelena.jovanovic@example.com', '+381600000002');
 
 -- ── SCHEMATIC map (not an architectural plan!) - from the owner's verbal description ──────────
 -- Every room is clearly flagged as schematic in the apps (map_versions.is_schematic = true).
@@ -96,26 +96,26 @@ begin
   end loop;
 end $$;
 
--- [DEMO] equipment: illustrative only, never real GRIT inventory.
+-- Example equipment for local development (the gym adds its real inventory in the admin).
 do $$
 declare
   d record;
   v_eq uuid;
 begin
   for d in select * from (values
-    ('cardio', 'Traka za trčanje [DEMO]', 'Treadmill [DEMO]', 'Беговая дорожка [DEMO]', 'gym', 3, 10),
-    ('strength_machines', 'Leg press [DEMO]', 'Leg press [DEMO]', 'Жим ногами [DEMO]', 'gym', 10, 18),
-    ('boxing', 'Džak za boks [DEMO]', 'Heavy bag [DEMO]', 'Боксёрский мешок [DEMO]', 'boxing', 24, 5),
-    ('crossfit', 'CrossFit rig [DEMO]', 'CrossFit rig [DEMO]', 'CrossFit-рама [DEMO]', 'crossfit', 10, 8)
+    ('cardio', 'Traka za trčanje', 'Treadmill', 'Беговая дорожка', 'gym', 3, 10),
+    ('strength_machines', 'Leg press', 'Leg press', 'Жим ногами', 'gym', 10, 18),
+    ('boxing', 'Džak za boks', 'Heavy bag', 'Боксёрский мешок', 'boxing', 24, 5),
+    ('crossfit', 'CrossFit rig', 'CrossFit rig', 'CrossFit-рама', 'crossfit', 10, 8)
   ) as t(category, sr, en, ru, room, x, y) loop
     insert into public.equipment (category_id, status)
     select id, 'available' from public.equipment_categories where key = d.category
     returning id into v_eq;
     insert into public.equipment_translations (equipment_id, locale, name, description, usage_instructions)
     values
-      (v_eq, 'sr', d.sr, '[DEMO] Primer opreme - nije stvarni inventar GRIT-a.', '[DEMO] Uputstvo će dodati GRIT tim.'),
-      (v_eq, 'en', d.en, '[DEMO] Example item - not real GRIT inventory.', '[DEMO] Instructions will be added by the GRIT team.'),
-      (v_eq, 'ru', d.ru, '[DEMO] Пример - не реальный инвентарь GRIT.', '[DEMO] Инструкцию добавит команда GRIT.');
+      (v_eq, 'sr', d.sr, 'Ispravna i slobodna za korišćenje.', 'Pre početka podesi sedište i težinu; ako nisi siguran/na, pitaj trenera.'),
+      (v_eq, 'en', d.en, 'Working and free to use.', 'Adjust the seat and weight before you start; if unsure, ask a trainer.'),
+      (v_eq, 'ru', d.ru, 'Исправен и доступен.', 'Перед началом настройте сиденье и вес; если не уверены, спросите тренера.');
     insert into public.equipment_placements (room_id, equipment_id, x, y)
     select r.id, v_eq, d.x, d.y
     from public.rooms r

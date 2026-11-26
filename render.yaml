@@ -1,0 +1,98 @@
+# Metis Fit on Render (Blueprint): Render reads this file when the GitHub repository is connected
+# (Dashboard → New → Blueprint) and creates the API and the two websites. Secrets are entered in
+# the Render dashboard (sync: false), never in this file. Steps: docs/POSTAVLJANJE.md.
+#
+#   api.fit.metis.rs    → metis-api   (Docker, apps/api/Dockerfile)
+#   admin.fit.metis.rs  → metis-admin (static, apps/admin/dist)
+#   fit.metis.rs        → metis-app   (static web version of the member app, apps/mobile/dist)
+
+services:
+  - type: web
+    name: metis-api
+    runtime: docker
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    region: frankfurt
+    plan: starter
+    healthCheckPath: /ready
+    autoDeploy: true
+    domains:
+      - api.fit.metis.rs
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: LOG_LEVEL
+        value: info
+      - key: CORS_ORIGINS
+        value: https://admin.fit.metis.rs,https://fit.metis.rs
+      - key: REQUIRE_MFA_FOR_ADMIN
+        value: true
+      - key: DEV_LOGIN
+        value: false
+      - key: MEDIA_STORE
+        value: supabase
+      - key: MEDIA_BUCKET
+        value: club-media
+      - key: STAFF_INVITE_REDIRECT_URL
+        value: https://admin.fit.metis.rs
+      - key: NOTIFICATION_JOBS
+        value: true
+      - key: PUSH_PROVIDER
+        value: none
+      - key: QR_TOKEN_SECRET
+        generateValue: true
+      # From the Supabase project (Settings → Database / API); entered in the Render dashboard.
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+
+  - type: web
+    name: metis-admin
+    runtime: static
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @grit/admin build
+    staticPublishPath: ./apps/admin/dist
+    autoDeploy: true
+    domains:
+      - admin.fit.metis.rs
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://api.fit.metis.rs/v1
+      - key: VITE_AUTH_MODE
+        value: supabase
+      - key: VITE_MEMBER_APP_URL
+        value: https://fit.metis.rs
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+
+  - type: web
+    name: metis-app
+    runtime: static
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @grit/mobile export:web
+    staticPublishPath: ./apps/mobile/dist
+    autoDeploy: true
+    domains:
+      - fit.metis.rs
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: EXPO_PUBLIC_API_URL
+        value: https://api.fit.metis.rs/v1
+      - key: EXPO_PUBLIC_AUTH_MODE
+        value: supabase
+      - key: EXPO_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: EXPO_PUBLIC_SUPABASE_ANON_KEY
+        sync: false

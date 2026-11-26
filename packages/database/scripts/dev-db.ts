@@ -110,7 +110,7 @@ if (existing.rowCount === 0) {
   );
   const member = await client.query<{ id: string }>(
     `insert into public.members (user_id, first_name, last_name, email, phone)
-     values ($1, 'Dev', 'Član [DEMO]', $2, '+381600000099') returning id`,
+     values ($1, 'Dev', 'Član', $2, '+381600000099') returning id`,
     [user.rows[0]!.id, DEV_MEMBER_EMAIL],
   );
   // Active monthly gym membership that started 10 days ago, partially paid (shows debt in the app).
