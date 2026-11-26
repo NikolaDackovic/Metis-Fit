@@ -4,7 +4,7 @@
 
 FROM node:22-alpine AS build
 WORKDIR /repo
-RUN corepack enable
+RUN npm install -g pnpm@10.34.9
 # Manifests first so the dependency layer is cached between code changes.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc turbo.json tsconfig.base.json ./
 COPY apps/api/package.json apps/api/
