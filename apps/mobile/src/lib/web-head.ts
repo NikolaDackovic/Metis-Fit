@@ -2,7 +2,8 @@ import { Platform } from 'react-native';
 
 /**
  * Web only: what phones need for "Add to Home Screen" (the M icon, the name "Metis Fit",
- * full-screen start). The files live in public/ next to index.html.
+ * full-screen start). The status bar stays opaque ("black"): with "black-translucent" the page
+ * would slide under the clock and hide the back arrow. Files live in public/ next to index.html.
  */
 export function applyWebHead() {
   if (Platform.OS !== 'web' || typeof document === 'undefined') return;
@@ -18,6 +19,6 @@ export function applyWebHead() {
   add('meta', { name: 'apple-mobile-web-app-title', content: 'Metis Fit' });
   add('meta', { name: 'apple-mobile-web-app-capable', content: 'yes' });
   add('meta', { name: 'mobile-web-app-capable', content: 'yes' });
-  add('meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' });
+  add('meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' });
   add('meta', { name: 'theme-color', content: '#0A0A0A' });
 }

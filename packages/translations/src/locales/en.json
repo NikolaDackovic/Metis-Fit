@@ -2296,7 +2296,9 @@
       "health": "Health",
       "club": "Club",
       "coach": "Work",
-      "more": "More"
+      "more": "More",
+      "schedule": "Schedule",
+      "inbox": "Messages"
     },
     "auth": {
       "tagline": "Train smarter",
@@ -3574,6 +3576,27 @@
       "save": "Save",
       "delete": "Delete photo",
       "diff_days": "{{n}} days apart"
+    },
+    "mode": {
+      "title": "How are you using the app today?",
+      "subtitle": "You are a trainer. Pick a mode; switch it with one tap any time.",
+      "coach": "I am working",
+      "coach_text": "Schedule, clients, programmes and messages.",
+      "member": "I am training",
+      "member_text": "My workouts, nutrition, progress and entry QR.",
+      "hint": "Switch the mode at the top of Home or in Profile.",
+      "switch": "Mode",
+      "coach_short": "Trainer",
+      "member_short": "Member",
+      "row": "Mode"
+    },
+    "schedule": {
+      "prev_week": "Previous week",
+      "next_week": "Next week",
+      "count": "Sessions this week: {{n}}",
+      "classes": "Group",
+      "personal": "Personal",
+      "inbox_hint": "Conversations with your clients."
     }
   },
   "equipment": {

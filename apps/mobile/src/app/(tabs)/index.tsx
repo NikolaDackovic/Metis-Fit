@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import {
   Building2,
   Bell,
@@ -17,7 +17,9 @@ import { ProfileOverview } from '@/components/ProfileOverview';
 import { RateCard } from '@/components/RateCard';
 import { MembershipCard } from '@/components/MembershipCard';
 import { VisitCard } from '@/components/VisitCard';
+import { ModeSwitch } from '@/components/ModeSwitch';
 import { Button, Card, EmptyState, ErrorNote, Screen, Skeleton } from '@/components/ui';
+import { useAppMode } from '@/lib/app-mode';
 import { greetingKey } from '@/lib/format';
 import { useNotifications } from '@/lib/notifications';
 import { currentMembership, useClub, useMe, useMyMemberships, useMyVisits } from '@/lib/queries';
@@ -32,6 +34,7 @@ export default function HomeScreen() {
   const current = currentMembership(memberships.data);
   const linked = Boolean(me.data?.member);
   const unread = useNotifications().data?.unread ?? 0;
+  const appMode = useAppMode();
 
   const refreshing = me.isFetching || memberships.isFetching || visits.isFetching;
   const refresh = () => {
@@ -41,8 +44,12 @@ export default function HomeScreen() {
     void club.refetch();
   };
 
+  // Trainer mode opens on Work.
+  if (appMode.mode === 'coach') return <Redirect href="/coach" />;
+
   return (
     <Screen refreshing={refreshing} onRefresh={refresh}>
+      {appMode.isTrainer && <ModeSwitch />}
       <View style={styles.header}>
         <View style={{ flex: 1 }}>
           <Text style={type.bodySm}>{t(`app.home.greeting.${greetingKey()}`)}</Text>

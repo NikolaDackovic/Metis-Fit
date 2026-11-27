@@ -42,7 +42,9 @@
       "health": "Santé",
       "club": "Club",
       "coach": "Travail",
-      "more": "Plus"
+      "more": "Plus",
+      "schedule": "Planning",
+      "inbox": "Messages"
     },
     "home": {
       "greeting": {
@@ -1311,6 +1313,27 @@
       "save": "Enregistrer",
       "delete": "Supprimer la photo",
       "diff_days": "{{n}} jours d’écart"
+    },
+    "mode": {
+      "title": "Comment utilises-tu l’app aujourd’hui ?",
+      "subtitle": "Tu es coach. Choisis un mode ; change-le d’un geste quand tu veux.",
+      "coach": "Je travaille",
+      "coach_text": "Planning, clients, programmes et messages.",
+      "member": "Je m’entraîne",
+      "member_text": "Mes séances, nutrition, progrès et QR d’entrée.",
+      "hint": "Change de mode en haut de l’accueil ou dans le profil.",
+      "switch": "Mode",
+      "coach_short": "Coach",
+      "member_short": "Membre",
+      "row": "Mode"
+    },
+    "schedule": {
+      "prev_week": "Semaine précédente",
+      "next_week": "Semaine suivante",
+      "count": "Séances cette semaine : {{n}}",
+      "classes": "Collectifs",
+      "personal": "Personnels",
+      "inbox_hint": "Conversations avec tes clients."
     }
   },
   "errors": {

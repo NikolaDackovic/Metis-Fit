@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { CoachSummary } from '@/components/coach/CoachSummary';
+import { ModeSwitch } from '@/components/ModeSwitch';
 import { ConversationList } from '@/components/ConversationList';
 import { Button, Card, EmptyState, ErrorNote, Screen, Skeleton } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
@@ -30,9 +31,14 @@ export default function CoachScreen() {
   const [segment, setSegment] = useState<Segment>('schedule');
   return (
     <Screen>
-      <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
-        {t('app.coach.title')}
-      </Text>
+      <View style={styles.head}>
+        <Text
+          style={[type.display, styles.title, { flex: 1, fontFamily: displayFont(i18n.language) }]}
+        >
+          {t('app.coach.title')}
+        </Text>
+        <ModeSwitch />
+      </View>
       <CoachSummary />
       <View style={styles.segments} accessibilityRole="tablist">
         {(['schedule', 'clients', 'messages'] as const).map((s) => (
@@ -257,6 +263,7 @@ function Clients() {
 }
 
 const styles = StyleSheet.create({
+  head: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   title: { fontSize: 24, lineHeight: 30, paddingTop: 12 },
   segments: {
     flexDirection: 'row',

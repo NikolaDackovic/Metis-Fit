@@ -42,7 +42,9 @@
       "health": "Gesundheit",
       "club": "Studio",
       "coach": "Arbeit",
-      "more": "Mehr"
+      "more": "Mehr",
+      "schedule": "Plan",
+      "inbox": "Nachrichten"
     },
     "home": {
       "greeting": {
@@ -1288,6 +1290,27 @@
       "save": "Speichern",
       "delete": "Foto löschen",
       "diff_days": "{{n}} Tage Abstand"
+    },
+    "mode": {
+      "title": "Wie nutzt du die App heute?",
+      "subtitle": "Du bist Trainer. Wähle einen Modus; wechsle ihn jederzeit mit einem Tipp.",
+      "coach": "Ich arbeite",
+      "coach_text": "Plan, Kunden, Programme und Nachrichten.",
+      "member": "Ich trainiere",
+      "member_text": "Meine Workouts, Ernährung, Fortschritt und Eintritts-QR.",
+      "hint": "Den Modus wechselst du oben auf Start oder im Profil.",
+      "switch": "Modus",
+      "coach_short": "Trainer",
+      "member_short": "Mitglied",
+      "row": "Modus"
+    },
+    "schedule": {
+      "prev_week": "Vorige Woche",
+      "next_week": "Nächste Woche",
+      "count": "Termine diese Woche: {{n}}",
+      "classes": "Gruppe",
+      "personal": "Personal",
+      "inbox_hint": "Gespräche mit deinen Kunden."
     }
   },
   "errors": {

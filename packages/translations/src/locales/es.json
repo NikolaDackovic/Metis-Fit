@@ -42,7 +42,9 @@
       "health": "Salud",
       "club": "Club",
       "coach": "Trabajo",
-      "more": "Más"
+      "more": "Más",
+      "schedule": "Agenda",
+      "inbox": "Mensajes"
     },
     "home": {
       "greeting": {
@@ -1288,6 +1290,27 @@
       "save": "Guardar",
       "delete": "Eliminar foto",
       "diff_days": "{{n}} días de diferencia"
+    },
+    "mode": {
+      "title": "¿Cómo usas la app hoy?",
+      "subtitle": "Eres entrenador. Elige un modo; cámbialo con un toque cuando quieras.",
+      "coach": "Estoy trabajando",
+      "coach_text": "Agenda, clientes, programas y mensajes.",
+      "member": "Estoy entrenando",
+      "member_text": "Mis entrenos, nutrición, progreso y QR de entrada.",
+      "hint": "Cambia el modo arriba en Inicio o en Perfil.",
+      "switch": "Modo",
+      "coach_short": "Entrenador",
+      "member_short": "Socio",
+      "row": "Modo"
+    },
+    "schedule": {
+      "prev_week": "Semana anterior",
+      "next_week": "Semana siguiente",
+      "count": "Sesiones esta semana: {{n}}",
+      "classes": "Grupales",
+      "personal": "Personales",
+      "inbox_hint": "Conversaciones con tus clientes."
     }
   },
   "errors": {

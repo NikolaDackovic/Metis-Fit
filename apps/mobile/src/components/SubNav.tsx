@@ -2,10 +2,12 @@ import { router, type Href } from 'expo-router';
 import {
   BriefcaseBusiness,
   Building2,
+  CalendarDays,
   Dumbbell,
   LayoutGrid,
   HeartPulse,
   House,
+  MessageCircle,
   QrCode,
   UserRound,
   type LucideIcon,
@@ -13,7 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useIsTrainer } from '@/lib/trainer';
+import { useAppMode } from '@/lib/app-mode';
 import { color, fonts } from '@/theme';
 
 /**
@@ -23,15 +25,46 @@ import { color, fonts } from '@/theme';
 export function SubNav() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const isTrainer = useIsTrainer();
+  const coach = useAppMode().mode === 'coach';
   const items: Array<{ key: string; label: string; icon: LucideIcon; href: Href }> = [
-    { key: 'home', label: t('app.tabs.home'), icon: House, href: '/(tabs)' },
-    { key: 'training', label: t('app.tabs.training'), icon: Dumbbell, href: '/(tabs)/classes' },
-    { key: 'health', label: t('app.tabs.health'), icon: HeartPulse, href: '/(tabs)/health' },
+    ...(coach
+      ? [
+          {
+            key: 'coach',
+            label: t('app.tabs.coach'),
+            icon: BriefcaseBusiness,
+            href: '/(tabs)/coach' as Href,
+          },
+          {
+            key: 'schedule',
+            label: t('app.tabs.schedule'),
+            icon: CalendarDays,
+            href: '/(tabs)/schedule' as Href,
+          },
+          {
+            key: 'inbox',
+            label: t('app.tabs.inbox'),
+            icon: MessageCircle,
+            href: '/(tabs)/inbox' as Href,
+          },
+        ]
+      : [
+          { key: 'home', label: t('app.tabs.home'), icon: House, href: '/(tabs)' as Href },
+          {
+            key: 'training',
+            label: t('app.tabs.training'),
+            icon: Dumbbell,
+            href: '/(tabs)/classes' as Href,
+          },
+          {
+            key: 'health',
+            label: t('app.tabs.health'),
+            icon: HeartPulse,
+            href: '/(tabs)/health' as Href,
+          },
+        ]),
     { key: 'qr', label: t('app.tabs.qr'), icon: QrCode, href: '/card' },
-    isTrainer
-      ? { key: 'coach', label: t('app.tabs.coach'), icon: BriefcaseBusiness, href: '/(tabs)/coach' }
-      : { key: 'club', label: t('app.tabs.club'), icon: Building2, href: '/(tabs)/club' },
+    { key: 'club', label: t('app.tabs.club'), icon: Building2, href: '/(tabs)/club' },
     { key: 'profile', label: t('app.tabs.profile'), icon: UserRound, href: '/profile' },
     { key: 'more', label: t('app.tabs.more'), icon: LayoutGrid, href: '/(tabs)/more' },
   ];

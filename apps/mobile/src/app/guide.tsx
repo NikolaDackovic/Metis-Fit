@@ -25,6 +25,7 @@ import { PlatformWordmark } from '@/components/PlatformWordmark';
 import { QrCode } from '@/components/QrCode';
 import { Button } from '@/components/ui';
 import { api } from '@/lib/api';
+import { useAppMode } from '@/lib/app-mode';
 import { markGuideSeen } from '@/lib/guide';
 import { clubShortName, useClub, useMe } from '@/lib/queries';
 import { color, fonts, MAX_CONTENT_WIDTH, radius, type } from '@/theme';
@@ -57,9 +58,12 @@ export default function GuideScreen() {
   const [i, setI] = useState(0);
   const step = STEPS[i]!;
   const last = i === STEPS.length - 1;
+  const appMode = useAppMode();
   const done = () => {
     void markGuideSeen(me.data?.id);
-    if (router.canGoBack()) router.back();
+    // Trainers then choose how they use the app (work or train).
+    if (appMode.isTrainer && !appMode.chosen) router.replace('/mode');
+    else if (router.canGoBack()) router.back();
     else router.replace('/');
   };
 

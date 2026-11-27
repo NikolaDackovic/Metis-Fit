@@ -42,7 +42,9 @@
       "health": "健康",
       "club": "俱乐部",
       "coach": "工作",
-      "more": "更多"
+      "more": "更多",
+      "schedule": "日程",
+      "inbox": "消息"
     },
     "home": {
       "greeting": {
@@ -1265,6 +1267,27 @@
       "save": "保存",
       "delete": "删除照片",
       "diff_days": "相隔 {{n}} 天"
+    },
+    "mode": {
+      "title": "你今天如何使用应用？",
+      "subtitle": "你是教练。选择一种模式，随时一键切换。",
+      "coach": "我在工作",
+      "coach_text": "日程、客户、计划和消息。",
+      "member": "我在训练",
+      "member_text": "我的训练、饮食、进度和入场二维码。",
+      "hint": "在首页顶部或个人资料中切换模式。",
+      "switch": "模式",
+      "coach_short": "教练",
+      "member_short": "会员",
+      "row": "模式"
+    },
+    "schedule": {
+      "prev_week": "上一周",
+      "next_week": "下一周",
+      "count": "本周课程：{{n}}",
+      "classes": "团课",
+      "personal": "私教",
+      "inbox_hint": "与客户的对话。"
     }
   },
   "errors": {

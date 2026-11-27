@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import { router, type Href } from 'expo-router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  BriefcaseBusiness,
   Building2,
   CalendarPlus,
   ChevronRight,
@@ -33,6 +34,7 @@ import { Button, Card, ErrorNote, Screen, SectionTitle } from '@/components/ui';
 import { exportMyData } from '@/lib/account';
 import { themePref } from '@/lib/brand-boot';
 import { api, ApiError } from '@/lib/api';
+import { useAppMode } from '@/lib/app-mode';
 import { AUTH_MODE, signOut } from '@/lib/auth';
 import { clubShortName, useClub, useMe } from '@/lib/queries';
 import { dirIcon } from '@/lib/rtl';
@@ -81,6 +83,7 @@ function Row({
  */
 export default function ProfileScreen() {
   const { t } = useTranslation();
+  const appMode = useAppMode();
   const me = useMe();
   const club = useClub();
   const member = me.data?.member;
@@ -135,6 +138,15 @@ export default function ProfileScreen() {
         />
         {member && (
           <Row icon={IdCard} label={t('app.hub.membership')} onPress={go('/membership')} divider />
+        )}
+        {appMode.isTrainer && (
+          <Row
+            icon={BriefcaseBusiness}
+            label={t('app.mode.row')}
+            value={t(appMode.mode === 'coach' ? 'app.mode.coach_short' : 'app.mode.member_short')}
+            onPress={go('/mode')}
+            divider
+          />
         )}
         {AUTH_MODE !== 'dev' && (
           <Row

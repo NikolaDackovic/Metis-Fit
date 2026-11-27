@@ -17,7 +17,9 @@ export function BackHeader({ title, right }: { title: string; right?: ReactNode 
         accessibilityLabel={t('app.common.back')}
         hitSlop={10}
       >
-        <ArrowLeft style={dirIcon} size={24} color={color.text.primary} />
+        <View style={styles.back}>
+          <ArrowLeft style={dirIcon} size={24} color={color.text.primary} />
+        </View>
       </Pressable>
       <Text style={[type.h1, styles.title]} numberOfLines={1}>
         {title}
@@ -42,14 +44,24 @@ export function BackButton({ onPress }: { onPress?: () => void }) {
       accessibilityLabel={t('app.common.back')}
       hitSlop={8}
     >
-      <ArrowLeft style={dirIcon} size={22} color={color.text.primary} />
+      <ArrowLeft style={dirIcon} size={24} color={color.text.primary} />
     </Pressable>
   );
 }
 BackButton.stickyTop = true;
 
 const styles = StyleSheet.create({
-  back: { width: 44, height: 44, justifyContent: 'center' },
+  // A visible, thumb-sized target on small phones.
+  back: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: color.bg.surface,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: color.border.subtle,
+  },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 8 },
   title: { flex: 1, fontSize: 24, lineHeight: 30 },
 });

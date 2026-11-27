@@ -2,10 +2,12 @@ import { router, Tabs } from 'expo-router';
 import {
   BriefcaseBusiness,
   Building2,
+  CalendarDays,
   Dumbbell,
   LayoutGrid,
   HeartPulse,
   House,
+  MessageCircle,
   QrCode,
   UserRound,
 } from 'lucide-react-native';
@@ -14,7 +16,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { guideSeen } from '@/lib/guide';
-import { useIsTrainer } from '@/lib/trainer';
+import { useAppMode } from '@/lib/app-mode';
 import { processPendingJoin } from '@/lib/join';
 import { useMe } from '@/lib/queries';
 import { registerForPush, usePushNavigation } from '@/lib/push';
@@ -22,7 +24,8 @@ import { color, fonts } from '@/theme';
 
 /**
  * Bottom navigation with the entry QR exactly in the middle:
- * Home · Training · Health · [QR] · Club (Work for trainers) · Profile · More.
+ *  member:  Home · Training · Health · [QR] · Club · Profile · More
+ *  trainer: Work · Schedule · Messages · [QR] · Club · Profile · More
  */
 export default function TabsLayout() {
   const { t } = useTranslation();
@@ -44,8 +47,15 @@ export default function TabsLayout() {
       if (!seen) router.push('/guide');
     });
   }, [userId]);
-  // F14-1: trainers get a "Work" tab instead of "Club" (Club moves to More).
-  const isTrainer = useIsTrainer();
+  // Trainers work in "trainer mode" (Work, Schedule, Messages) or train like any member.
+  const { mode, chosen, loaded, isTrainer } = useAppMode();
+  const coach = mode === 'coach';
+  useEffect(() => {
+    if (!userId || !isTrainer || !loaded || chosen) return;
+    void guideSeen(userId).then((seen) => {
+      if (seen) router.push('/mode');
+    });
+  }, [userId, isTrainer, loaded, chosen]);
   return (
     <Tabs
       screenOptions={{
@@ -66,8 +76,42 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
+        name="coach"
+        options={{
+          href: coach ? undefined : null,
+          title: t('app.tabs.coach'),
+          tabBarIcon: ({ focused, size }) => (
+            <BriefcaseBusiness
+              size={size}
+              color={focused ? color.accent[400] : color.text.secondary}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="schedule"
+        options={{
+          href: coach ? undefined : null,
+          title: t('app.tabs.schedule'),
+          tabBarIcon: ({ focused, size }) => (
+            <CalendarDays size={size} color={focused ? color.accent[400] : color.text.secondary} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="inbox"
+        options={{
+          href: coach ? undefined : null,
+          title: t('app.tabs.inbox'),
+          tabBarIcon: ({ focused, size }) => (
+            <MessageCircle size={size} color={focused ? color.accent[400] : color.text.secondary} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
+          href: coach ? null : undefined,
           title: t('app.tabs.home'),
           tabBarIcon: ({ focused, size }) => (
             <House size={size} color={focused ? color.accent[400] : color.text.secondary} />
@@ -77,6 +121,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="classes"
         options={{
+          href: coach ? null : undefined,
           title: t('app.tabs.training'),
           tabBarIcon: ({ focused, size }) => (
             <Dumbbell size={size} color={focused ? color.accent[400] : color.text.secondary} />
@@ -86,6 +131,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="health"
         options={{
+          href: coach ? null : undefined,
           title: t('app.tabs.health'),
           tabBarIcon: ({ focused, size }) => (
             <HeartPulse size={size} color={focused ? color.accent[400] : color.text.secondary} />
@@ -113,22 +159,8 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="coach"
-        options={{
-          href: isTrainer ? undefined : null,
-          title: t('app.tabs.coach'),
-          tabBarIcon: ({ focused, size }) => (
-            <BriefcaseBusiness
-              size={size}
-              color={focused ? color.accent[400] : color.text.secondary}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="club"
         options={{
-          href: isTrainer ? null : undefined,
           title: t('app.tabs.club'),
           tabBarIcon: ({ focused, size }) => (
             <Building2 size={size} color={focused ? color.accent[400] : color.text.secondary} />

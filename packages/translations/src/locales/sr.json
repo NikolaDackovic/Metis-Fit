@@ -2320,7 +2320,9 @@
       "health": "Zdravlje",
       "club": "Klub",
       "coach": "Posao",
-      "more": "Više"
+      "more": "Više",
+      "schedule": "Raspored",
+      "inbox": "Poruke"
     },
     "auth": {
       "tagline": "Treniraj pametnije",
@@ -3621,6 +3623,27 @@
       "save": "Sačuvaj",
       "delete": "Obriši fotografiju",
       "diff_days": "Razmak: {{n}} dana"
+    },
+    "mode": {
+      "title": "Kako danas koristiš aplikaciju?",
+      "subtitle": "Ti si trener. Izaberi režim; menjaš ga jednim dodirom kad god hoćeš.",
+      "coach": "Radim kao trener",
+      "coach_text": "Raspored, klijenti, programi i poruke.",
+      "member": "Treniram kao član",
+      "member_text": "Moji treninzi, ishrana, napredak i QR za ulaz.",
+      "hint": "Režim menjaš na vrhu početne strane ili u Profilu.",
+      "switch": "Režim rada",
+      "coach_short": "Trener",
+      "member_short": "Član",
+      "row": "Režim rada"
+    },
+    "schedule": {
+      "prev_week": "Prethodna nedelja",
+      "next_week": "Sledeća nedelja",
+      "count": "Termina ove nedelje: {{n}}",
+      "classes": "Grupni",
+      "personal": "Personalni",
+      "inbox_hint": "Razgovori sa tvojim klijentima."
     }
   },
   "equipment": {
