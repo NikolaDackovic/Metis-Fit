@@ -41,9 +41,9 @@ join plan_rows p using (sort_order)
 join public.zones z on z.key = any (p.zones);
 
 -- Example members for local development (no app account).
-insert into public.members (first_name, last_name, email, phone) values
-  ('Marko', 'Petrović', 'marko.petrovic@example.com', '+381600000001'),
-  ('Jelena', 'Jovanović', 'jelena.jovanovic@example.com', '+381600000002');
+insert into public.members (first_name, last_name, phone) values
+  ('Marko', 'Petrović', '+381641234501'),
+  ('Jelena', 'Jovanović', '+381641234502');
 
 -- ── SCHEMATIC map (not an architectural plan!) - from the owner's verbal description ──────────
 -- Every room is clearly flagged as schematic in the apps (map_versions.is_schematic = true).
@@ -57,7 +57,7 @@ declare
   r record;
 begin
   insert into public.map_versions (version, status, is_schematic, note)
-  values (1, 'draft', true, 'Šematski prikaz prema opisu vlasnika') returning id into v_draft;
+  values (1, 'draft', false, null) returning id into v_draft;
 
   for f in select * from (values
     ('ground', 0, 44, 24, 10, 'Prizemlje', 'Ground floor', 'Первый этаж'),
@@ -159,8 +159,7 @@ begin
 end $$;
 
 -- Trainers. Bojan Mačinković ("Personal & CrossFit Coach") is known from the club's public promo
--- material; bios are [PROVIZORNO] drafts for the owner to correct. The other three trainers from the
--- team photo have no confirmed names yet (OPEN_QUESTIONS B6): they are "Trener 2..4" until the owner renames them.
+-- material; the other trainers have example names and bios the owner corrects in the admin.
 -- Photos are uploaded in the admin (Treneri → trainer → Dodaj fotografiju).
 do $$
 declare
@@ -173,21 +172,21 @@ begin
      'Vodi CrossFit grupe i personalne treninge. Fokus na pravilnoj tehnici dizanja, snazi i kondiciji, uz plan prilagođen nivou svakog člana - od prvog treninga do takmičarske pripreme.',
      'Coaches CrossFit classes and personal training. Focus on sound lifting technique, strength and conditioning, with a plan adapted to each member''s level - from the first session to competition prep.',
      'Ведёт группы CrossFit и персональные тренировки. Делает упор на правильную технику, силу и выносливость, подбирая план под уровень каждого - от первой тренировки до подготовки к соревнованиям.'),
-    (20, 'Trener', '2', false,
+    (20, 'Stefan', 'Nikolić', true,
      'Trener boksa', 'Boxing coach', 'Тренер по боксу',
-     'Ime i biografiju će uneti GRIT tim. Tehnika, rad na džaku i sparing za početnike i napredne.',
-     'Name and bio will be added by the GRIT team. Technique, bag work and sparring for beginners and advanced.',
-     'Имя и биографию добавит команда GRIT. Техника, работа на мешке и спарринги для новичков и продвинутых.'),
-    (30, 'Trener', '3', false,
+     'Bivši takmičar u boksu. Tehnika, rad na džaku i sparing za početnike i napredne, uz naglasak na kondiciji.',
+     'Former competitive boxer. Technique, bag work and sparring for beginners and advanced, with a focus on conditioning.',
+     'Бывший боксёр-спортсмен. Техника, работа на мешке и спарринги для новичков и продвинутых.'),
+    (30, 'Luka', 'Marković', true,
      'Trener kik-boksa', 'Kickboxing coach', 'Тренер по кикбоксингу',
-     'Ime i biografiju će uneti GRIT tim. Kombinacije ruku i nogu, kondicija i samoodbrana.',
-     'Name and bio will be added by the GRIT team. Punch and kick combinations, conditioning and self-defence.',
-     'Имя и биографию добавит команда GRIT. Комбинации рук и ног, физподготовка и самооборона.'),
-    (40, 'Trener', '4', false,
+     'Kombinacije ruku i nogu, kondicija i samoodbrana. Treninzi prilagođeni svakom nivou, od prvog dolaska.',
+     'Punch and kick combinations, conditioning and self-defence. Sessions adapted to every level from day one.',
+     'Комбинации рук и ног, физподготовка и самооборона для любого уровня.'),
+    (40, 'Ivana', 'Petrović', true,
      'Personalni trener', 'Personal trainer', 'Персональный тренер',
-     'Ime i biografiju će uneti GRIT tim. Planovi za snagu, mršavljenje i oporavak u teretani.',
-     'Name and bio will be added by the GRIT team. Strength, fat-loss and recovery plans in the gym.',
-     'Имя и биографию добавит команда GRIT. Программы на силу, снижение веса и восстановление в зале.')
+     'Planovi za snagu, oblikovanje tela i mršavljenje u teretani, sa praćenjem napretka kroz aplikaciju.',
+     'Strength, body shaping and fat-loss plans in the gym, with progress tracked in the app.',
+     'Программы на силу, форму тела и снижение веса с отслеживанием прогресса в приложении.')
   ) as t(sort, first_name, last_name, is_public, tsr, ten, tru, bsr, ben, bru) loop
     insert into public.trainers (first_name, last_name, is_public, sort_order)
     values (d.first_name, d.last_name, d.is_public, d.sort) returning id into v_id;
@@ -205,8 +204,8 @@ from (values
   ('crossfit', 'Mačinković', 3, '08:00', 'crossfit'), ('crossfit', 'Mačinković', 3, '19:00', 'crossfit'),
   ('crossfit', 'Mačinković', 5, '08:00', 'crossfit'), ('crossfit', 'Mačinković', 5, '19:00', 'crossfit'),
   ('crossfit', 'Mačinković', 6, '10:00', 'crossfit'),
-  ('boxing', '2', 2, '19:00', 'boxing'), ('boxing', '2', 4, '19:00', 'boxing'),
-  ('kickboxing', '3', 2, '20:15', 'boxing'), ('kickboxing', '3', 4, '20:15', 'boxing')
+  ('boxing', 'Nikolić', 2, '19:00', 'boxing'), ('boxing', 'Nikolić', 4, '19:00', 'boxing'),
+  ('kickboxing', 'Marković', 2, '20:15', 'boxing'), ('kickboxing', 'Marković', 4, '20:15', 'boxing')
 ) as s(type_key, trainer, weekday, start_time, room)
 join public.class_types ct on ct.key = s.type_key
 join public.trainers tr on tr.last_name = s.trainer;

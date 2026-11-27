@@ -99,15 +99,25 @@ describe('group classes', () => {
     await expect(
       db.as('anon', (c) => c.query('select user_id from public.trainers')),
     ).rejects.toThrow(/permission denied/);
-    // Only trainers with consent are public (seed: Bojan Mačinković; placeholders stay hidden).
-    const trainers = await db.as('anon', (c) =>
-      c.query<{ last_name: string }>('select last_name from public.trainers'),
+    // Only trainers with consent are public: a hidden trainer never shows to guests.
+    await db.admin.query(
+      "update public.trainers set is_public = false where last_name = 'Petrović'",
     );
-    expect(trainers.rows.map((r) => r.last_name)).toEqual(['Mačinković']);
+    const trainers = await db.as('anon', (c) =>
+      c.query<{ last_name: string }>('select last_name from public.trainers order by sort_order'),
+    );
+    expect(trainers.rows.map((r) => r.last_name)).toEqual(['Mačinković', 'Nikolić', 'Marković']);
+    // Nor does the hidden trainer's bio.
     const bios = await db.as('anon', (c) =>
       c.query<{ title: string }>('select title from public.trainer_translations'),
     );
-    expect(bios.rows.every((r) => r.title.includes('CrossFit'))).toBe(true);
+    expect(bios.rows.length).toBeGreaterThan(0);
+    expect(bios.rows.some((r) => ['Personalni trener', 'Personal trainer'].includes(r.title))).toBe(
+      false,
+    );
+    await db.admin.query(
+      "update public.trainers set is_public = true where last_name = 'Petrović'",
+    );
     await expect(db.as('anon', (c) => c.query('select id from public.bookings'))).rejects.toThrow(
       /permission denied/,
     );

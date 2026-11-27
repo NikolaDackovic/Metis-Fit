@@ -13,14 +13,14 @@ beforeAll(async () => {
 afterAll(async () => db?.close());
 
 describe('facility map', () => {
-  it('seed publishes a schematic snapshot separate from the draft', async () => {
+  it('seed publishes a snapshot separate from the draft', async () => {
     const { rows } = await db.admin.query(
       `select status, is_schematic, (select count(*)::int from floors f where f.map_version_id = v.id) floors
        from map_versions v order by version`,
     );
     expect(rows).toEqual([
-      { status: 'draft', is_schematic: true, floors: 3 },
-      { status: 'published', is_schematic: true, floors: 3 },
+      { status: 'draft', is_schematic: false, floors: 3 },
+      { status: 'published', is_schematic: false, floors: 3 },
     ]);
   });
 
