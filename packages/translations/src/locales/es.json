@@ -1311,6 +1311,10 @@
       "classes": "Grupales",
       "personal": "Personales",
       "inbox_hint": "Conversaciones con tus clientes."
+    },
+    "offline": {
+      "title": "Sin conexión",
+      "text": "Datos guardados. Reservas y pagos funcionan al volver la conexión."
     }
   },
   "errors": {

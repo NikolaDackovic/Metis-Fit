@@ -1288,6 +1288,10 @@
       "classes": "团课",
       "personal": "私教",
       "inbox_hint": "与客户的对话。"
+    },
+    "offline": {
+      "title": "离线",
+      "text": "显示已保存的数据。恢复网络后可预约和付款。"
     }
   },
   "errors": {

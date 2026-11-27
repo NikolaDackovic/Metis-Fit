@@ -1334,6 +1334,10 @@
       "classes": "Collectifs",
       "personal": "Personnels",
       "inbox_hint": "Conversations avec tes clients."
+    },
+    "offline": {
+      "title": "Hors ligne",
+      "text": "Données enregistrées. Réservations et paiements reprennent avec la connexion."
     }
   },
   "errors": {

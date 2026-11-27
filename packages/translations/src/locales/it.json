@@ -1311,6 +1311,10 @@
       "classes": "Di gruppo",
       "personal": "Personali",
       "inbox_hint": "Conversazioni con i tuoi clienti."
+    },
+    "offline": {
+      "title": "Offline",
+      "text": "Dati salvati. Prenotazioni e pagamenti tornano con la connessione."
     }
   },
   "errors": {

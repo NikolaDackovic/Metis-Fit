@@ -3597,6 +3597,10 @@
       "classes": "Group",
       "personal": "Personal",
       "inbox_hint": "Conversations with your clients."
+    },
+    "offline": {
+      "title": "Offline",
+      "text": "Showing saved data. Bookings and payments work once you are back online."
     }
   },
   "equipment": {

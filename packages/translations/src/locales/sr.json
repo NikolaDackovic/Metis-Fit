@@ -3644,6 +3644,10 @@
       "classes": "Grupni",
       "personal": "Personalni",
       "inbox_hint": "Razgovori sa tvojim klijentima."
+    },
+    "offline": {
+      "title": "Bez interneta",
+      "text": "Prikazujem sačuvane podatke. Rezervacije i uplate rade kad se veza vrati."
     }
   },
   "equipment": {

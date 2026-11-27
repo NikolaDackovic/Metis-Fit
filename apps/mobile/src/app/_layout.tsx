@@ -28,6 +28,7 @@ import { clubShortName, useClub } from '@/lib/queries';
 import { useWorkout } from '@/lib/workout-store';
 import { setClubName } from '@grit/translations';
 import { useTranslation } from 'react-i18next';
+import { OfflineBanner } from '@/components/OfflineBanner';
 import { color } from '@/theme';
 import { loadSelectedClub, onClubChange } from '@/lib/club-select';
 
@@ -40,6 +41,9 @@ const queryClient = new QueryClient({
       retry: (count, error) =>
         !(error instanceof ApiError && error.status >= 400 && error.status < 500) && count < 2,
     },
+    // Without internet an action fails at once with a clear message. It is never queued and
+    // sent later (a booking must not appear or happen behind the member's back).
+    mutations: { networkMode: 'always' },
   },
 });
 
@@ -201,6 +205,7 @@ export default function RootLayout() {
           {/* Table QR ordering: open to guests without an account. */}
           <Stack.Screen name="order/[code]" />
         </Stack>
+        <OfflineBanner />
       </QueryClientProvider>
     </I18nextProvider>
   );

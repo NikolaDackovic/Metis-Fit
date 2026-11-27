@@ -63,6 +63,8 @@ export default function CardScreen() {
     gcTime: 0,
     staleTime: 0,
     retry: false,
+    // Offline the request must fail (not wait), so the spare offline pass is shown.
+    networkMode: 'always',
   });
 
   useEffect(() => {

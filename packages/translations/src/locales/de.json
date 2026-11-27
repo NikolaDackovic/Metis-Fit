@@ -1311,6 +1311,10 @@
       "classes": "Gruppe",
       "personal": "Personal",
       "inbox_hint": "Gespräche mit deinen Kunden."
+    },
+    "offline": {
+      "title": "Offline",
+      "text": "Gespeicherte Daten. Buchungen und Zahlungen funktionieren wieder mit Verbindung."
     }
   },
   "errors": {
