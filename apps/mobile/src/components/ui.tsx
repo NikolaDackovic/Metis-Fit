@@ -50,7 +50,12 @@ export function Screen({
   const first = items[0];
   const sticky =
     isValidElement(first) && Boolean((first.type as { stickyTop?: boolean }).stickyTop);
-  const inner = <View style={styles.content}>{sticky ? items.slice(1) : children}</View>;
+  // Under a fixed back arrow the first line (often a big title) gets room, never clipped.
+  const inner = (
+    <View style={[styles.content, sticky && { paddingTop: 14 }]}>
+      {sticky ? items.slice(1) : children}
+    </View>
+  );
   return (
     <SafeAreaView
       style={[styles.screen, transparent && { backgroundColor: 'transparent' }]}

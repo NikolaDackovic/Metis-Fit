@@ -21,4 +21,11 @@ export function applyWebHead() {
   add('meta', { name: 'mobile-web-app-capable', content: 'yes' });
   add('meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' });
   add('meta', { name: 'theme-color', content: '#0A0A0A' });
+  // Text fields already show their own border; the browser's extra focus ring looked broken.
+  if (!document.getElementById('metis-web-css')) {
+    const css = document.createElement('style');
+    css.id = 'metis-web-css';
+    css.textContent = 'input:focus,textarea:focus{outline:none}';
+    document.head.appendChild(css);
+  }
 }
