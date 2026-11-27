@@ -60,6 +60,7 @@ export default function GymsScreen() {
             <GymRow
               key={c.id}
               name={c.name}
+              logoUrl={directory.data?.find((d) => d.slug === c.slug)?.logoUrl}
               city={c.city}
               note={c.isMember ? t('app.gyms.member') : t('app.gyms.staff')}
               active={c.slug === current}

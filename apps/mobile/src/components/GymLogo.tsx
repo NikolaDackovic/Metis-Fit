@@ -17,7 +17,7 @@ export function GymLogo({
       <Image
         source={{ uri: logoUrl }}
         style={[styles.img, box]}
-        resizeMode="cover"
+        resizeMode="contain"
         accessibilityLabel={name}
       />
     );
@@ -36,7 +36,8 @@ export function GymLogo({
 }
 
 const styles = StyleSheet.create({
-  img: { backgroundColor: color.bg.surface2 },
+  // Logos come in any shape: shown whole on a dark tile.
+  img: { backgroundColor: '#111' },
   badge: { backgroundColor: color.accent.tint, alignItems: 'center', justifyContent: 'center' },
   text: { fontFamily: fonts.bold, color: color.accent[400] },
 });
