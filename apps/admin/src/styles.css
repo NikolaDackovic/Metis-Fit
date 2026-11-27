@@ -85,3 +85,47 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Phones: data tables become cards (see components/ui/Table.tsx). */
+@media (max-width: 639px) {
+  .rtable thead {
+    display: none;
+  }
+  .rtable,
+  .rtable tbody,
+  .rtable tr,
+  .rtable td {
+    display: block;
+    width: 100%;
+  }
+  .rtable tr {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .rtable td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border: 0;
+    padding: 0.35rem 1rem;
+    text-align: end;
+  }
+  .rtable td::before {
+    content: attr(data-label);
+    flex-shrink: 0;
+    max-width: 45%;
+    text-align: start;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+  .rtable td[data-label=''] {
+    justify-content: flex-end;
+  }
+  .rtable td[data-label='']::before {
+    display: none;
+  }
+}

@@ -214,7 +214,7 @@ export function ReceptionPage() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-end gap-3">
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-[1_1_16rem]">
           <h1 className="font-display text-2xl tracking-tight uppercase">
             {t('admin.reception.title')}
           </h1>
@@ -225,13 +225,16 @@ export function ReceptionPage() {
             {t('admin.reception.new_member')}
           </Button>
         )}
-        <Button
-          variant="ghost"
-          icon={<Maximize className="size-4" />}
-          onClick={() => void document.documentElement.requestFullscreen?.()}
-        >
-          {t('admin.reception.fullscreen')}
-        </Button>
+        {/* Full screen is for the desk computer; phones are already full screen. */}
+        <span className="hidden sm:inline-flex">
+          <Button
+            variant="ghost"
+            icon={<Maximize className="size-4" />}
+            onClick={() => void document.documentElement.requestFullscreen?.()}
+          >
+            {t('admin.reception.fullscreen')}
+          </Button>
+        </span>
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">

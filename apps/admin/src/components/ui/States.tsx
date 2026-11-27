@@ -89,7 +89,8 @@ export function PageHeader({
 }) {
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-      <div>
+      {/* The title keeps a readable width; actions move below it on narrow screens. */}
+      <div className="min-w-0 flex-[1_1_16rem]">
         <h1 className="font-display text-2xl tracking-tight uppercase">{title}</h1>
         {subtitle && <p className="mt-1 text-sm text-text-secondary">{subtitle}</p>}
       </div>

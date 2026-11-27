@@ -1,13 +1,39 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { ReactNode, ThHTMLAttributes } from 'react';
+import { useLayoutEffect, useRef, type ReactNode, type ThHTMLAttributes } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconButton } from './Button';
 import { cn } from './cn';
 
+/**
+ * Data table. On phones (< 640 px) every row becomes a card: each cell shows its column name
+ * (copied from the header into data-label), so nothing is cut off or needs sideways scrolling.
+ */
 export function Table({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLTableElement>(null);
+  useLayoutEffect(() => {
+    const table = ref.current;
+    if (!table) return;
+    const label = () => {
+      const heads = [...table.querySelectorAll('thead th')].map(
+        (th) => th.textContent?.trim() ?? '',
+      );
+      for (const row of table.querySelectorAll('tbody tr')) {
+        [...row.children].forEach((cell, i) => {
+          const text = heads[i] ?? '';
+          if (cell.getAttribute('data-label') !== text) cell.setAttribute('data-label', text);
+        });
+      }
+    };
+    label();
+    const obs = new MutationObserver(label);
+    obs.observe(table, { childList: true, subtree: true });
+    return () => obs.disconnect();
+  });
   return (
     <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-sm">{children}</table>
+      <table ref={ref} className="rtable w-full border-collapse text-sm">
+        {children}
+      </table>
     </div>
   );
 }
@@ -87,7 +113,8 @@ export function Tabs<T extends string>({
   return (
     <div
       role="tablist"
-      className="no-scrollbar flex gap-1 overflow-x-auto overflow-y-hidden border-b border-border-subtle"
+      // Phones: tabs wrap onto a second line instead of hiding off-screen.
+      className="no-scrollbar flex flex-wrap gap-x-1 border-b border-border-subtle sm:flex-nowrap sm:overflow-x-auto sm:overflow-y-hidden"
     >
       {tabs.map((tab) => (
         <button
