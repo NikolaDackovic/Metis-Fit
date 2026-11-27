@@ -351,7 +351,7 @@ export function MapEditorPage() {
       ) : (
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
           <div className="flex min-w-0 flex-col gap-3">
-            <div className="no-scrollbar flex items-center gap-1 overflow-x-auto">
+            <div className="flex flex-wrap items-center gap-1">
               {floors.map((f, i) => (
                 <button
                   key={f.key + i}

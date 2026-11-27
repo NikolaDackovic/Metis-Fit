@@ -179,7 +179,7 @@ function Stat({
   tone?: 'warning';
 }) {
   return (
-    <Card className="min-w-0 px-5 py-4">
+    <Card className="min-w-0 px-4 py-4 sm:px-5">
       <p className="text-[11px] font-semibold tracking-wider text-text-secondary uppercase">
         {label}
       </p>
@@ -189,8 +189,12 @@ function Stat({
         <p
           className={cn(
             // Money values are long ("3.000 RSD"): scale down instead of overflowing the card.
-            'tabular mt-1 font-bold break-words',
-            String(value).length > 6 ? 'text-xl xl:text-2xl' : 'text-3xl',
+            'tabular mt-1 font-bold',
+            String(value).length > 9
+              ? 'text-lg whitespace-nowrap sm:text-xl xl:text-2xl'
+              : String(value).length > 6
+                ? 'text-xl whitespace-nowrap xl:text-2xl'
+                : 'text-3xl',
             tone === 'warning' && Number(value) > 0 && 'text-status-warning',
           )}
         >

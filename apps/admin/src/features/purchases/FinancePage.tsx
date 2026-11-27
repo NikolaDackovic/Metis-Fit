@@ -185,7 +185,7 @@ function Stat({
         <p
           className={cn(
             'tabular mt-1 truncate font-bold',
-            small ? 'text-lg' : 'text-xl xl:text-2xl',
+            small ? 'text-lg' : 'text-lg sm:text-xl xl:text-2xl',
             tone === 'danger' && 'text-status-danger',
             tone === 'success' && 'text-status-success',
           )}
