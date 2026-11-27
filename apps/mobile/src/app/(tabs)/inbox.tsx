@@ -11,11 +11,11 @@ export default function InboxTab() {
   const { t, i18n } = useTranslation();
   return (
     <Screen>
+      <ModeSwitch />
       <View style={styles.head}>
         <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
           {t('app.tabs.inbox')}
         </Text>
-        <ModeSwitch />
       </View>
       <Text style={[type.bodySm, { color: color.text.secondary }]}>
         {t('app.schedule.inbox_hint')}

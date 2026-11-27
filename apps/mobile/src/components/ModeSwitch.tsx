@@ -46,7 +46,8 @@ export function ModeSwitch() {
 const styles = StyleSheet.create({
   wrap: {
     flexDirection: 'row',
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-end',
+    marginTop: 8,
     padding: 3,
     borderRadius: 999,
     backgroundColor: color.bg.surface,

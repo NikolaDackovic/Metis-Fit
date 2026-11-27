@@ -71,11 +71,11 @@ export default function ScheduleTab() {
 
   return (
     <Screen>
+      <ModeSwitch />
       <View style={styles.head}>
         <Text style={[type.display, styles.title, { fontFamily: displayFont(i18n.language) }]}>
           {t('app.tabs.schedule')}
         </Text>
-        <ModeSwitch />
       </View>
 
       <View style={styles.weekRow}>

@@ -31,13 +31,13 @@ export default function CoachScreen() {
   const [segment, setSegment] = useState<Segment>('schedule');
   return (
     <Screen>
+      <ModeSwitch />
       <View style={styles.head}>
         <Text
           style={[type.display, styles.title, { flex: 1, fontFamily: displayFont(i18n.language) }]}
         >
           {t('app.coach.title')}
         </Text>
-        <ModeSwitch />
       </View>
       <CoachSummary />
       <View style={styles.segments} accessibilityRole="tablist">
