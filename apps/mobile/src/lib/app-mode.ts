@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { create } from 'zustand';
 import { useMe } from './queries';
 import { secureStorage } from './storage';
-import { useIsTrainer } from './trainer';
+import { useTrainerState } from './trainer';
 
 /**
  * A trainer uses the app two ways: at work (schedule, clients, messages) or training like any
@@ -32,9 +32,11 @@ export function useAppMode(): {
   chosen: boolean;
   loaded: boolean;
   isTrainer: boolean;
+  /** Everything needed to pick the right tabs is known. */
+  ready: boolean;
 } {
   const userId = useMe().data?.id ?? null;
-  const isTrainer = useIsTrainer();
+  const { isTrainer, ready: trainerKnown } = useTrainerState();
   const s = useStore();
   useEffect(() => {
     if (!userId || (s.loaded && s.userId === userId)) return;
@@ -52,5 +54,6 @@ export function useAppMode(): {
     chosen: loaded && s.mode !== null,
     loaded,
     isTrainer,
+    ready: trainerKnown && (!isTrainer || loaded),
   };
 }

@@ -48,7 +48,7 @@ export default function TabsLayout() {
     });
   }, [userId]);
   // Trainers work in "trainer mode" (Work, Schedule, Messages) or train like any member.
-  const { mode, chosen, loaded, isTrainer } = useAppMode();
+  const { mode, chosen, loaded, isTrainer, ready } = useAppMode();
   const coach = mode === 'coach';
   useEffect(() => {
     if (!userId || !isTrainer || !loaded || chosen) return;
@@ -56,6 +56,8 @@ export default function TabsLayout() {
       if (seen) router.push('/mode');
     });
   }, [userId, isTrainer, loaded, chosen]);
+  // Wait until we know member or trainer mode, so the wrong tabs never flash.
+  if (!ready) return <View style={{ flex: 1, backgroundColor: color.bg.base }} />;
   return (
     <Tabs
       screenOptions={{

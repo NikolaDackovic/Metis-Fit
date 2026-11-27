@@ -7,12 +7,21 @@ import { useMe } from './queries';
  * train, so the permission alone is not enough).
  */
 export function useIsTrainer() {
-  const canSchedule = Boolean(useMe().data?.permissions.includes('schedule.own'));
+  return useTrainerState().isTrainer;
+}
+
+/** Whether the account is a trainer, and whether that is known yet (no flicker while loading). */
+export function useTrainerState(): { isTrainer: boolean; ready: boolean } {
+  const me = useMe();
+  const canSchedule = Boolean(me.data?.permissions.includes('schedule.own'));
   const trainer = useQuery({
     queryKey: ['me', 'trainer'],
     queryFn: () => api.get<{ trainerId: string | null }>('/admin/me/trainer'),
     enabled: canSchedule,
     staleTime: 10 * 60_000,
   });
-  return canSchedule && Boolean(trainer.data?.trainerId);
+  return {
+    isTrainer: canSchedule && Boolean(trainer.data?.trainerId),
+    ready: (Boolean(me.data) || me.isError) && (!canSchedule || !trainer.isPending),
+  };
 }
